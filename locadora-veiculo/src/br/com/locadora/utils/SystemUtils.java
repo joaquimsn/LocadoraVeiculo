@@ -9,13 +9,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.UUID;
 
 import br.com.locadora.utils.annotation.Required;
@@ -23,7 +20,7 @@ import br.com.locadora.utils.annotation.Required;
 public class SystemUtils {
 	/**
 	 * Valida o preenchimento de um campo obrigatório por reflection
-	 * @author Renan Baggio
+	 * @author Renan Baggio | Joaquim Neto
 	 * @param objeto Objeto com os campos (atributos) a serem validados
 	 * @return <b>true</b> se todos campos obrigatórios foram preenchidos
 	 */
@@ -567,38 +564,4 @@ public class SystemUtils {
 	public static int getRamdomId() {
 		return (int) UUID.randomUUID().getLeastSignificantBits();
 	}
-
-	/**
-	 * Retorna uma String de conteúdo aleatório
-	 * @author Renan Baggio
-	 * @param objeto
-	 * @return String aleatória
-	 */
-	public static String getRamdomString() {
-		return UUID.randomUUID().toString();
-	}
-
-	/**
-	 * Retorna um TreeMap ordenado pelo value
-	 * @author Renan Baggio
-	 * @param map Map a ordenar
-	 * @return TreeMap ordenado
-	 */
-	public static <K, V extends Comparable<V>> Map<K, V> sortMapByValues(final Map<K, V> map) {
-		Comparator<K> valueComparator = new Comparator<K>() {
-			public int compare(K k1, K k2) {
-				int compare = map.get(k2).compareTo(map.get(k1));
-				if (compare == 0)
-					return 1;
-				else
-					return compare;
-			}
-		};
-
-		Map<K, V> sortedByValues = new TreeMap<K, V>(valueComparator);
-		sortedByValues.putAll(map);
-
-		return sortedByValues;
-	}
-
 }
