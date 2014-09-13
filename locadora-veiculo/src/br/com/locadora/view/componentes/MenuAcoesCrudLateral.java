@@ -1,6 +1,5 @@
 package br.com.locadora.view.componentes;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.Serializable;
 

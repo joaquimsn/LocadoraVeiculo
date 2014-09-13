@@ -4,6 +4,8 @@ package br.com.locadora.controller;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import br.com.locadora.model.entity.Agencia;
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.view.TelaPrincipalGUI;
 
 public class MainSistemaLocadora {
@@ -20,6 +22,10 @@ public class MainSistemaLocadora {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		Agencia agencia = new Agencia();
+		
+		SystemUtils.isCamposObrigatoriosPreenchidos(agencia);
 		
 		TelaPrincipalGUI telaPrincipalGUI = new TelaPrincipalGUI();
 	}

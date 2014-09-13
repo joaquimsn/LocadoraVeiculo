@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -76,15 +77,20 @@ public class TelaPrincipalGUI extends JFrame {
 		menuCrudLateral.add(button);
 		
 		// Menu informações do sistema no roda pé
-		panelFooter = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-		panelFooter.add(new JLabel("Empresa locação"));
-		panelFooter.add(new JLabel("Usuário: Joaquim Neto"));
+		panelFooter = new JPanel(new FlowLayout(FlowLayout.LEFT, 30, 10));
+		
+		panelFooter.add(new JLabel("BJ 	Locadora de ve[iculos LTDA, JLabel.LEFT"));
+		panelFooter.add(new JLabel("Agência: 08873 ", JLabel.LEFT));
+		panelFooter.add(new JLabel("Cidade: São Paulo - SP ", JLabel.LEFT));
+		panelFooter.add(new JLabel("Usuário: Joaquim Neto ", JLabel.LEFT));
+		panelFooter.add(new JLabel("Acesso: 90 ", JLabel.RIGHT));
 		
 		// Configurações do container das telas utilizadas no sistema
 		panelContainerTela = new JPanel(null);
 		panelContainerTela.setSize(900, 600);
 		
-		panelContainerTela.add(new JLabel("Teste oi "));
+		// Define a tela default para ser exibida ao abrir o sistema
+		panelContainerTela.add(new JLabel("Teste"));
 		
 		this.setLayout(new BorderLayout());
 		this.setSize(1368, 768);
