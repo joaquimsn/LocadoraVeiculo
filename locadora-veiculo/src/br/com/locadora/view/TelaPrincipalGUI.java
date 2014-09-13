@@ -30,10 +30,10 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 	private static JPanel panelContainerTela;
 	
 	// Menus itens
-	private JMenuItem miCadastroAgencia;
-	private JMenuItem miCadastroFuncionario;
-	private JMenuItem miCadastroCliente;
-	private JMenuItem miCadastroVeiculo;
+	private JMenuItem miGerenciaAgencia;
+	private JMenuItem miGerenciaFuncionario;
+	private JMenuItem miGerenciaCliente;
+	private JMenuItem miGerenciaVeiculo;
 	
 	// Componentes
 	private MenuAcoesLateral menuAcoesLateral;
@@ -60,8 +60,8 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 		JPanel panelMenuCabecalho = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		panelMenuCabecalho.setBorder(border);
 		JMenuBar menuBar = new JMenuBar();
-		JMenu menuCadastro = new JMenu(LocaleUtils.getLocaleView().getString("menu_cadastro"));
-		menuCadastro.setFont(new Font("Sans Serif", Font.BOLD, 14));
+		JMenu menuGerencia = new JMenu(LocaleUtils.getLocaleView().getString("menu_gerencia"));
+		menuGerencia.setFont(new Font("Sans Serif", Font.BOLD, 14));
 		JMenu menuLocacao = new JMenu(LocaleUtils.getLocaleView().getString("menu_locacao"));
 		menuLocacao.setFont(new Font("Sans Serif", Font.BOLD, 14));
 		JMenu menuRelatorio = new JMenu(LocaleUtils.getLocaleView().getString("menu_relatorio"));
@@ -69,17 +69,17 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 		JMenu menuConfiguracao = new JMenu(LocaleUtils.getLocaleView().getString("menu_configuracao"));
 		menuConfiguracao.setFont(new Font("Sans Serif", Font.BOLD, 14));
 		
-		miCadastroAgencia = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_cad_agencia"));
-		menuCadastro.add(miCadastroAgencia);
-		miCadastroCliente = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_cad_cliente"));
-		menuCadastro.add(miCadastroCliente);
-		miCadastroFuncionario = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_cad_funcionario"));
-		menuCadastro.add(miCadastroFuncionario);
-		miCadastroVeiculo = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_cad_veiculo"));
-		menuCadastro.add(miCadastroVeiculo);
+		miGerenciaAgencia = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_agencia"));
+		menuGerencia.add(miGerenciaAgencia);
+		miGerenciaCliente = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_cliente"));
+		menuGerencia.add(miGerenciaCliente);
+		miGerenciaFuncionario = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_funcionario"));
+		menuGerencia.add(miGerenciaFuncionario);
+		miGerenciaVeiculo = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_veiculo"));
+		menuGerencia.add(miGerenciaVeiculo);
 		
 		// Estrutura do menu
-		menuBar.add(menuCadastro);
+		menuBar.add(menuGerencia);
 		menuBar.add(menuLocacao);
 		menuBar.add(menuRelatorio);
 		menuBar.add(menuConfiguracao);
@@ -114,11 +114,19 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
-		miCadastroVeiculo.addActionListener(new ActionListener() {
+		miGerenciaVeiculo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				VeiculoGUI cadastroVeiculoGUI = new VeiculoGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_veiculo"));
-				mudarTelaContainer(cadastroVeiculoGUI);
+				VeiculoGUI veiculoGUI = new VeiculoGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_veiculo"));
+				mudarTelaContainer(veiculoGUI);
+			}
+		});
+		
+		miGerenciaAgencia.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AgenciaGUI agenciaGUI = new AgenciaGUI();
+				mudarTelaContainer(agenciaGUI);
 			}
 		});
 		

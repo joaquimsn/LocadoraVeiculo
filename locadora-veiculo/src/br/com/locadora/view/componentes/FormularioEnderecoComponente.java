@@ -2,173 +2,141 @@ package br.com.locadora.view.componentes;
 
 import java.io.Serializable;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class FormularioEnderecoComponente extends JPanel implements Serializable{
+public class FormularioEnderecoComponente extends JPanel implements Serializable {
 	private static final long serialVersionUID = 2863741403200090086L;
-	
-	private JLabel lblLogradouro;
-	private JTextField txtLogradouro;
-	private JLabel lblNumero;
-	private JTextField textNumero;
-	private JLabel lblBairro;
-	private JTextField txtBairro;
-	private JLabel lblCep;
-	private JTextField txtCep;
-	private JLabel lblUf;
-	private JComboBox cbxUf;
-	private JLabel lblCidade;
-	private JComboBox cbxCidade;
-	private JLabel lblTelefone;
-	private JTextField txtTelefone;
-	private JLabel lblEmail;
-	private JTextField txtEmail;
-	private JLabel lblSite;
-	private JTextField txtSite;
 
+	// Labels
+	private JLabel lblLogradouro;
+	private JLabel lblNumero;
+	private JLabel lblBairro;
+	private JLabel lblCep;
+	private JLabel lblUf;
+	private JLabel lblCidade;
+	private JLabel lblTelefone;
+	private JLabel lblEmail;
+	private JLabel lblSite;
+
+	// Inputs
+	private JTextField txtLogradouro;
+	private JTextField textNumero;
+	private JTextField txtCep;
+	private JComboBox cbxUf;
+	private JComboBox cbxCidade;
+	private JTextField txtEmail;
+	private JTextField txtSite;
+	private JTextField txtBairro;
+	private JTextField txtTelefone;
+
+	/**
+	 * Componente formulário enederço contém todos os campos
+	 * necessários para representação de um endereço
+	 * </br> Os campos presente no formulário são:</br>
+	 * <b>
+	 * Logradouro</br>
+	 * Numero</br>
+	 * Bairro</br>
+	 * CEP<br>
+	 * UF e Cidade<br>
+	 * Telefone</br>
+	 * E-mail e site
+	 * </b>
+	 * @author Joaquim Neto
+	 */
 	public FormularioEnderecoComponente() {
+		inicializar();
+	}
+	
+	/**Inicializa todos os componetes da formularioEndereco
+	 * @author Joaquim Neto
+	 */
+	private void inicializar() {
+		setLayout(null);
+		setSize(800, 170);
 
 		lblLogradouro = new JLabel("Logradouro");
+		lblLogradouro.setBounds(5, 5, 150, 20);
+		add(lblLogradouro);
+		
 		txtLogradouro = new JTextField();
+		txtLogradouro.setBounds(0, 25, 450, 30);
 		txtLogradouro.setColumns(10);
+		add(txtLogradouro);
+		
 		lblNumero = new JLabel("Numero");
+		lblNumero.setBounds(460, 5, 88, 20);
+		add(lblNumero);
+		
 		textNumero = new JTextField();
+		textNumero.setBounds(455, 25, 125, 30);
 		textNumero.setColumns(10);
+		add(textNumero);
+		
 		lblBairro = new JLabel("Bairro");
+		lblBairro.setBounds(590, 5, 125, 20);
+		add(lblBairro);
+		
 		txtBairro = new JTextField();
+		txtBairro.setBounds(585, 25, 210, 30);
 		txtBairro.setColumns(10);
+		add(txtBairro);
+		
 		lblCep = new JLabel("CEP");
+		lblCep.setBounds(5, 60, 141, 20);
+		add(lblCep);
+		
 		txtCep = new JTextField();
+		txtCep.setBounds(0, 80, 200, 30);
 		txtCep.setColumns(10);
+		add(txtCep);
+		
 		lblUf = new JLabel("UF");
-		
+		lblUf.setBounds(210, 60, 50, 20);
+		add(lblUf);
+
 		cbxUf = new JComboBox();
-		
+		cbxUf.setBounds(205, 80, 80, 30);
+		add(cbxUf);
+
 		lblCidade = new JLabel("Cidade");
-		
+		lblCidade.setBounds(295, 60, 150, 20);
+		add(lblCidade);
+
 		cbxCidade = new JComboBox();
-		
+		cbxCidade.setBounds(290, 80, 250, 30);
+		add(cbxCidade);
+
 		lblTelefone = new JLabel("Telefone");
+		lblTelefone.setBounds(545, 60, 150, 20);
+		add(lblTelefone);
 		
 		txtTelefone = new JTextField();
+		txtTelefone.setBounds(545, 80, 250, 30);
 		txtTelefone.setColumns(10);
+		add(txtTelefone);
 		
 		lblEmail = new JLabel("E-mail");
-		
-		txtEmail = new JTextField();
-		txtEmail.setColumns(10);
-		
-		lblSite = new JLabel("Site");
-		
-		txtSite = new JTextField();
-		txtSite.setColumns(10);
-			
-		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(txtLogradouro, GroupLayout.PREFERRED_SIZE, 486, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblLogradouro)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblCep)
-											.addGap(245)
-											.addComponent(lblUf)
-											.addGap(76)
-											.addComponent(lblCidade)))
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(18)
-											.addComponent(textNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(26)
-											.addComponent(lblNumero))))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-										.addComponent(txtEmail, Alignment.LEADING)
-										.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-											.addComponent(txtCep, GroupLayout.PREFERRED_SIZE, 253, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(cbxUf, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)))
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(txtSite, GroupLayout.PREFERRED_SIZE, 342, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblSite, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-										.addComponent(cbxCidade, 0, 272, Short.MAX_VALUE))))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(txtBairro, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-								.addComponent(lblBairro)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(6)
-									.addComponent(lblTelefone))
-								.addComponent(txtTelefone))
-							.addContainerGap())
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblEmail)
-							.addContainerGap(807, Short.MAX_VALUE))))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblLogradouro)
-						.addComponent(lblNumero)
-						.addComponent(lblBairro))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(txtLogradouro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(textNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(txtBairro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblTelefone)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(txtTelefone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblCep)
-										.addComponent(lblUf))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(txtCep, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(2)
-											.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(cbxUf, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-												.addComponent(cbxCidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
-								.addComponent(lblCidade))
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(lblEmail))
-								.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-									.addComponent(lblSite)))))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtSite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(138))
-		);
-		setLayout(groupLayout);
+		lblEmail.setBounds(5, 115, 125, 20);
+		add(lblEmail);
 
+		txtEmail = new JTextField();
+		txtEmail.setBounds(0, 135, 300, 30);
+		txtEmail.setColumns(10);
+		add(txtEmail);
+
+		lblSite = new JLabel("Site");
+		lblSite.setBounds(310, 115, 125, 20);
+		add(lblSite);
+
+		txtSite = new JTextField();
+		txtSite.setBounds(305, 135, 305, 30);
+		txtSite.setColumns(10);
+		add(txtSite);
+		
+		setVisible(true);
 	}
 }

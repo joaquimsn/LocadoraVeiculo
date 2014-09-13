@@ -4,11 +4,11 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
 
-public class BotesCrudComponente extends JPanel {
+public class BotoesCrudComponente extends JPanel {
 	private JButton btnSalvar;
 	private JButton btnCancelar;
 
-	public BotesCrudComponente() {
+	public BotoesCrudComponente() {
 		inicializar();
 	}
 	private void inicializar() {

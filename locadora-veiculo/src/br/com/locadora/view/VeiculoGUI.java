@@ -12,7 +12,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import br.com.locadora.utils.locale.LocaleUtils;
-import br.com.locadora.view.componentes.BotesCrudComponente;
+import br.com.locadora.view.componentes.BotoesCrudComponente;
 
 public class VeiculoGUI extends JPanel implements Serializable {
 	private static final long serialVersionUID = -1390603165047810065L;
@@ -57,13 +57,18 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		inicializar();
 	}
 	
+	/**
+	 * Cria o panel veículo com um titulo
+	 * @param tituloPanel Titulo do panel 
+	 * @author Joaquim Neto
+	 */
 	public VeiculoGUI(String tituloPanel) {
 		this.tituloPanel = tituloPanel;
 		// cria a tela de login
 		inicializar();
 	}
 	
-	/**Inicializa todos os componetes da tela de login
+	/**Inicializa todos os componetes da tela veículo
 	 * @author Joaquim Neto
 	 */
 	private void inicializar() {
@@ -204,9 +209,9 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		txtTarifaKmControlado.setBounds(331, 343, 146, 30);
 		add(txtTarifaKmControlado);
 		
-		BotesCrudComponente botesCrudComponente = new BotesCrudComponente();
-		botesCrudComponente.setBounds(633, 478, 200, 50);
-		add(botesCrudComponente);
+		BotoesCrudComponente botoesCrudComponente = new BotoesCrudComponente();
+		botoesCrudComponente.setBounds(633, 478, 200, 50);
+		add(botoesCrudComponente);
 		
 		this.setBounds(15, 10, 850, 550);
 		this.setVisible(true);
