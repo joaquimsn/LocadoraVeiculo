@@ -12,6 +12,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import br.com.locadora.utils.locale.LocaleUtils;
+import br.com.locadora.view.componentes.BotesCrudComponente;
 
 public class VeiculoGUI extends JPanel implements Serializable {
 	private static final long serialVersionUID = -1390603165047810065L;
@@ -202,6 +203,10 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		txtTarifaKmControlado.setColumns(10);
 		txtTarifaKmControlado.setBounds(331, 343, 146, 30);
 		add(txtTarifaKmControlado);
+		
+		BotesCrudComponente botesCrudComponente = new BotesCrudComponente();
+		botesCrudComponente.setBounds(633, 478, 200, 50);
+		add(botesCrudComponente);
 		
 		this.setBounds(15, 10, 850, 550);
 		this.setVisible(true);
