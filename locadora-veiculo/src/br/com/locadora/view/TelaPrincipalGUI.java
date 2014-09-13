@@ -1,11 +1,12 @@
 package br.com.locadora.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -14,6 +15,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.MenuAcoesCrudLateral;
@@ -48,13 +52,21 @@ public class TelaPrincipalGUI extends JFrame {
 		JButton button = new JButton(LocaleUtils.getLocaleView().getString("titulo_sys"));
 		button.setSize(300, 30);
 		
+		// Borda para os panels
+		Border border = new TitledBorder(new LineBorder(Color.GRAY));
+		
 		// Cria o menu do cabecalho
 		JPanel panelMenuCabecalho = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		panelMenuCabecalho.setBorder(border);
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menuCadastro = new JMenu(LocaleUtils.getLocaleView().getString("menu_cadastro"));
+		menuCadastro.setFont(new Font("Sans Serif", Font.BOLD, 14));
 		JMenu menuLocacao = new JMenu(LocaleUtils.getLocaleView().getString("menu_locacao"));
+		menuLocacao.setFont(new Font("Sans Serif", Font.BOLD, 14));
 		JMenu menuRelatorio = new JMenu(LocaleUtils.getLocaleView().getString("menu_relatorio"));
+		menuRelatorio.setFont(new Font("Sans Serif", Font.BOLD, 14));
 		JMenu menuConfiguracao = new JMenu(LocaleUtils.getLocaleView().getString("menu_configuracao"));
+		menuConfiguracao.setFont(new Font("Sans Serif", Font.BOLD, 14));
 		
 		miCadastroAgencia = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_cad_agencia"));
 		menuCadastro.add(miCadastroAgencia);
@@ -78,8 +90,9 @@ public class TelaPrincipalGUI extends JFrame {
 		
 		// Menu informações do sistema no roda pé
 		panelFooter = new JPanel(new FlowLayout(FlowLayout.LEFT, 30, 10));
+		panelFooter.setBorder(border);
 		
-		panelFooter.add(new JLabel("BJ 	Locadora de ve[iculos LTDA, JLabel.LEFT"));
+		panelFooter.add(new JLabel("BJ 	Locadora de veiculos LTDA", JLabel.LEFT));
 		panelFooter.add(new JLabel("Agência: 08873 ", JLabel.LEFT));
 		panelFooter.add(new JLabel("Cidade: São Paulo - SP ", JLabel.LEFT));
 		panelFooter.add(new JLabel("Usuário: Joaquim Neto ", JLabel.LEFT));
@@ -87,6 +100,7 @@ public class TelaPrincipalGUI extends JFrame {
 		
 		// Configurações do container das telas utilizadas no sistema
 		panelContainerTela = new JPanel(null);
+		panelContainerTela.setBorder(border);
 		panelContainerTela.setSize(900, 600);
 		
 		// Define a tela default para ser exibida ao abrir o sistema
@@ -106,7 +120,7 @@ public class TelaPrincipalGUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelContainerTela.removeAll();
-				panelContainerTela.setSize(800, 600);
+				panelContainerTela.setSize(900, 600);
 				BlocoPanel blocoPanel = new BlocoPanel();
 				blocoPanel.setVisible(true);
 				panelContainerTela.add(blocoPanel);
