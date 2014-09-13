@@ -6,8 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,10 +20,11 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import br.com.locadora.utils.locale.LocaleUtils;
-import br.com.locadora.view.componentes.MenuAcoesCrudLateral;
+import br.com.locadora.view.componentes.MenuAcoesLateral;
 
-public class TelaPrincipalGUI extends JFrame {
-
+public class TelaPrincipalGUI extends JFrame implements Serializable {
+	private static final long serialVersionUID = 5554966268958184617L;
+	
 	// Panel que compoem à estrutura da tela principal
 	private JPanel panelFooter;
 	private static JPanel panelContainerTela;
@@ -33,9 +34,12 @@ public class TelaPrincipalGUI extends JFrame {
 	private JMenuItem miCadastroFuncionario;
 	private JMenuItem miCadastroCliente;
 	private JMenuItem miCadastroVeiculo;
+	
+	// Componentes
+	private MenuAcoesLateral menuAcoesLateral;
 
 	public TelaPrincipalGUI() {
-		super(LocaleUtils.getLocaleView().getString("titulo_sys"));
+		super(LocaleUtils.getLocaleView().getString("titulo_tela_principal_sistema"));
 		
 		criarTela();
 			
@@ -49,11 +53,8 @@ public class TelaPrincipalGUI extends JFrame {
 	 */
 	private void criarTela() {
 		
-		JButton button = new JButton(LocaleUtils.getLocaleView().getString("titulo_sys"));
-		button.setSize(300, 30);
-		
 		// Borda para os panels
-		Border border = new TitledBorder(new LineBorder(Color.GRAY));
+		Border border = new TitledBorder(new LineBorder(Color.GRAY, 1, true));
 		
 		// Cria o menu do cabecalho
 		JPanel panelMenuCabecalho = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -85,8 +86,7 @@ public class TelaPrincipalGUI extends JFrame {
 		panelMenuCabecalho.add(menuBar);
 		
 		// Menu lateral esquerdo
-		MenuAcoesCrudLateral menuCrudLateral = new MenuAcoesCrudLateral();
-		menuCrudLateral.add(button);
+		menuAcoesLateral = new MenuAcoesLateral(null);
 		
 		// Menu informações do sistema no roda pé
 		panelFooter = new JPanel(new FlowLayout(FlowLayout.LEFT, 30, 10));
@@ -100,8 +100,6 @@ public class TelaPrincipalGUI extends JFrame {
 		
 		// Configurações do container das telas utilizadas no sistema
 		panelContainerTela = new JPanel(null);
-		panelContainerTela.setBorder(border);
-		panelContainerTela.setSize(900, 600);
 		
 		// Define a tela default para ser exibida ao abrir o sistema
 		panelContainerTela.add(new JLabel("Teste"));
@@ -109,27 +107,37 @@ public class TelaPrincipalGUI extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.setSize(1368, 768);
 		this.add(panelMenuCabecalho, BorderLayout.NORTH);
-		this.add(menuCrudLateral, BorderLayout.WEST);
+		this.add(menuAcoesLateral, BorderLayout.WEST);
 		this.add(panelContainerTela, BorderLayout.CENTER);
 		this.add(panelFooter, BorderLayout.SOUTH);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
-		button.addActionListener(new ActionListener() {
+		miCadastroVeiculo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				panelContainerTela.removeAll();
-				panelContainerTela.setSize(900, 600);
-				BlocoPanel blocoPanel = new BlocoPanel();
-				blocoPanel.setVisible(true);
-				panelContainerTela.add(blocoPanel);
-				add(panelContainerTela, BorderLayout.CENTER);
-				panelContainerTela.repaint();
-				
+				VeiculoGUI cadastroVeiculoGUI = new VeiculoGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_veiculo"));
+				mudarTelaContainer(cadastroVeiculoGUI);
 			}
 		});
 		
+	}
+	
+	/**
+	 * Troca a tela do container de telas pela informada por parâmetro
+	 * @param tela Panel da nova tela que será renderizada
+	 * @author Joaquim Neto
+	 */
+	private void mudarTelaContainer(JPanel tela) {
+		panelContainerTela.removeAll();
+		panelContainerTela.add(tela);
+		add(panelContainerTela, BorderLayout.CENTER);
+		panelContainerTela.repaint();
+		
+		// Adiciona a tela ao componente menu lateral
+		menuAcoesLateral.setTelaParaControle(tela);
+		menuAcoesLateral.repaint();
 	}
 
 }

@@ -10,25 +10,29 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 
-public class MenuAcoesCrudLateral extends JPanel implements Serializable{
+public class MenuAcoesLateral extends JPanel implements Serializable{
 	private static final long serialVersionUID = -3381377661549796928L;
-
-	public MenuAcoesCrudLateral() {
+	
+	private JPanel telaParaControle;
+	
+	public MenuAcoesLateral() {
 		inicializar();
 	}
 	
-	public MenuAcoesCrudLateral(Object tela) {
-		
+	public MenuAcoesLateral(JPanel tela) {
+		telaParaControle = tela;
+		inicializar();
 	}
 	
 	public void inicializar() {
-		this.setLayout(new GridLayout(12, 1, 10, 5));
-		this.setSize(100, 300);
+		this.setLayout(new GridLayout(12, 1, 20, 5));
+		this.setSize(150, 400);
 		
 		// Borda para o menu lateral
-		Border border = new TitledBorder(new LineBorder(Color.GRAY), "Menu Ações");
+		Border border = new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_menu_lateral"));
 		
 		this.add(new JButton(LocaleUtils.getLocaleView().getString("btn_alterar_crud")));
 		this.add(new JButton(LocaleUtils.getLocaleView().getString("btn_cadastrar_crud")));
@@ -36,6 +40,24 @@ public class MenuAcoesCrudLateral extends JPanel implements Serializable{
 		this.add(new JButton(LocaleUtils.getLocaleView().getString("btn_excluir_crud")));
 		
 		this.setBorder(border);
-		this.setVisible(true);
+		
+		if (SystemUtils.isTodosNulosOuVazios(telaParaControle)) {
+			this.setVisible(false);
+		} else {
+			this.setVisible(true);
+		}
+		
+	}
+	
+	public void setTelaParaControle(JPanel tela) {
+		telaParaControle = tela;
+		
+		if (SystemUtils.isTodosNulosOuVazios(telaParaControle)) {
+			this.setVisible(false);
+		} else {
+			this.setVisible(true);
+		}
+		
+		this.repaint();
 	}
 }
