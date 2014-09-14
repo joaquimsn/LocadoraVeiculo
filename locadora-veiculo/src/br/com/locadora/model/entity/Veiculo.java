@@ -1,5 +1,6 @@
 package br.com.locadora.model.entity;
 public class Veiculo {
+	private int id;
 	private String modelo;
 	private String fabricante;
 	private String imagem;
@@ -17,28 +18,18 @@ public class Veiculo {
 	private Devolucao devolucao;
 	private Locacao locacao;
 	
-	public Veiculo(String modelo, String fabricante, String imagem, int ano, 
-					int grupo, String acessorio, int chassi, String placa, 
-					String cidade, String uf, double kmRodado, double precoKmLivre, 
-					double precoKmControlado, int status, Devolucao devolucao, Locacao locacao){
-		setModelo(modelo);
-		setFabricante(fabricante);
-		setImagem(imagem);
-		setAno(ano);
-		setGrupo(grupo);
-		setAcessorio(acessorio);
-		setChassi(chassi);
-		setPlaca(placa);
-		setCidade(cidade);
-		setUf(uf);
-		setKmRodado(kmRodado);
-		setPrecoKmLivre(precoKmLivre);
-		setPrecoKmControlado(precoKmControlado);
-		setStatus(status);
-		setDevolucao(devolucao);
-		setLocacao(locacao);
+	public Veiculo(){
+		
 	}
 
+	public int getId(){
+		return id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
+	}
+	
 	public String getModelo() {
 		return modelo;
 	}

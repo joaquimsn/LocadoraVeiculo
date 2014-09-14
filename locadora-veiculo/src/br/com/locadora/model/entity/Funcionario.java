@@ -20,28 +20,25 @@ public class Funcionario {
 	private int codigoAgencia;
 	private Funcionario funcionario;
 	private Usuario usuario;
-	public Funcionario(String nome, Date dataNascimento, String cpf, String rg, char genero, 
-						String logradouro, int numero, String bairro, String cep, String cidade, 
-						String uf, String telefone, String email, int nivel, int funcionarioSupervisor,
-						int codigoAgencia, Funcionario funcionario, Usuario usuario){
-		setNome(nome);
-		setDataNascimento(dataNascimento);
-		setCpf(cpf);
-		setRg(rg);
-		setGenero(genero);
-		setLogradouro(logradouro);
-		setNumero(numero);
-		setBairro(bairro);
-		setCep(cep);
-		setCidade(cidade);
-		setUf(uf);
-		setTelefone(telefone);
-		setEmail(email);
-		setNivel(nivel);
-		setFuncionarioSupervisor(funcionarioSupervisor);
-		setCodigoAgencia(codigoAgencia);
-		setFuncionario(funcionario);
-		setUsuario(usuario);
+	public Funcionario(){
+		setNome("");
+		setDataNascimento(null);
+		setCpf("");
+		setRg("");
+		setGenero(' ');
+		setLogradouro("");
+		setNumero(0);
+		setBairro("");
+		setCep("");
+		setCidade("");
+		setUf("");
+		setTelefone("");
+		setEmail("");
+		setNivel(0);
+		setFuncionarioSupervisor(0);
+		setCodigoAgencia(0);
+		setFuncionario(null);
+		setUsuario(null);
 	}
 	public String getNome() {
 		return nome;

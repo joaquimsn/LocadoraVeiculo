@@ -3,6 +3,11 @@ public class Pagamento {
 	private double valor;
 	private String cpf;
 	private String titular;
+	public Pagamento(){
+		setValor(0);
+		setCpf("");
+		setTitular("");
+	}
 	public Pagamento(double valor, String cpf, String titular){
 		setValor(valor);
 		setCpf(cpf);
