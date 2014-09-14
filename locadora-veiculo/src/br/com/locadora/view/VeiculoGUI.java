@@ -210,10 +210,10 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		add(txtTarifaKmControlado);
 		
 		BotoesCrudComponente botoesCrudComponente = new BotoesCrudComponente();
-		botoesCrudComponente.setBounds(633, 478, 200, 50);
+		botoesCrudComponente.setBounds(610, 421, 198, 45);
 		add(botoesCrudComponente);
 		
-		this.setBounds(15, 10, 850, 550);
+		this.setBounds(15, 10, 850, 500);
 		this.setVisible(true);
 	}
 }

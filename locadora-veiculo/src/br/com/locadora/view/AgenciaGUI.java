@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.FormularioEnderecoComponente;
 
@@ -24,7 +25,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 	private JLabel lblInscEstadual;
 	private JTextField txtIncEstadual;
 	private JLabel lblResponsavel;
-	private JTextField textField;
+	private JTextField txtResponsavel;
 	
 	private String tituloTela;
 	
@@ -39,16 +40,17 @@ public class AgenciaGUI extends JPanel implements Serializable{
 	 */
 	public AgenciaGUI(String tituloTela) {
 		this.tituloTela = tituloTela;
+		inicializar();
 	}
 	
 	/**Inicializa todos os componetes da tela veículo
 	 * @author Joaquim Neto
 	 */
 	private void inicializar() {
-		setBorder(new TitledBorder(new LineBorder(new Color(128, 128, 128), 1, true), tituloTela, TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), tituloTela, TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setLayout(null);
 		
-		lblRazoSocial = new JLabel("Razão Social");
+		lblRazoSocial = new JLabel(LocaleUtils.getLocaleView().getString("lbl_razao_social"));
 		lblRazoSocial.setBounds(35, 40, 125, 20);
 		add(lblRazoSocial);
 		
@@ -57,7 +59,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		add(txtRazaoSocial);
 		txtRazaoSocial.setColumns(10);
 		
-		lblFantasia = new JLabel("Fantasia");
+		lblFantasia = new JLabel(LocaleUtils.getLocaleView().getString("lbl_nome_fantasia"));
 		lblFantasia.setBounds(35, 90, 125, 20);
 		add(lblFantasia);
 		
@@ -66,7 +68,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		txtFantasia.setBounds(30, 110, 370, 30);
 		add(txtFantasia);
 		
-		lblCnpj = new JLabel("CNPJ");
+		lblCnpj = new JLabel(LocaleUtils.getLocaleView().getString("lbl_cnpj"));
 		lblCnpj.setBounds(410, 90, 125, 20);
 		add(lblCnpj);
 		
@@ -75,7 +77,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		txtCnpj.setBounds(405, 110, 220, 30);
 		add(txtCnpj);
 		
-		lblInscEstadual = new JLabel("Insc. Estadual");
+		lblInscEstadual = new JLabel(LocaleUtils.getLocaleView().getString("lbl_insc_estadual"));
 		lblInscEstadual.setBounds(638, 90, 125, 20);
 		add(lblInscEstadual);
 		
@@ -84,14 +86,14 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		txtIncEstadual.setBounds(630, 110, 200, 30);
 		add(txtIncEstadual);
 		
-		lblResponsavel = new JLabel("Responsavel");
+		lblResponsavel = new JLabel(LocaleUtils.getLocaleView().getString("lbl_responsavel"));
 		lblResponsavel.setBounds(35, 145, 125, 20);
 		add(lblResponsavel);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(30, 165, 600, 30);
-		add(textField);
+		txtResponsavel = new JTextField();
+		txtResponsavel.setColumns(10);
+		txtResponsavel.setBounds(30, 165, 600, 30);
+		add(txtResponsavel);
 		
 		// Componete formulário para endereço
 		FormularioEnderecoComponente formularioEndereco = new FormularioEnderecoComponente();
@@ -100,7 +102,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		
 		// Componente botões
 		BotoesCrudComponente botoesCrudComponente = new BotoesCrudComponente();
-		botoesCrudComponente.setBounds(648, 408, 176, 46);
+		botoesCrudComponente.setBounds(623, 408, 200, 45);
 		add(botoesCrudComponente);
 		
 		this.setBounds(15, 10, 859, 500);

@@ -30,16 +30,17 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 	private static JPanel panelContainerTela;
 	
 	// Menus itens
-	private JMenuItem miGerenciaAgencia;
-	private JMenuItem miGerenciaFuncionario;
-	private JMenuItem miGerenciaCliente;
-	private JMenuItem miGerenciaVeiculo;
+	private JMenuItem mItemGerenciaAgencia;
+	private JMenuItem mItemGerenciaFuncionario;
+	private JMenuItem mItemGerenciaCliente;
+	private JMenuItem mItemGerenciaVeiculo;
+	private JMenuItem mItemLogoff;
 	
 	// Componentes
 	private MenuAcoesLateral menuAcoesLateral;
 
 	public TelaPrincipalGUI() {
-		super(LocaleUtils.getLocaleView().getString("titulo_tela_principal_sistema"));
+		super(LocaleUtils.getLocaleView().getString("titulo_cadastro_principal_sistema"));
 		
 		criarTela();
 			
@@ -69,20 +70,23 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 		JMenu menuConfiguracao = new JMenu(LocaleUtils.getLocaleView().getString("menu_configuracao"));
 		menuConfiguracao.setFont(new Font("Sans Serif", Font.BOLD, 14));
 		
-		miGerenciaAgencia = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_agencia"));
-		menuGerencia.add(miGerenciaAgencia);
-		miGerenciaCliente = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_cliente"));
-		menuGerencia.add(miGerenciaCliente);
-		miGerenciaFuncionario = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_funcionario"));
-		menuGerencia.add(miGerenciaFuncionario);
-		miGerenciaVeiculo = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_veiculo"));
-		menuGerencia.add(miGerenciaVeiculo);
+		mItemGerenciaAgencia = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_agencia"));
+		menuGerencia.add(mItemGerenciaAgencia);
+		mItemGerenciaCliente = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_cliente"));
+		menuGerencia.add(mItemGerenciaCliente);
+		mItemGerenciaFuncionario = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_funcionario"));
+		menuGerencia.add(mItemGerenciaFuncionario);
+		mItemGerenciaVeiculo = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_veiculo"));
+		menuGerencia.add(mItemGerenciaVeiculo);
+		
+		mItemLogoff = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_logoff"));
 		
 		// Estrutura do menu
 		menuBar.add(menuGerencia);
 		menuBar.add(menuLocacao);
 		menuBar.add(menuRelatorio);
 		menuBar.add(menuConfiguracao);
+		menuBar.add(mItemLogoff);
 		panelMenuCabecalho.add(menuBar);
 		
 		// Menu lateral esquerdo
@@ -114,7 +118,7 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		
-		miGerenciaVeiculo.addActionListener(new ActionListener() {
+		mItemGerenciaVeiculo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				VeiculoGUI veiculoGUI = new VeiculoGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_veiculo"));
@@ -122,11 +126,36 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 			}
 		});
 		
-		miGerenciaAgencia.addActionListener(new ActionListener() {
+		mItemGerenciaAgencia.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AgenciaGUI agenciaGUI = new AgenciaGUI();
+				AgenciaGUI agenciaGUI = new AgenciaGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_agencia"));
 				mudarTelaContainer(agenciaGUI);
+			}
+		});
+		
+		mItemGerenciaFuncionario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FuncionarioGUI funcionarioGUI = new FuncionarioGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_funcionario"));
+				mudarTelaContainer(funcionarioGUI);
+			}
+		});
+		
+		mItemGerenciaCliente.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ClienteGUI clienteGUI = new ClienteGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_cliente"));
+				mudarTelaContainer(clienteGUI);
+			}
+		});
+		
+		// Pega a instacia atual do frame principal do sistema para fazer o logoff
+		final JFrame frm = this;
+		mItemLogoff.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new LoginGUI(frm);
 			}
 		});
 		

@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public class FormularioEnderecoComponente extends JPanel implements Serializable {
 	private static final long serialVersionUID = 2863741403200090086L;
 
@@ -58,7 +60,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		setLayout(null);
 		setSize(800, 170);
 
-		lblLogradouro = new JLabel("Logradouro");
+		lblLogradouro = new JLabel(LocaleUtils.getLocaleView().getString("lbl_logradouro"));
 		lblLogradouro.setBounds(5, 5, 150, 20);
 		add(lblLogradouro);
 		
@@ -67,7 +69,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		txtLogradouro.setColumns(10);
 		add(txtLogradouro);
 		
-		lblNumero = new JLabel("Numero");
+		lblNumero = new JLabel(LocaleUtils.getLocaleView().getString("lbl_numero"));
 		lblNumero.setBounds(460, 5, 88, 20);
 		add(lblNumero);
 		
@@ -76,7 +78,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		textNumero.setColumns(10);
 		add(textNumero);
 		
-		lblBairro = new JLabel("Bairro");
+		lblBairro = new JLabel(LocaleUtils.getLocaleView().getString("lbl_bairro"));
 		lblBairro.setBounds(590, 5, 125, 20);
 		add(lblBairro);
 		
@@ -85,7 +87,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		txtBairro.setColumns(10);
 		add(txtBairro);
 		
-		lblCep = new JLabel("CEP");
+		lblCep = new JLabel(LocaleUtils.getLocaleView().getString("lbl_cep"));
 		lblCep.setBounds(5, 60, 141, 20);
 		add(lblCep);
 		
@@ -94,7 +96,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		txtCep.setColumns(10);
 		add(txtCep);
 		
-		lblUf = new JLabel("UF");
+		lblUf = new JLabel(LocaleUtils.getLocaleView().getString("lbl_uf"));
 		lblUf.setBounds(210, 60, 50, 20);
 		add(lblUf);
 
@@ -102,7 +104,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		cbxUf.setBounds(205, 80, 80, 30);
 		add(cbxUf);
 
-		lblCidade = new JLabel("Cidade");
+		lblCidade = new JLabel(LocaleUtils.getLocaleView().getString("lbl_cidade"));
 		lblCidade.setBounds(295, 60, 150, 20);
 		add(lblCidade);
 
@@ -110,7 +112,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		cbxCidade.setBounds(290, 80, 250, 30);
 		add(cbxCidade);
 
-		lblTelefone = new JLabel("Telefone");
+		lblTelefone = new JLabel(LocaleUtils.getLocaleView().getString("lbl_telefone"));
 		lblTelefone.setBounds(545, 60, 150, 20);
 		add(lblTelefone);
 		
@@ -119,7 +121,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		txtTelefone.setColumns(10);
 		add(txtTelefone);
 		
-		lblEmail = new JLabel("E-mail");
+		lblEmail = new JLabel(LocaleUtils.getLocaleView().getString("lbl_email"));
 		lblEmail.setBounds(5, 115, 125, 20);
 		add(lblEmail);
 
@@ -128,7 +130,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		txtEmail.setColumns(10);
 		add(txtEmail);
 
-		lblSite = new JLabel("Site");
+		lblSite = new JLabel(LocaleUtils.getLocaleView().getString("lbl_site"));
 		lblSite.setBounds(310, 115, 125, 20);
 		add(lblSite);
 
