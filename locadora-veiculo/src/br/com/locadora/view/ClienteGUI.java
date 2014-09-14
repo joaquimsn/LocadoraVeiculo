@@ -124,6 +124,7 @@ public class ClienteGUI extends JPanel {
 		
 		dataVencimentoCnh = new JDateChooser();
 		dataVencimentoCnh.setLocale(LocaleUtils.getLocaleView().getLocale());
+		dataVencimentoCnh.setMinSelectableDate(new Date());
 		dataVencimentoCnh.setBounds(635, 110, 200, 30);
 		add(dataVencimentoCnh);
 		

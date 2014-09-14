@@ -22,7 +22,7 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 	
 	private JPanel telaParaControle;
 	
-	private JButton btnHome;
+	private JButton btnInicio;
 	private JButton btnLocacao;
 	private JButton btnDevolucao;
 	private JButton btnCadastrar;
@@ -62,21 +62,21 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 	private void criarBotoesLocacaoDevolucao() {
 		btnLocacao = new JButton(LocaleUtils.getLocaleView().getString("menu_locacao"));
 		btnLocacao.addActionListener(this);
-		btnDevolucao = new JButton("Devolução");
+		btnDevolucao = new JButton(LocaleUtils.getLocaleView().getString("btn_devolucao"));
 		panelContainer.add(btnLocacao);
 		panelContainer.add(btnDevolucao);
 		
 	}
 
 	private void criarBotoesCrud() {
-		btnHome = new JButton("Inicio");
-		btnHome.addActionListener(this);
-		btnHome.setActionCommand("btnHome");
-		panelContainer.add(btnHome);
-		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_alterar_crud")));
-		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_cadastrar_crud")));
-		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_pesquisar_crud")));
-		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_excluir_crud")));
+		btnInicio = new JButton(LocaleUtils.getLocaleView().getString("btn_inicio"));
+		btnInicio.addActionListener(this);
+		btnInicio.setActionCommand("btnInicio");
+		panelContainer.add(btnInicio);
+		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_alterar")));
+		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_cadastrar")));
+		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_pesquisar")));
+		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_excluir")));
 	}
 	
 	public void setTelaParaControle(JPanel tela) {
@@ -97,7 +97,7 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnLocacao) {
 			new LocacaoGUI();
-		} else if (e.getSource() == btnHome) {
+		} else if (e.getSource() == btnInicio) {
 			setTelaParaControle(null);
 			panelContainer.repaint();
 			this.add(panelContainer);
