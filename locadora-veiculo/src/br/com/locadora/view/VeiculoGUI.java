@@ -1,9 +1,13 @@
 package br.com.locadora.view;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -13,8 +17,9 @@ import javax.swing.border.TitledBorder;
 
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
+import br.com.locadora.view.componentes.ImageFilter;
 
-public class VeiculoGUI extends JPanel implements Serializable {
+public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 	private static final long serialVersionUID = -1390603165047810065L;
 	
 	// Labels
@@ -50,6 +55,9 @@ public class VeiculoGUI extends JPanel implements Serializable {
 	private JTextField txtDiretorioImagem;
 	private JTextField txtTarifaKmControlado;
 	
+	private JFileChooser escolhaImagemVeiculo;
+	private JButton btnEscolhaImagem;
+	
 	private String tituloPanel;
 
 	public VeiculoGUI() {
@@ -73,6 +81,9 @@ public class VeiculoGUI extends JPanel implements Serializable {
 	 */
 	private void inicializar() {
 		
+		// Configura o FileChooser para escolha da imagem do veiculo
+		fileChooserConfig();
+		
 		setLayout(null);
 		setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), tituloPanel, TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		
@@ -81,10 +92,9 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		lblModelo.setBounds(346, 37, 125, 20);
 		add(lblModelo);
 		
-		txtModelo = new JTextField();
+		txtModelo = new JTextField(10);
 		txtModelo.setBounds(346, 59, 306, 30);
 		add(txtModelo);
-		txtModelo.setColumns(10);
 		
 		panelImagemVeiculo = new JPanel();
 		panelImagemVeiculo.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -95,10 +105,9 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		lblFabricante.setBounds(674, 39, 125, 20);
 		add(lblFabricante);
 		
-		txtFabricante = new JTextField();
+		txtFabricante = new JTextField(10);
 		txtFabricante.setBounds(664, 59, 179, 30);
 		add(txtFabricante);
-		txtFabricante.setColumns(10);
 		
 		lblGrupo = new JLabel(LocaleUtils.getLocaleView().getString("lbl_grupo"));
 		lblGrupo.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -114,18 +123,16 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		lblAcessrios.setBounds(515, 88, 125, 20);
 		add(lblAcessrios);
 		
-		txtAcessorios = new JTextField();
+		txtAcessorios = new JTextField(10);
 		txtAcessorios.setBounds(512, 111, 140, 30);
 		add(txtAcessorios);
-		txtAcessorios.setColumns(10);
 		
 		lblDataFab = new JLabel(LocaleUtils.getLocaleView().getString("lbl_data_fab"));
 		lblDataFab.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblDataFab.setBounds(664, 88, 125, 20);
 		add(lblDataFab);
 		
-		txtDataFab = new JTextField();
-		txtDataFab.setColumns(10);
+		txtDataFab = new JTextField(10);
 		txtDataFab.setBounds(664, 109, 179, 30);
 		add(txtDataFab);
 		
@@ -134,20 +141,23 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		lblImagemVeiculo.setBounds(346, 151, 204, 20);
 		add(lblImagemVeiculo);
 		
-		txtDiretorioImagem = new JTextField();
+		txtDiretorioImagem = new JTextField(10);
 		txtDiretorioImagem.setEditable(false);
-		txtDiretorioImagem.setColumns(10);
-		txtDiretorioImagem.setBounds(346, 175, 342, 30);
+		txtDiretorioImagem.setBounds(346, 175, 340, 30);
 		add(txtDiretorioImagem);
+		
+		btnEscolhaImagem = new JButton(LocaleUtils.getLocaleView().getString("btn_escolha_imagem"));
+		btnEscolhaImagem .setBounds(693, 174, 150, 30);
+		btnEscolhaImagem.addActionListener(this);
+		add(btnEscolhaImagem);
 		
 		lblChassi = new JLabel(LocaleUtils.getLocaleView().getString("lbl_chassi"));
 		lblChassi.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblChassi.setBounds(27, 267, 125, 20);
 		add(lblChassi);
 		
-		txtChassi = new JTextField();
+		txtChassi = new JTextField(10);
 		txtChassi.setEditable(false);
-		txtChassi.setColumns(10);
 		txtChassi.setBounds(27, 288, 306, 30);
 		add(txtChassi);
 		
@@ -156,8 +166,7 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		lblPlca.setBounds(352, 267, 125, 20);
 		add(lblPlca);
 		
-		txtPlaca = new JTextField();
-		txtPlaca.setColumns(10);
+		txtPlaca = new JTextField(10);
 		txtPlaca.setBounds(346, 288, 140, 30);
 		add(txtPlaca);
 		
@@ -184,8 +193,7 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		lblKmRodado.setBounds(27, 319, 125, 20);
 		add(lblKmRodado);
 		
-		txtKmRodado = new JTextField();
-		txtKmRodado.setColumns(10);
+		txtKmRodado = new JTextField(10);
 		txtKmRodado.setBounds(27, 342, 140, 30);
 		add(txtKmRodado);
 		
@@ -194,8 +202,7 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		lblTarefaKmLivre.setBounds(182, 319, 145, 20);
 		add(lblTarefaKmLivre);
 		
-		txtTarifaKmLivre = new JTextField();
-		txtTarifaKmLivre.setColumns(10);
+		txtTarifaKmLivre = new JTextField(10);
 		txtTarifaKmLivre.setBounds(179, 342, 140, 30);
 		add(txtTarifaKmLivre);
 		
@@ -204,8 +211,7 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		lblTarefaKmControlado.setBounds(335, 319, 165, 20);
 		add(lblTarefaKmControlado);
 		
-		txtTarifaKmControlado = new JTextField();
-		txtTarifaKmControlado.setColumns(10);
+		txtTarifaKmControlado = new JTextField(10);
 		txtTarifaKmControlado.setBounds(331, 343, 146, 30);
 		add(txtTarifaKmControlado);
 		
@@ -215,5 +221,31 @@ public class VeiculoGUI extends JPanel implements Serializable {
 		
 		this.setBounds(15, 10, 850, 500);
 		this.setVisible(true);
+	}
+	
+	private void fileChooserConfig(){
+		escolhaImagemVeiculo = new JFileChooser();
+		escolhaImagemVeiculo.setLocale(LocaleUtils.getLocaleView().getLocale());
+		escolhaImagemVeiculo.setDialogTitle(LocaleUtils.getLocaleView().getString("titulo_escolha_uma_imagem"));
+		escolhaImagemVeiculo.setFileFilter(new ImageFilter());
+		escolhaImagemVeiculo.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		escolhaImagemVeiculo.setApproveButtonText(LocaleUtils.getLocaleView().getString("btn_adicionar"));
+		escolhaImagemVeiculo.addActionListener(this);
+		escolhaImagemVeiculo.setSize(300, 300);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEscolhaImagem) {
+			// pega o valor do retorna da escolha do usuário
+			int valorRetornado =  escolhaImagemVeiculo.showOpenDialog(txtDiretorioImagem);
+			
+			// Verifica se o usuário selecionou uma imagem com sucesso
+			if (valorRetornado == JFileChooser.APPROVE_OPTION) {
+				txtDiretorioImagem.setText(escolhaImagemVeiculo.getSelectedFile().getName());
+			}
+		}
+		
 	}
 }

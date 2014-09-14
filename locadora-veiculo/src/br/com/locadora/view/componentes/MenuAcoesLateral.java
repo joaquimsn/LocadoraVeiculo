@@ -28,8 +28,8 @@ public class MenuAcoesLateral extends JPanel implements Serializable{
 	}
 	
 	public void inicializar() {
-		this.setLayout(new GridLayout(12, 1, 20, 5));
-		this.setSize(150, 400);
+		this.setLayout(new GridLayout(14, 1, 20, 5));
+		this.setSize(200, 650);
 		
 		// Borda para o menu lateral
 		Border border = new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_menu_lateral"));

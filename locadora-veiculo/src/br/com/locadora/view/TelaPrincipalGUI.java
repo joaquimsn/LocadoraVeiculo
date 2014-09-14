@@ -96,17 +96,17 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 		panelFooter = new JPanel(new FlowLayout(FlowLayout.LEFT, 30, 10));
 		panelFooter.setBorder(border);
 		
-		panelFooter.add(new JLabel("BJ 	Locadora de veiculos LTDA", JLabel.LEFT));
-		panelFooter.add(new JLabel("Agência: 08873 ", JLabel.LEFT));
-		panelFooter.add(new JLabel("Cidade: São Paulo - SP ", JLabel.LEFT));
-		panelFooter.add(new JLabel("Usuário: Joaquim Neto ", JLabel.LEFT));
-		panelFooter.add(new JLabel("Acesso: 90 ", JLabel.RIGHT));
+		panelFooter.add(new JLabel("<html><b>Empresa:</b><html> BJ Locadora de veiculos LTDA", JLabel.LEFT));
+		panelFooter.add(new JLabel("<html><b>Agência:</b><html> 08873 ", JLabel.LEFT));
+		panelFooter.add(new JLabel("<html><b>Cidade:</b><html> São Paulo - SP ", JLabel.LEFT));
+		panelFooter.add(new JLabel("<html><b>Usuário:</b><html> Joaquim Neto ", JLabel.LEFT));
+		panelFooter.add(new JLabel("<html><b>Acesso:</b><html> 90 ", JLabel.RIGHT));
 		
 		// Configurações do container das telas utilizadas no sistema
 		panelContainerTela = new JPanel(null);
 		
 		// Define a tela default para ser exibida ao abrir o sistema
-		panelContainerTela.add(new JLabel("Teste"));
+//		panelContainerTela.add();
 		
 		this.setLayout(new BorderLayout());
 		this.setSize(1368, 768);
