@@ -13,21 +13,19 @@ public class Cliente {
 	private String telefone;
 	private String email;
 	
-	public Cliente(String cnh, String estadoEmissor, int validadeCnh, int genero, 
-					String logradouro, String bairro, String cep, String cidade, String uf,
-					int numero, String telefone, String email){
-		setCnh(cnh);
-		setEstadoEmissor(estadoEmissor);
-		setValidadeCnh(validadeCnh);
-		setGenero(genero);
-		setLogradouro(logradouro);
-		setBairro(bairro);
-		setCep(cep);
-		setCidade(cidade);
-		setUf(uf);
-		setNumero(numero);
-		setTelefone(telefone);
-		setEmail(email);
+	public Cliente(){
+		setCnh("");
+		setEstadoEmissor("");
+		setValidadeCnh(0);
+		setGenero(0);
+		setLogradouro("");
+		setBairro("");
+		setCep("");
+		setCidade("");
+		setUf("");
+		setNumero(0);
+		setTelefone("");
+		setEmail("");
 	}
 	
 	public String getCnh() {

@@ -3,11 +3,14 @@ package br.com.locadora.model.entity;
 public class Usuario{
 
 	private String usuario;
-
 	private String senha;
-
 	private Funcionario funcionario;
-
+	public Usuario(){
+		setUsuario("");
+		setSenha("");
+		setFuncionario(null);
+	}
+	
 	public Usuario(String usuario, String senha, Funcionario funcionario){
 		setUsuario(usuario);
 		setSenha(senha);

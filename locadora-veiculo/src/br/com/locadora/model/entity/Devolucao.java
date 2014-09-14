@@ -8,14 +8,13 @@ public class Devolucao {
 	private Pagamento pagamento;
 	private Veiculo veiculo;
 	
-	public Devolucao(Date dataDevolucao, int agenciaDevolucao, double acrescimo, double kmDevolucao,
-						Pagamento pagamento, Veiculo veiculo){
-		setDataDevolucao(dataDevolucao);
-		setAgenciaDevolucao(agenciaDevolucao);
-		setAcrescimo(acrescimo);
-		setKmDevolucao(kmDevolucao);
-		setPagamento(pagamento);
-		setVeiculo(veiculo);
+	public Devolucao(){
+		setDataDevolucao(null);
+		setAgenciaDevolucao(0);
+		setAcrescimo(0.0);
+		setKmDevolucao(0.0);
+		setPagamento(null);
+		setVeiculo(null);
 	}
 	
 	public Date getDataDevolucao() {

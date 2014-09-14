@@ -12,18 +12,16 @@ public class Locacao {
 	private Pagamento pagamento;
 	private Devolucao devolucao;
 	private Cliente cliente;
-	public Locacao(int numeroLocacao, Date dataHoraLocacao, Date dataHoraDevolucao, 
-					int agenciaDevolucao, int tipoTarifa, double kmLocacao, 
-					Pagamento pagamento, Devolucao devolucao, Cliente cliente){
-		setNumeroLocacao(numeroLocacao);
-		setDataHoraLocacao(dataHoraLocacao);
-		setDataHoraDevolucao(dataHoraDevolucao);
-		setAgenciaDevolucao(agenciaDevolucao);
-		setTipoTarifa(tipoTarifa);
-		setKmLocacao(kmLocacao);
-		setPagamento(pagamento);
-		setDevolucao(devolucao);
-		setCliente(cliente);
+	public Locacao(){
+		setNumeroLocacao(0);
+		setDataHoraLocacao(null);
+		setDataHoraDevolucao(null);
+		setAgenciaDevolucao(0);
+		setTipoTarifa(0);
+		setKmLocacao(0.0);
+		setPagamento(null);
+		setDevolucao(null);
+		setCliente(null);
 	}
 	public int getNumeroLocacao() {
 		return numeroLocacao;
