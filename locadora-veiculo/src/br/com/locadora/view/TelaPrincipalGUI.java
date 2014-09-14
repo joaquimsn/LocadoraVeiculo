@@ -22,18 +22,20 @@ import javax.swing.border.TitledBorder;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.MenuAcoesLateral;
 
-public class TelaPrincipalGUI extends JFrame implements Serializable {
+public class TelaPrincipalGUI extends JFrame implements Serializable, ActionListener{
 	private static final long serialVersionUID = 5554966268958184617L;
 	
 	// Panel que compoem à estrutura da tela principal
 	private JPanel panelFooter;
 	private static JPanel panelContainerTela;
+	private static JPanel panelMenuLateral;
 	
 	// Menus itens
 	private JMenuItem mItemGerenciaAgencia;
 	private JMenuItem mItemGerenciaFuncionario;
 	private JMenuItem mItemGerenciaCliente;
 	private JMenuItem mItemGerenciaVeiculo;
+	private JMenuItem mItemLocacao;
 	private JMenuItem mItemLogoff;
 	
 	// Componentes
@@ -79,6 +81,10 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 		mItemGerenciaVeiculo = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_veiculo"));
 		menuGerencia.add(mItemGerenciaVeiculo);
 		
+		mItemLocacao = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_locacao"));
+		mItemLocacao.addActionListener(this);
+		menuLocacao.add(mItemLocacao);
+		
 		mItemLogoff = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_logoff"));
 		
 		// Estrutura do menu
@@ -90,7 +96,10 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 		panelMenuCabecalho.add(menuBar);
 		
 		// Menu lateral esquerdo
+		panelMenuLateral = new JPanel(new FlowLayout());
+		panelMenuLateral.setSize(150, 500);
 		menuAcoesLateral = new MenuAcoesLateral(null);
+		panelMenuLateral.add(menuAcoesLateral);
 		
 		// Menu informações do sistema no roda pé
 		panelFooter = new JPanel(new FlowLayout(FlowLayout.LEFT, 30, 10));
@@ -111,7 +120,7 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 		this.setLayout(new BorderLayout());
 		this.setSize(1368, 768);
 		this.add(panelMenuCabecalho, BorderLayout.NORTH);
-		this.add(menuAcoesLateral, BorderLayout.WEST);
+		this.add(panelMenuLateral, BorderLayout.WEST);
 		this.add(panelContainerTela, BorderLayout.CENTER);
 		this.add(panelFooter, BorderLayout.SOUTH);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -150,6 +159,13 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 			}
 		});
 		
+		mItemLocacao.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new LocacaoGUI();
+			}
+		});
+		
 		// Pega a instacia atual do frame principal do sistema para fazer o logoff
 		final JFrame frm = this;
 		mItemLogoff.addActionListener(new ActionListener() {
@@ -173,8 +189,17 @@ public class TelaPrincipalGUI extends JFrame implements Serializable {
 		panelContainerTela.repaint();
 		
 		// Adiciona a tela ao componente menu lateral
-		menuAcoesLateral.setTelaParaControle(tela);
-		menuAcoesLateral.repaint();
+		panelMenuLateral.removeAll();
+		menuAcoesLateral = new MenuAcoesLateral(tela);
+		panelMenuLateral.add(menuAcoesLateral);
+		add(panelMenuLateral, BorderLayout.WEST);
+		panelMenuLateral.repaint();
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
 	}
 
 }

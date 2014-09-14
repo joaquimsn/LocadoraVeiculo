@@ -15,6 +15,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.toedter.calendar.JYearChooser;
+
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.ImageFilter;
@@ -46,7 +48,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 	private JComboBox cbxGrupo;
 	private JTextField txtPlaca;
 	private JTextField txtModelo;
-	private JTextField txtDataFab;
+	private JYearChooser anoFabricacao;
 	private JTextField txtChassi;
 	private JTextField txtKmRodado;
 	private JTextField txtFabricante;
@@ -132,9 +134,9 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		lblDataFab.setBounds(664, 88, 125, 20);
 		add(lblDataFab);
 		
-		txtDataFab = new JTextField(10);
-		txtDataFab.setBounds(664, 109, 179, 30);
-		add(txtDataFab);
+		anoFabricacao = new JYearChooser();
+		anoFabricacao.setBounds(664, 109, 179, 30);
+		add(anoFabricacao);
 		
 		lblImagemVeiculo = new JLabel(LocaleUtils.getLocaleView().getString("lbl_imagem_veiculo"));
 		lblImagemVeiculo.setVerticalAlignment(SwingConstants.BOTTOM);

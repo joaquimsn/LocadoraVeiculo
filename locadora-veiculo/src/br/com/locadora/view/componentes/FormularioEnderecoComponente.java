@@ -64,36 +64,32 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		lblLogradouro.setBounds(5, 5, 150, 20);
 		add(lblLogradouro);
 		
-		txtLogradouro = new JTextField();
+		txtLogradouro = new JTextField(10);
 		txtLogradouro.setBounds(0, 25, 450, 30);
-		txtLogradouro.setColumns(10);
 		add(txtLogradouro);
 		
 		lblNumero = new JLabel(LocaleUtils.getLocaleView().getString("lbl_numero"));
 		lblNumero.setBounds(460, 5, 88, 20);
 		add(lblNumero);
 		
-		textNumero = new JTextField();
+		textNumero = new JTextField(10);
 		textNumero.setBounds(455, 25, 125, 30);
-		textNumero.setColumns(10);
 		add(textNumero);
 		
 		lblBairro = new JLabel(LocaleUtils.getLocaleView().getString("lbl_bairro"));
 		lblBairro.setBounds(590, 5, 125, 20);
 		add(lblBairro);
 		
-		txtBairro = new JTextField();
+		txtBairro = new JTextField(10);
 		txtBairro.setBounds(585, 25, 210, 30);
-		txtBairro.setColumns(10);
 		add(txtBairro);
 		
 		lblCep = new JLabel(LocaleUtils.getLocaleView().getString("lbl_cep"));
 		lblCep.setBounds(5, 60, 141, 20);
 		add(lblCep);
 		
-		txtCep = new JTextField();
+		txtCep = new JTextField(10);
 		txtCep.setBounds(0, 80, 200, 30);
-		txtCep.setColumns(10);
 		add(txtCep);
 		
 		lblUf = new JLabel(LocaleUtils.getLocaleView().getString("lbl_uf"));
@@ -116,27 +112,24 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		lblTelefone.setBounds(545, 60, 150, 20);
 		add(lblTelefone);
 		
-		txtTelefone = new JTextField();
+		txtTelefone = new JTextField(10);
 		txtTelefone.setBounds(545, 80, 250, 30);
-		txtTelefone.setColumns(10);
 		add(txtTelefone);
 		
 		lblEmail = new JLabel(LocaleUtils.getLocaleView().getString("lbl_email"));
 		lblEmail.setBounds(5, 115, 125, 20);
 		add(lblEmail);
 
-		txtEmail = new JTextField();
+		txtEmail = new JTextField(10);
 		txtEmail.setBounds(0, 135, 300, 30);
-		txtEmail.setColumns(10);
 		add(txtEmail);
 
 		lblSite = new JLabel(LocaleUtils.getLocaleView().getString("lbl_site"));
 		lblSite.setBounds(310, 115, 125, 20);
 		add(lblSite);
 
-		txtSite = new JTextField();
+		txtSite = new JTextField(10);
 		txtSite.setBounds(305, 135, 305, 30);
-		txtSite.setColumns(10);
 		add(txtSite);
 		
 		setVisible(true);

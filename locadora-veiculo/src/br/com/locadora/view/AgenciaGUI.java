@@ -54,17 +54,15 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		lblRazoSocial.setBounds(35, 40, 125, 20);
 		add(lblRazoSocial);
 		
-		txtRazaoSocial = new JTextField();
+		txtRazaoSocial = new JTextField(10);
 		txtRazaoSocial.setBounds(30, 60, 800, 30);
 		add(txtRazaoSocial);
-		txtRazaoSocial.setColumns(10);
 		
 		lblFantasia = new JLabel(LocaleUtils.getLocaleView().getString("lbl_nome_fantasia"));
 		lblFantasia.setBounds(35, 90, 125, 20);
 		add(lblFantasia);
 		
-		txtFantasia = new JTextField();
-		txtFantasia.setColumns(10);
+		txtFantasia = new JTextField(10);
 		txtFantasia.setBounds(30, 110, 370, 30);
 		add(txtFantasia);
 		
@@ -72,8 +70,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		lblCnpj.setBounds(410, 90, 125, 20);
 		add(lblCnpj);
 		
-		txtCnpj = new JTextField();
-		txtCnpj.setColumns(10);
+		txtCnpj = new JTextField(10);
 		txtCnpj.setBounds(405, 110, 220, 30);
 		add(txtCnpj);
 		
@@ -81,8 +78,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		lblInscEstadual.setBounds(638, 90, 125, 20);
 		add(lblInscEstadual);
 		
-		txtIncEstadual = new JTextField();
-		txtIncEstadual.setColumns(10);
+		txtIncEstadual = new JTextField(10);
 		txtIncEstadual.setBounds(630, 110, 200, 30);
 		add(txtIncEstadual);
 		
@@ -90,8 +86,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		lblResponsavel.setBounds(35, 145, 125, 20);
 		add(lblResponsavel);
 		
-		txtResponsavel = new JTextField();
-		txtResponsavel.setColumns(10);
+		txtResponsavel = new JTextField(10);
 		txtResponsavel.setBounds(30, 165, 600, 30);
 		add(txtResponsavel);
 		

@@ -1,6 +1,7 @@
 package br.com.locadora.view;
 
 import java.awt.Color;
+import java.util.Date;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -13,6 +14,8 @@ import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.FormularioEnderecoComponente;
 
+import com.toedter.calendar.JDateChooser;
+
 public class ClienteGUI extends JPanel {
 
 	// Labels
@@ -23,17 +26,17 @@ public class ClienteGUI extends JPanel {
 	private JLabel lblRg;
 	private JLabel lblEstadoEmissor;
 	private JLabel lblCnh;
-	private JTextField txtVencimentoCnh;
+	private JLabel lblVencimentoCnh;
 	
 	// Inputs
 	private JTextField txtNome;
 	private JComboBox cbxGenero;
 	private JTextField txtCpf;
 	private JTextField txtRg;
-	private JTextField txtDataNascimento;
+	private JDateChooser dataNascimentoChooser;
 	private JTextField txtEstadoEmissor;
 	private JTextField txtCnh;
-	private JLabel lblVencimentoCnh;
+	private JDateChooser dataVencimentoCnh;
 	
 	private String tituloTela;
 	
@@ -62,10 +65,9 @@ public class ClienteGUI extends JPanel {
 		lblNome.setBounds(35, 40, 125, 20);
 		add(lblNome);
 		
-		txtNome = new JTextField();
+		txtNome = new JTextField(10);
 		txtNome.setBounds(30, 60, 400, 30);
 		add(txtNome);
-		txtNome.setColumns(10);
 		
 		lblGenero = new JLabel(LocaleUtils.getLocaleView().getString("lbl_genero"));
 		lblGenero.setBounds(440, 40, 125, 20);
@@ -79,17 +81,16 @@ public class ClienteGUI extends JPanel {
 		lblDataNascimento.setBounds(635, 40, 125, 20);
 		add(lblDataNascimento);
 		
-		txtDataNascimento = new JTextField();
-		txtDataNascimento.setColumns(10);
-		txtDataNascimento.setBounds(630, 60, 200, 30);
-		add(txtDataNascimento);
+		dataNascimentoChooser = new JDateChooser(new Date());
+		dataNascimentoChooser.setLocale(LocaleUtils.getLocaleView().getLocale());
+		dataNascimentoChooser.setBounds(635, 60, 200, 30);
+		add(dataNascimentoChooser);
 		
 		lblCpf = new JLabel(LocaleUtils.getLocaleView().getString("lbl_cpf"));
 		lblCpf.setBounds(35, 90, 125, 20);
 		add(lblCpf);
 		
-		txtCpf = new JTextField();
-		txtCpf.setColumns(10);
+		txtCpf = new JTextField(10);
 		txtCpf.setBounds(30, 110, 200, 30);
 		add(txtCpf);
 		
@@ -101,13 +102,11 @@ public class ClienteGUI extends JPanel {
 		lblCnh.setBounds(440, 90, 125, 20);
 		add(lblCnh);
 		
-		txtCnh = new JTextField();
-		txtCnh.setColumns(10);
+		txtCnh = new JTextField(10);
 		txtCnh.setBounds(435, 111, 195, 30);
 		add(txtCnh);
 		
-		txtRg = new JTextField();
-		txtRg.setColumns(10);
+		txtRg = new JTextField(10);
 		txtRg.setBounds(235, 110, 195, 30);
 		add(txtRg);
 		
@@ -115,19 +114,18 @@ public class ClienteGUI extends JPanel {
 		lblEstadoEmissor.setBounds(35, 145, 125, 20);
 		add(lblEstadoEmissor);
 		
-		txtEstadoEmissor = new JTextField();
-		txtEstadoEmissor.setColumns(10);
+		txtEstadoEmissor = new JTextField(10);
 		txtEstadoEmissor.setBounds(30, 165, 150, 30);
 		add(txtEstadoEmissor);
 		
 		lblVencimentoCnh = new JLabel(LocaleUtils.getLocaleView().getString("lbl_data_vencimento"));
-		lblVencimentoCnh.setBounds(640, 90, 125, 20);
+		lblVencimentoCnh.setBounds(640, 90, 190, 20);
 		add(lblVencimentoCnh);
 		
-		txtVencimentoCnh = new JTextField();
-		txtVencimentoCnh.setColumns(10);
-		txtVencimentoCnh.setBounds(635, 110, 200, 30);
-		add(txtVencimentoCnh);
+		dataVencimentoCnh = new JDateChooser();
+		dataVencimentoCnh.setLocale(LocaleUtils.getLocaleView().getLocale());
+		dataVencimentoCnh.setBounds(635, 110, 200, 30);
+		add(dataVencimentoCnh);
 		
 		// Componete formulário para endereço
 		FormularioEnderecoComponente formularioEndereco = new FormularioEnderecoComponente();

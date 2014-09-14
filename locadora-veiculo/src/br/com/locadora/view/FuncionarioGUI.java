@@ -10,6 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.toedter.calendar.JDateChooser;
+
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.FormularioEnderecoComponente;
@@ -32,7 +34,7 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 	private JComboBox cbxGenero;
 	private JTextField txtCpf;
 	private JTextField txtRg;
-	private JTextField txtDataNascimento;
+	private JDateChooser dataNascimentoChooser;
 	private JComboBox cbxNivel;
 	private JTextField txtCodigoAgencia;
 	private JComboBox cbxSupervisor;
@@ -64,10 +66,9 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 		lblNome.setBounds(35, 40, 125, 20);
 		add(lblNome);
 		
-		txtNome = new JTextField();
+		txtNome = new JTextField(10);
 		txtNome.setBounds(30, 60, 400, 30);
 		add(txtNome);
-		txtNome.setColumns(10);
 		
 		lblGenero = new JLabel(LocaleUtils.getLocaleView().getString("lbl_genero"));
 		lblGenero.setBounds(440, 40, 125, 20);
@@ -81,17 +82,16 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 		lblDataNascimento.setBounds(635, 40, 125, 20);
 		add(lblDataNascimento);
 		
-		txtDataNascimento = new JTextField();
-		txtDataNascimento.setColumns(10);
-		txtDataNascimento.setBounds(630, 60, 200, 30);
-		add(txtDataNascimento);
+		dataNascimentoChooser = new JDateChooser();
+		dataNascimentoChooser.setLocale(LocaleUtils.getLocaleView().getLocale());
+		dataNascimentoChooser.setBounds(630, 60, 200, 30);
+		add(dataNascimentoChooser);
 		
 		lblCpf = new JLabel(LocaleUtils.getLocaleView().getString("lbl_cpf"));
 		lblCpf.setBounds(35, 90, 125, 20);
 		add(lblCpf);
 		
-		txtCpf = new JTextField();
-		txtCpf.setColumns(10);
+		txtCpf = new JTextField(10);
 		txtCpf.setBounds(30, 110, 200, 30);
 		add(txtCpf);
 		
@@ -107,8 +107,7 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 		cbxNivel.setBounds(435, 110, 395, 30);
 		add(cbxNivel);
 		
-		txtRg = new JTextField();
-		txtRg.setColumns(10);
+		txtRg = new JTextField(10);
 		txtRg.setBounds(235, 110, 195, 30);
 		add(txtRg);
 		
@@ -116,8 +115,7 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 		lblCodigoAgencia.setBounds(35, 145, 125, 20);
 		add(lblCodigoAgencia);
 		
-		txtCodigoAgencia = new JTextField();
-		txtCodigoAgencia.setColumns(10);
+		txtCodigoAgencia = new JTextField(10);
 		txtCodigoAgencia.setBounds(30, 165, 150, 30);
 		add(txtCodigoAgencia);
 		
