@@ -22,5 +22,5 @@ public class MainSistemaLocadora {
 		}
 		
 		TelaPrincipalGUI telaPrincipalGUI = new TelaPrincipalGUI();
-	}
+	}	
 }
