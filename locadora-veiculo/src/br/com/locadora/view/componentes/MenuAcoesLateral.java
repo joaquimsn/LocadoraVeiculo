@@ -15,7 +15,9 @@ import javax.swing.border.TitledBorder;
 
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
+import br.com.locadora.view.ConsultaClienteGUI;
 import br.com.locadora.view.LocacaoGUI;
+import br.com.locadora.view.TelaPrincipalGUI;
 
 public class MenuAcoesLateral extends JPanel implements Serializable, ActionListener{
 	private static final long serialVersionUID = -3381377661549796928L;
@@ -30,14 +32,18 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 	private JButton btnAlterar;
 	private JButton btnExcluir;
 	
+	private static TelaPrincipalGUI telaPrincipalGUI;
+	
 	private static JPanel panelContainer;
 	
 	public MenuAcoesLateral() {
 		inicializar();
 	}
 	
-	public MenuAcoesLateral(JPanel tela) {
+	public MenuAcoesLateral(JPanel tela, TelaPrincipalGUI telaPrincipalGUI) {
 		telaParaControle = tela;
+		this.telaPrincipalGUI = telaPrincipalGUI;
+		
 		inicializar();
 	}
 	
@@ -72,10 +78,13 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 		btnInicio = new JButton(LocaleUtils.getLocaleView().getString("btn_inicio"));
 		btnInicio.addActionListener(this);
 		btnInicio.setActionCommand("btnInicio");
+		
+		btnPesquisar = new JButton(LocaleUtils.getLocaleView().getString("btn_pesquisar"));
+		btnPesquisar.addActionListener(this);
 		panelContainer.add(btnInicio);
 		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_alterar")));
 		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_cadastrar")));
-		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_pesquisar")));
+		panelContainer.add(btnPesquisar);
 		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_excluir")));
 	}
 	
@@ -100,7 +109,11 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 		} else if (e.getSource() == btnInicio) {
 			setTelaParaControle(null);
 			panelContainer.repaint();
+			telaPrincipalGUI.mudarTelaContainer(null);
 			this.add(panelContainer);
+		} else if (e.getSource() == btnPesquisar) {
+			ConsultaClienteGUI consultaClienteGUI = new ConsultaClienteGUI();
+			telaPrincipalGUI.mudarTelaContainer(consultaClienteGUI);
 		}
 		
 	}

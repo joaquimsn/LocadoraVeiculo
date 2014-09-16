@@ -4,7 +4,7 @@ package br.com.locadora.controller;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import br.com.locadora.view.TelaPrincipalGUI;
+import br.com.locadora.view.LoginGUI;
 
 public class MainSistemaLocadora {
 	
@@ -21,6 +21,6 @@ public class MainSistemaLocadora {
 			e.printStackTrace();
 		}
 		
-		TelaPrincipalGUI telaPrincipalGUI = new TelaPrincipalGUI();
+		LoginGUI loginGUI = new LoginGUI();
 	}	
 }

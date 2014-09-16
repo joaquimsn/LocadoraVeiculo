@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -45,9 +44,6 @@ public class TelaPrincipalGUI extends JFrame implements Serializable, ActionList
 		super(LocaleUtils.getLocaleView().getString("titulo_cadastro_principal_sistema"));
 		
 		criarTela();
-			
-		// Abre o Dialog de login para autenticação do usuário e senha
-		JDialog dilogLogin = new LoginGUI(this);
 	}
 
 	/**
@@ -98,7 +94,7 @@ public class TelaPrincipalGUI extends JFrame implements Serializable, ActionList
 		// Menu lateral esquerdo
 		panelMenuLateral = new JPanel(new FlowLayout());
 		panelMenuLateral.setSize(150, 500);
-		menuAcoesLateral = new MenuAcoesLateral(null);
+		menuAcoesLateral = new MenuAcoesLateral(null, this);
 		panelMenuLateral.add(menuAcoesLateral);
 		
 		// Menu informações do sistema no roda pé
@@ -171,7 +167,7 @@ public class TelaPrincipalGUI extends JFrame implements Serializable, ActionList
 		mItemLogoff.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new LoginGUI(frm);
+				new LogoffGUI(frm);
 			}
 		});
 		
@@ -182,7 +178,7 @@ public class TelaPrincipalGUI extends JFrame implements Serializable, ActionList
 	 * @param tela Panel da nova tela que será renderizada
 	 * @author Joaquim Neto
 	 */
-	private void mudarTelaContainer(JPanel tela) {
+	public void mudarTelaContainer(JPanel tela) {
 		panelContainerTela.removeAll();
 		panelContainerTela.add(tela);
 		add(panelContainerTela, BorderLayout.CENTER);
@@ -190,7 +186,7 @@ public class TelaPrincipalGUI extends JFrame implements Serializable, ActionList
 		
 		// Adiciona a tela ao componente menu lateral
 		panelMenuLateral.removeAll();
-		menuAcoesLateral = new MenuAcoesLateral(tela);
+		menuAcoesLateral = new MenuAcoesLateral(tela, this);
 		panelMenuLateral.add(menuAcoesLateral);
 		add(panelMenuLateral, BorderLayout.WEST);
 		panelMenuLateral.repaint();

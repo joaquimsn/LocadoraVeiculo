@@ -21,8 +21,8 @@ import br.com.locadora.controller.Autenticacao;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.CustomComboBox;
 
-public class LoginGUI extends JFrame {
-	private static final long serialVersionUID = -3763913627489904669L;
+public class LogoffGUI extends JDialog {
+	private static final long serialVersionUID = 622477161185997978L;
 	
 	// labels para os inputs
 	private JLabel lblIdioma;
@@ -47,14 +47,22 @@ public class LoginGUI extends JFrame {
 	private JButton btnCancelar;
 	private JButton btnAcessar;
 	
+	// Frame principal que controla todas as telas do sistema
+	private final JFrame framePrincipal;
+
 	/**
 	 * Tela responsável para controlar o acesso ao sistema
 	 * bloqueando as funcionalidades até que o login seja efetuado com sucesso
 	 * @author Joaquim Neto
 	 * @param frame Objeto JFrame
 	 */
-	public LoginGUI() {
+	public LogoffGUI(JFrame frame) {
 		this.setTitle(LocaleUtils.getLocaleView().getString("titulo_tela_login"));
+		
+		// recebe o frame principal do systema
+		framePrincipal = frame;
+		
+		bloquearAcoesSistema();
 		
 		// cria a tela de login
 		inicializar();
@@ -150,10 +158,11 @@ public class LoginGUI extends JFrame {
 		
 		this.setLayout(null);
 		this.add(panelcontainer);
+		this.setModal(false);
 		this.setSize(400, 350);
 		this.setAlwaysOnTop(true);
 		this.setResizable(false);
-		this.setLocationRelativeTo(null);
+		this.setLocationRelativeTo(framePrincipal);
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		this.setVisible(true);
 		
@@ -166,7 +175,7 @@ public class LoginGUI extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				framePrincipal.dispose();
 				System.exit(EXIT_ON_CLOSE);
 			}
 		});
@@ -176,7 +185,7 @@ public class LoginGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (Autenticacao.autenticar(txtUsuario.getText(), passwordField.getText())) {
 					dispose();
-					new TelaPrincipalGUI();
+					liberarAcoesSistema();
 				} else {
 					// Limpa o campo senha
 					passwordField.setText("");
@@ -186,5 +195,23 @@ public class LoginGUI extends JFrame {
 			}
 		});
 		
+	}
+	
+	/**
+	 * Bloquea todas as funcionalidades do sitema até que um 
+	 * usuário faça o login
+	 * @author Joaquim Neto
+	 */
+	public void bloquearAcoesSistema() {
+		framePrincipal.setEnabled(false);
+	}
+	
+	
+	/**
+	 * Libera todos as funcionalidades do sistema
+	 * @author Joaquim Neto
+	 */
+	public void liberarAcoesSistema() {
+		framePrincipal.setEnabled(true);
 	}
 }

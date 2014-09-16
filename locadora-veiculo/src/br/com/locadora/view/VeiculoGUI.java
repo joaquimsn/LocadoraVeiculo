@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -15,11 +16,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import com.toedter.calendar.JYearChooser;
-
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.ImageFilter;
+
+import com.toedter.calendar.JYearChooser;
 
 public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 	private static final long serialVersionUID = -1390603165047810065L;
@@ -38,6 +39,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 	private JLabel lblImagemVeiculo;
 	private JLabel lblTarefaKmLivre;
 	private JLabel lblTarefaKmControlado;
+	private JLabel previewImagemVeiculo;
 	
 	// Panel para exibição da imagem do veículo
 	private JPanel panelImagemVeiculo;
@@ -98,6 +100,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		txtModelo.setBounds(346, 59, 306, 30);
 		add(txtModelo);
 		
+		// Panel para preview da imagem do veiculo
 		panelImagemVeiculo = new JPanel();
 		panelImagemVeiculo.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelImagemVeiculo.setBounds(27, 45, 300, 200);
@@ -246,6 +249,14 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 			// Verifica se o usuário selecionou uma imagem com sucesso
 			if (valorRetornado == JFileChooser.APPROVE_OPTION) {
 				txtDiretorioImagem.setText(escolhaImagemVeiculo.getSelectedFile().getName());
+				
+				panelImagemVeiculo.removeAll();
+				previewImagemVeiculo = new JLabel();
+				ImageIcon imageVeiculo = new ImageIcon(escolhaImagemVeiculo.getSelectedFile().getAbsolutePath());
+				previewImagemVeiculo = new JLabel(imageVeiculo);
+				previewImagemVeiculo.setBounds(5, 5, 290, 190);
+				panelImagemVeiculo.add(previewImagemVeiculo);
+				panelImagemVeiculo.repaint();
 			}
 		}
 		

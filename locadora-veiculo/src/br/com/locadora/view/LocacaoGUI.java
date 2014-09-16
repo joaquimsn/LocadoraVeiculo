@@ -1,22 +1,26 @@
 package br.com.locadora.view;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import br.com.locadora.utils.locale.LocaleUtils;
+import br.com.locadora.view.componentes.CartaoCreditoComponente;
+import br.com.locadora.view.componentes.CartaoDebitoComponente;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -25,7 +29,6 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	// Panels 
 	private JPanel panelLocacao;
 	private JPanel panelDetalheLocao;
-	private JPanel panelPagamento;
 	
 	// Labels
 	private JLabel lblSelecioneVeiculo;
@@ -34,11 +37,9 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	private JLabel lblDataDaDevoluo;
 	private JLabel lblPesquisarVeculo;
 	private JLabel lblPesquisarCliente;
-	private JLabel lblNomeDoTitular;
-	private JLabel lblCpf;
-	private JLabel lblNumeroDoCarto;
-	private JLabel lblCdgioSegurana;
-	private JLabel lblValidade;
+	private JLabel lblAgnciaDeDevoluo;
+	private JLabel lblFormaPagamento;
+	private JLabel lblAgnciaDeRetirada;
 
 	// Inputs
 	private JComboBox cbxSelecaoVeiculo;
@@ -47,20 +48,22 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	private JTextField txtParametroPesquisaCliente;
 	private JDateChooser dataLocacao;
 	private JDateChooser dataDevolucao;
-	private JTextArea textArea;
-	private JTextField txtNomeTitular;
-	private JTextField txtCpfTitular;
-	private JTextField txtNumeroCartao;
-	private JTextField txtCodigoSeguranca;
-	private JDateChooser dataValidadeChooser;
+	
 	
 	// Buttons
 	private JButton btnPesquisarCliente;
 	private JButton btnCadastrar;
 	private JButton btnPesquisarVeiculo;
-	private JButton btnFazerPagamento;
 	private JButton btnConcluir;
 	private JButton btnCancelar;
+	private JRadioButton rdbtnCartoCredito;
+	private JRadioButton rdbtnCartoDebito;
+	private JComboBox cbxAgenciaRetirada;
+	private JComboBox cbxAgenciaDevolucao;
+	
+	// Componentes
+	private CartaoDebitoComponente cartaoDebitoComponente;
+	private CartaoCreditoComponente cartaoCreditoComponente;
 
 	public LocacaoGUI() {
 		inicializar();
@@ -71,6 +74,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	 */
 	private void inicializar() {
 		getContentPane().setLayout(null);
+		Container container = getContentPane();
 		
 		panelLocacao = new JPanel();
 		panelLocacao.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_dado_locacao"), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 128)));
@@ -79,19 +83,19 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		panelLocacao.setLayout(null);
 		
 		lblSelecioneVeiculo = new JLabel(LocaleUtils.getLocaleView().getString("lbl_selecione_veiculo"));
-		lblSelecioneVeiculo.setBounds(10, 75, 150, 20);
+		lblSelecioneVeiculo.setBounds(15, 75, 150, 20);
 		panelLocacao.add(lblSelecioneVeiculo);
 		
 		cbxSelecaoVeiculo = new JComboBox();
-		cbxSelecaoVeiculo.setBounds(5, 95, 465, 30);
+		cbxSelecaoVeiculo.setBounds(10, 95, 455, 30);
 		panelLocacao.add(cbxSelecaoVeiculo);
 		
 		txtParametroPesquisaVeiculo = new JTextField(10);;
-		txtParametroPesquisaVeiculo.setBounds(5, 40, 350, 30);
+		txtParametroPesquisaVeiculo.setBounds(10, 40, 345, 30);
 		panelLocacao.add(txtParametroPesquisaVeiculo);
 		
 		btnPesquisarVeiculo = new JButton(LocaleUtils.getLocaleView().getString("btn_pesquisar"));
-		btnPesquisarVeiculo.setBounds(360, 40, 110, 30);
+		btnPesquisarVeiculo.setBounds(355, 40, 110, 30);
 		panelLocacao.add(btnPesquisarVeiculo);
 		
 		lblSelecioneOCliente = new JLabel(LocaleUtils.getLocaleView().getString("lbl_selecione_cliente"));
@@ -99,46 +103,45 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		panelLocacao.add(lblSelecioneOCliente);
 		
 		cbcSelecaoCliente = new JComboBox();
-		cbcSelecaoCliente.setBounds(5, 195, 465, 30);
+		cbcSelecaoCliente.setBounds(10, 195, 455, 30);
 		panelLocacao.add(cbcSelecaoCliente);
 		
 		txtParametroPesquisaCliente = new JTextField(10);;
-		txtParametroPesquisaCliente.setBounds(5, 145, 245, 30);
+		txtParametroPesquisaCliente.setBounds(10, 145, 240, 30);
 		panelLocacao.add(txtParametroPesquisaCliente);
 		
 		btnPesquisarCliente = new JButton(LocaleUtils.getLocaleView().getString("btn_pesquisar"));
-		btnPesquisarCliente.setBounds(250, 145, 110, 30);
+		btnPesquisarCliente.setBounds(250, 145, 105, 30);
 		panelLocacao.add(btnPesquisarCliente);
 		
-		lblDataLocacao = new JLabel(LocaleUtils.getLocaleView().getString("lbl_data_locacao"));
-		lblDataLocacao.setBounds(10, 230, 150, 20);
-		panelLocacao.add(lblDataLocacao);
-		
-		lblDataDaDevoluo = new JLabel(LocaleUtils.getLocaleView().getString("lbl_data_devolucao"));
-		lblDataDaDevoluo.setBounds(245, 230, 150, 20);
-		panelLocacao.add(lblDataDaDevoluo);
-		
-		dataDevolucao = new JDateChooser();
-		dataDevolucao.setLocale(LocaleUtils.getLocaleView().getLocale());
-		dataDevolucao.setBounds(240, 250, 200, 30);
-		panelLocacao.add(dataDevolucao);
-		
-		dataLocacao = new JDateChooser();
-		dataLocacao.setLocale(LocaleUtils.getLocaleView().getLocale());
-		dataLocacao.setBounds(5, 250, 200, 30);
-		panelLocacao.add(dataLocacao);
-		
 		lblPesquisarVeculo = new JLabel(LocaleUtils.getLocaleView().getString("lbl_pesquisar_veiculo"));
-		lblPesquisarVeculo.setBounds(10, 20, 150, 20);
+		lblPesquisarVeculo.setBounds(15, 20, 150, 20);
 		panelLocacao.add(lblPesquisarVeculo);
 		
 		lblPesquisarCliente = new JLabel(LocaleUtils.getLocaleView().getString("lbl_pesquisar_cliente"));
-		lblPesquisarCliente.setBounds(10, 125, 150, 20);
+		lblPesquisarCliente.setBounds(15, 125, 150, 20);
 		panelLocacao.add(lblPesquisarCliente);
 		
 		btnCadastrar = new JButton(LocaleUtils.getLocaleView().getString("btn_cadastrar"));
-		btnCadastrar.setBounds(360, 145, 110, 30);
+		btnCadastrar.setBounds(355, 145, 110, 30);
 		panelLocacao.add(btnCadastrar);
+		
+		lblFormaPagamento = new JLabel(LocaleUtils.getLocaleView().getString("lbl_forma_pagamento"));
+		lblFormaPagamento.setBounds(15, 235, 220, 20);
+		panelLocacao.add(lblFormaPagamento);
+		
+		// Grupo radio button
+		ButtonGroup grupRadio = new ButtonGroup();
+		
+		rdbtnCartoCredito = new JRadioButton(LocaleUtils.getLocaleView().getString("cartao_credito"));
+		rdbtnCartoCredito.setBounds(15, 265, 150, 20);
+		grupRadio.add(rdbtnCartoCredito);
+		panelLocacao.add(rdbtnCartoCredito);
+		
+		rdbtnCartoDebito = new JRadioButton(LocaleUtils.getLocaleView().getString("cartao_debito"));
+		rdbtnCartoDebito.setBounds(176, 265, 150, 18);
+		grupRadio.add(rdbtnCartoDebito);
+		panelLocacao.add(rdbtnCartoDebito);
 		
 		panelDetalheLocao = new JPanel();
 		panelDetalheLocao.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_detalhe_locacao"), 
@@ -147,82 +150,65 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		getContentPane().add(panelDetalheLocao);
 		panelDetalheLocao.setLayout(null);
 		
-		textArea = new JTextArea("Teste");
-		textArea.setEditable(false);
-		textArea.setBounds(22, 21, 248, 251);
-		panelDetalheLocao.add(textArea);
+		lblDataLocacao = new JLabel(LocaleUtils.getLocaleView().getString("lbl_data_locacao"));
+		lblDataLocacao.setBounds(15, 20, 150, 20);
+		panelDetalheLocao.add(lblDataLocacao);
 		
-		panelPagamento = new JPanel();
-		panelPagamento.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_pagamento"), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 128)));
-		panelPagamento.setBounds(10, 322, 611, 233);
-		getContentPane().add(panelPagamento);
-		panelPagamento.setLayout(null);
+		dataLocacao = new JDateChooser();
+		// Define a data minima para seleção
+		dataLocacao.setMinSelectableDate(new Date());
+		dataLocacao.setBounds(10, 40, 200, 30);
+		panelDetalheLocao.add(dataLocacao);
+		dataLocacao.setLocale(LocaleUtils.getLocaleView().getLocale());
 		
-		lblNomeDoTitular = new JLabel(LocaleUtils.getLocaleView().getString("lbl_nome_titular"));
-		lblNomeDoTitular.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblNomeDoTitular.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNomeDoTitular.setBounds(10, 20, 150, 20);
-		panelPagamento.add(lblNomeDoTitular);
+		lblDataDaDevoluo = new JLabel(LocaleUtils.getLocaleView().getString("lbl_data_devolucao"));
+		lblDataDaDevoluo.setBounds(15, 75, 150, 20);
+		panelDetalheLocao.add(lblDataDaDevoluo);
 		
-		txtNomeTitular = new JTextField(10);;
-		txtNomeTitular.setBounds(165, 20, 440, 30);
-		panelPagamento.add(txtNomeTitular);
+		dataDevolucao = new JDateChooser();
+		// Define a data minima para seleção
+		dataDevolucao.setMinSelectableDate(new Date());
+		dataDevolucao.setBounds(10, 95, 200, 30);
+		panelDetalheLocao.add(dataDevolucao);
+		dataDevolucao.setLocale(LocaleUtils.getLocaleView().getLocale());
 		
-		lblCpf = new JLabel(LocaleUtils.getLocaleView().getString("lbl_cpf"));
-		lblCpf.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCpf.setBounds(10, 60, 150, 20);
-		panelPagamento.add(lblCpf);
+		lblAgnciaDeRetirada = new JLabel(LocaleUtils.getLocaleView().getString("lbl_agencia_retirada"));
+		lblAgnciaDeRetirada.setBounds(15, 130, 150, 20);
+		panelDetalheLocao.add(lblAgnciaDeRetirada);
 		
-		txtCpfTitular = new JTextField(10);;
-		txtCpfTitular.setBounds(165, 55, 200, 30);
-		panelPagamento.add(txtCpfTitular);
+		cbxAgenciaRetirada = new JComboBox();
+		cbxAgenciaRetirada.setBounds(10, 148, 250, 30);
+		panelDetalheLocao.add(cbxAgenciaRetirada);
 		
-		lblNumeroDoCarto = new JLabel(LocaleUtils.getLocaleView().getString("lbl_numero_cartao"));
-		lblNumeroDoCarto.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblNumeroDoCarto.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNumeroDoCarto.setBounds(10, 90, 150, 20);
-		panelPagamento.add(lblNumeroDoCarto);
+		lblAgnciaDeDevoluo = new JLabel(LocaleUtils.getLocaleView().getString("lbl_agencia_devolucao"));
+		lblAgnciaDeDevoluo.setBounds(15, 185, 150, 20);
+		panelDetalheLocao.add(lblAgnciaDeDevoluo);
 		
-		txtNumeroCartao = new JTextField(10);;
-		txtNumeroCartao.setBounds(165, 90, 346, 30);
-		panelPagamento.add(txtNumeroCartao);
-		
-		lblCdgioSegurana = new JLabel(LocaleUtils.getLocaleView().getString("lbl_codigo_seguranca"));
-		lblCdgioSegurana.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblCdgioSegurana.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCdgioSegurana.setBounds(10, 130, 150, 20);
-		panelPagamento.add(lblCdgioSegurana);
-		
-		txtCodigoSeguranca = new JTextField(10);;
-		txtCodigoSeguranca.setBounds(165, 125, 90, 30);
-		panelPagamento.add(txtCodigoSeguranca);
-		
-		lblValidade = new JLabel(LocaleUtils.getLocaleView().getString("lbl_validade"));
-		lblValidade.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblValidade.setBounds(267, 130, 73, 20);
-		panelPagamento.add(lblValidade);
-		
-		dataValidadeChooser = new JDateChooser();
-		dataValidadeChooser.setBounds(352, 125, 159, 30);
-		panelPagamento.add(dataValidadeChooser);
-		
-		btnFazerPagamento = new JButton(LocaleUtils.getLocaleView().getString("btn_processar_pagamento"));
-		btnFazerPagamento.setBounds(350, 165, 230, 30);
-		panelPagamento.add(btnFazerPagamento);
+		cbxAgenciaDevolucao = new JComboBox();
+		cbxAgenciaDevolucao.setBounds(10, 205, 250, 30);
+		panelDetalheLocao.add(cbxAgenciaDevolucao);
 		
 		btnConcluir = new JButton(LocaleUtils.getLocaleView().getString("btn_concluir"));
 		btnConcluir.setBounds(660, 474, 100, 65);
 		getContentPane().add(btnConcluir);
 		
-		setSize(800, 600);
+		btnCancelar = new JButton(LocaleUtils.getLocaleView().getString("btn_cancelar"));
+		btnCancelar.setBounds(660, 398, 100, 65);
+		getContentPane().add(btnCancelar);
+		
+//		cartaoDebitoComponente = new CartaoDebitoComponente();
+//		cartaoDebitoComponente.setBounds(10, 322, 620, 250);
+//		getContentPane().add(cartaoDebitoComponente);
+		
+		cartaoCreditoComponente = new CartaoCreditoComponente();
+		cartaoCreditoComponente.setBounds(10, 322, 620, 250);
+		getContentPane().add(cartaoCreditoComponente);
+		
+		setBounds(10, 0, 790, 600);
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
-		
-		btnCancelar = new JButton(LocaleUtils.getLocaleView().getString("btn_cancelar"));
-		btnCancelar.setBounds(660, 398, 100, 65);
-		getContentPane().add(btnCancelar);
 	}
 
 	@Override
