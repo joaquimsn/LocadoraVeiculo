@@ -17,7 +17,8 @@ import br.com.locadora.view.componentes.FormularioEnderecoComponente;
 import com.toedter.calendar.JDateChooser;
 
 public class ClienteGUI extends JPanel {
-
+	private static final long serialVersionUID = 9025986133093083364L;
+	
 	// Labels
 	private JLabel lblNome;
 	private JLabel lblGenero;

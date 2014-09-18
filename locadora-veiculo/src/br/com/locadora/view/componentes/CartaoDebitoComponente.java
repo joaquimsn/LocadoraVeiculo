@@ -6,7 +6,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -14,9 +13,8 @@ import javax.swing.border.TitledBorder;
 
 import br.com.locadora.utils.locale.LocaleUtils;
 
-import com.toedter.calendar.JDateChooser;
-
 public class CartaoDebitoComponente extends JPanel {
+	private static final long serialVersionUID = 4870107417592877514L;
 	
 	// Labels
 	private JLabel lblNomeDoTitular;
@@ -52,8 +50,10 @@ public class CartaoDebitoComponente extends JPanel {
 	private void inicializar() {
 		setLayout(null);
 		
+		TitledBorder titledBorder = new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_pagamento_debito"), 
+					TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 128));
 		panelPagamento = new JPanel();
-		panelPagamento.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_pagamento"), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 128)));
+		panelPagamento.setBorder(titledBorder);
 		panelPagamento.setLayout(null);
 		panelPagamento.setBounds(0, 5, 617, 238);
 		add(panelPagamento);
@@ -77,7 +77,7 @@ public class CartaoDebitoComponente extends JPanel {
 		txtCpfTitular.setBounds(165, 55, 200, 30);
 		panelPagamento.add(txtCpfTitular);
 		
-		lblTelefone = new JLabel("Telefone");
+		lblTelefone = new JLabel(LocaleUtils.getLocaleView().getString("lbl_telefone"));
 		lblTelefone.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblTelefone.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTelefone.setBounds(10, 90, 150, 20);
@@ -87,7 +87,7 @@ public class CartaoDebitoComponente extends JPanel {
 		txtTelefone.setBounds(165, 90, 200, 30);
 		panelPagamento.add(txtTelefone);
 		
-		lblBanco = new JLabel("Banco");
+		lblBanco = new JLabel(LocaleUtils.getLocaleView().getString("lbl_banco"));
 		lblBanco.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblBanco.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblBanco.setBounds(10, 130, 61, 20);
@@ -97,7 +97,7 @@ public class CartaoDebitoComponente extends JPanel {
 		txtBanco.setBounds(79, 125, 174, 30);
 		panelPagamento.add(txtBanco);
 		
-		lblAgenciaBancaria = new JLabel("Agência");
+		lblAgenciaBancaria = new JLabel(LocaleUtils.getLocaleView().getString("lbl_agencia_bancaria"));
 		lblAgenciaBancaria.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAgenciaBancaria.setBounds(259, 130, 61, 20);
 		panelPagamento.add(lblAgenciaBancaria);
@@ -110,7 +110,7 @@ public class CartaoDebitoComponente extends JPanel {
 		txtAgenciaBancaria.setBounds(325, 125, 75, 30);
 		panelPagamento.add(txtAgenciaBancaria);
 		
-		lblContaCorrente = new JLabel("C/C");
+		lblContaCorrente = new JLabel(LocaleUtils.getLocaleView().getString("lbl_conta_corrente"));
 		lblContaCorrente.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblContaCorrente.setBounds(405, 130, 61, 20);
 		panelPagamento.add(lblContaCorrente);

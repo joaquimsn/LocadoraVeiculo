@@ -16,6 +16,7 @@ import javax.swing.border.TitledBorder;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.ConsultaClienteGUI;
+import br.com.locadora.view.DevolucaoGUI;
 import br.com.locadora.view.LocacaoGUI;
 import br.com.locadora.view.TelaPrincipalGUI;
 
@@ -69,6 +70,7 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 		btnLocacao = new JButton(LocaleUtils.getLocaleView().getString("menu_locacao"));
 		btnLocacao.addActionListener(this);
 		btnDevolucao = new JButton(LocaleUtils.getLocaleView().getString("btn_devolucao"));
+		btnDevolucao.addActionListener(this);
 		panelContainer.add(btnLocacao);
 		panelContainer.add(btnDevolucao);
 		
@@ -114,6 +116,8 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 		} else if (e.getSource() == btnPesquisar) {
 			ConsultaClienteGUI consultaClienteGUI = new ConsultaClienteGUI();
 			telaPrincipalGUI.mudarTelaContainer(consultaClienteGUI);
+		} else if (e.getSource() == btnDevolucao) {
+			new DevolucaoGUI();
 		}
 		
 	}

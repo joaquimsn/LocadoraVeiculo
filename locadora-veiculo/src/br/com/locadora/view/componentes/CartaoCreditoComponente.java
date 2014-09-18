@@ -17,6 +17,7 @@ import br.com.locadora.utils.locale.LocaleUtils;
 import com.toedter.calendar.JDateChooser;
 
 public class CartaoCreditoComponente extends JPanel {
+	private static final long serialVersionUID = -3056594278812705256L;
 	
 	// Labels
 	private JLabel lblNomeDoTitular;
@@ -55,8 +56,10 @@ public class CartaoCreditoComponente extends JPanel {
 	private void inicializar() {
 		setLayout(null);
 		
+		TitledBorder titledBorder = new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_pagamento_credito"), 
+					TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 128));
 		panelPagamento = new JPanel();
-		panelPagamento.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_pagamento"), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 128)));
+		panelPagamento.setBorder(titledBorder);
 		panelPagamento.setLayout(null);
 		panelPagamento.setBounds(0, 5, 617, 238);
 		add(panelPagamento);

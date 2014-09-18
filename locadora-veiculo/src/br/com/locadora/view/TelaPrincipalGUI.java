@@ -35,6 +35,9 @@ public class TelaPrincipalGUI extends JFrame implements Serializable, ActionList
 	private JMenuItem mItemGerenciaCliente;
 	private JMenuItem mItemGerenciaVeiculo;
 	private JMenuItem mItemLocacao;
+	private JMenuItem mItemDevolucao;
+	private JMenuItem mItemRelatorio;
+	private JMenuItem mItemConfigConexaoDB;
 	private JMenuItem mItemLogoff;
 	
 	// Componentes
@@ -78,8 +81,15 @@ public class TelaPrincipalGUI extends JFrame implements Serializable, ActionList
 		menuGerencia.add(mItemGerenciaVeiculo);
 		
 		mItemLocacao = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_locacao"));
-		mItemLocacao.addActionListener(this);
 		menuLocacao.add(mItemLocacao);
+		mItemDevolucao = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_devolucao"));
+		menuLocacao.add(mItemDevolucao);
+		
+		mItemRelatorio = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_relatorio"));
+		menuRelatorio.add(mItemRelatorio);
+		
+		mItemConfigConexaoDB = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_conexao"));
+		menuConfiguracao.add(mItemConfigConexaoDB);
 		
 		mItemLogoff = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_logoff"));
 		
@@ -159,6 +169,28 @@ public class TelaPrincipalGUI extends JFrame implements Serializable, ActionList
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new LocacaoGUI();
+			}
+		});
+		
+		mItemDevolucao.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new DevolucaoGUI();
+			}
+		});
+		
+		mItemRelatorio.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RelatorioGUI relatorioGUI = new RelatorioGUI();
+				mudarTelaContainer(relatorioGUI);
+			}
+		});
+		
+		mItemConfigConexaoDB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ConfiguracaoConexaoGUI();
 			}
 		});
 		

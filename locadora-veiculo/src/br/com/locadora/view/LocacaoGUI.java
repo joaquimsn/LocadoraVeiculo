@@ -25,6 +25,7 @@ import br.com.locadora.view.componentes.CartaoDebitoComponente;
 import com.toedter.calendar.JDateChooser;
 
 public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
+	private static final long serialVersionUID = -448346052180078969L;
 	
 	// Panels 
 	private JPanel panelLocacao;
@@ -66,6 +67,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	private CartaoCreditoComponente cartaoCreditoComponente;
 
 	public LocacaoGUI() {
+		setTitle(LocaleUtils.getLocaleView().getString("titulo_tela_locacao"));
 		inicializar();
 	}
 	
@@ -189,11 +191,11 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		panelDetalheLocao.add(cbxAgenciaDevolucao);
 		
 		btnConcluir = new JButton(LocaleUtils.getLocaleView().getString("btn_concluir"));
-		btnConcluir.setBounds(660, 474, 100, 65);
+		btnConcluir.setBounds(660, 470, 100, 65);
 		getContentPane().add(btnConcluir);
 		
 		btnCancelar = new JButton(LocaleUtils.getLocaleView().getString("btn_cancelar"));
-		btnCancelar.setBounds(660, 398, 100, 65);
+		btnCancelar.setBounds(660, 370, 100, 65);
 		getContentPane().add(btnCancelar);
 		
 //		cartaoDebitoComponente = new CartaoDebitoComponente();

@@ -1,55 +1,126 @@
 package br.com.locadora.view;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+
+import br.com.locadora.utils.locale.LocaleUtils;
+import br.com.locadora.view.componentes.CartaoCreditoComponente;
+import br.com.locadora.view.componentes.CartaoDebitoComponente;
 
 public class DevolucaoGUI extends JDialog {
+	private static final long serialVersionUID = 2391312642421242922L;
+	
+	// Lables
+	private JLabel lblConsultarLocao;
+	private JLabel lblFormaPagamento;
+	private JLabel lblValorAPagar;
+	
+	// Inputs
+	private JTextField txtConsultaLocacao;
+	private JTextField txtValorPagar;
+	
+	// Buttons
+	private JButton btnConsultar;
+	private JRadioButton rdbtnCartoCredito;
+	private JRadioButton rdbtnCartoDebito;
+	
+	// Componentes
+	private CartaoDebitoComponente cartaoDebitoComponente;
+	private CartaoCreditoComponente cartaoCreditoComponente;
 
-	private final JPanel contentPanel = new JPanel();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			DevolucaoGUI dialog = new DevolucaoGUI();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
+	private JPanel panelDetalheLocacao;
+	private JButton btnConcluir;
+	private JButton btnCancelar;
+	private JTextArea txtDetalheLocacao;
+	
 	public DevolucaoGUI() {
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
+		setTitle(LocaleUtils.getLocaleView().getString("titulo_tela_devolucao"));
+		inicializar();
 	}
-
+	
+	/**Inicializa todos os componetes da tela
+	 * @author Joaquim Neto
+	 */
+	private void inicializar() {
+		getContentPane().setLayout(null);
+		panelDetalheLocacao = new JPanel();
+		
+		TitledBorder titledBorder = new TitledBorder(new LineBorder(Color.GRAY, 1, true), (LocaleUtils.getLocaleView().getString("titulo_detalhe_locacao")), 
+				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE);
+		
+		panelDetalheLocacao.setBorder(titledBorder);
+		panelDetalheLocacao.setBounds(30, 90, 730, 200);
+		panelDetalheLocacao.setLayout(null);
+		getContentPane().add(panelDetalheLocacao);
+		
+		txtDetalheLocacao = new JTextArea();
+		txtDetalheLocacao.setBounds(10, 20, 710, 170);
+		panelDetalheLocacao.add(txtDetalheLocacao);
+		
+		lblConsultarLocao = new JLabel((LocaleUtils.getLocaleView().getString("lbl_consultar_locacao")));
+		lblConsultarLocao.setBounds(35, 20, 150, 20);
+		getContentPane().add(lblConsultarLocao);
+		
+		txtConsultaLocacao = new JTextField(10);
+		txtConsultaLocacao.setBounds(30, 40, 150, 30);
+		getContentPane().add(txtConsultaLocacao);
+		
+		btnConsultar = new JButton("Consultar");
+		btnConsultar.setBounds(190, 40, 100, 30);
+		getContentPane().add(btnConsultar);
+		
+		lblFormaPagamento = new JLabel(LocaleUtils.getLocaleView().getString("lbl_forma_pagamento"));
+		lblFormaPagamento.setBounds(460, 300, 220, 20);
+		getContentPane().add(lblFormaPagamento);
+		
+		// Grupo radio button
+		ButtonGroup grupRadio = new ButtonGroup();
+		
+		rdbtnCartoCredito = new JRadioButton(LocaleUtils.getLocaleView().getString("cartao_credito"));
+		rdbtnCartoCredito.setBounds(460, 325, 150, 20);
+		grupRadio.add(rdbtnCartoCredito);
+		getContentPane().add(rdbtnCartoCredito);
+		
+		rdbtnCartoDebito = new JRadioButton(LocaleUtils.getLocaleView().getString("cartao_debito"));
+		rdbtnCartoDebito.setBounds(610, 325, 150, 20);
+		grupRadio.add(rdbtnCartoDebito);
+		getContentPane().add(rdbtnCartoDebito);
+		
+		lblValorAPagar = new JLabel((LocaleUtils.getLocaleView().getString("lbl_valor_a_pagar")));
+		lblValorAPagar.setBounds(35, 300, 150, 20);
+		getContentPane().add(lblValorAPagar);
+		
+		txtValorPagar = new JTextField(10);
+		txtValorPagar.setEditable(false);
+		txtValorPagar.setBounds(30, 320, 150, 30);
+		getContentPane().add(txtValorPagar);
+		
+		cartaoDebitoComponente = new CartaoDebitoComponente();
+		cartaoDebitoComponente.setBounds(30, 350, 618, 255);
+		getContentPane().add(cartaoDebitoComponente);
+		
+		btnConcluir = new JButton((LocaleUtils.getLocaleView().getString("btn_concluir")));
+		btnConcluir.setBounds(660, 420, 100, 65);
+		getContentPane().add(btnConcluir);
+		
+		btnCancelar = new JButton((LocaleUtils.getLocaleView().getString("btn_cancelar")));
+		btnCancelar.setBounds(660, 505, 100, 65);
+		getContentPane().add(btnCancelar);
+		
+		setBounds(10, 0, 790, 630);
+		setResizable(false);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
 }

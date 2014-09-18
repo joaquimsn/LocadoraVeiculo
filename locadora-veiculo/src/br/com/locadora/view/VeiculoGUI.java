@@ -224,7 +224,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		botoesCrudComponente.setBounds(610, 421, 198, 45);
 		add(botoesCrudComponente);
 		
-		this.setBounds(15, 10, 850, 500);
+		this.setBounds(15, 10, 860, 500);
 		this.setVisible(true);
 	}
 	
