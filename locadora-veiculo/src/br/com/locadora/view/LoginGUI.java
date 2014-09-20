@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,7 +21,6 @@ import javax.swing.SwingConstants;
 
 import br.com.locadora.controller.Autenticacao;
 import br.com.locadora.model.enums.LocalEnum;
-import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.CustomComboBox;
 
@@ -202,7 +200,9 @@ public class LoginGUI extends JFrame implements ItemListener{
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		// Faz a troca do idioma
-		if (e.getSource() == cbxSelecaoIdioma.bandeiraList) {
+		if (e.getSource() == cbxSelecaoIdioma.bandeiraList && cbxSelecaoIdioma.bandeiraList.getSelectedIndex() 
+				!= LocalEnum.getValueByDisplay(LocaleUtils.getDisplayLocale())) {
+			
 			// Obtém a localeID
 			String localeId = LocalEnum.getDisplayByValue((Integer) cbxSelecaoIdioma.bandeiraList.getSelectedItem());
 			LocaleUtils.setLocaleId(localeId, true);
