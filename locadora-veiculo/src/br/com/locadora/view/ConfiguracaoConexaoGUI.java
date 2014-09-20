@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public class ConfiguracaoConexaoGUI extends JDialog {
 	private JButton btnSalvar;
 	private JTextArea txtInfoConexao;
@@ -30,9 +32,9 @@ public class ConfiguracaoConexaoGUI extends JDialog {
 		getContentPane().setLayout(null);
 		
 		// Cria o JTextArea e adicionar ao Panel para exibição
-	    String info = "\n\tNome do BD: locadora \n\tPorta: 3306 \n\tUsuario: root \n\tSenha: ******\n";
-		
-		btnSalvar = new JButton("Salvar");
+	    String info = LocaleUtils.getLocaleView().getString("lbl_info_bancodados");
+		//LocaleUtils.getLocaleView().getString("")
+		btnSalvar = new JButton(LocaleUtils.getLocaleView().getString("btn_salvar"));
 		btnSalvar.setBounds(280, 360, 100, 30);
 		getContentPane().add(btnSalvar);
 		
@@ -41,11 +43,11 @@ public class ConfiguracaoConexaoGUI extends JDialog {
 		txtInfoConexao.setBounds(20, 30, 360, 100);
 		getContentPane().add(txtInfoConexao);
 		
-		lblDadosAtualDa = new JLabel("Dados atual da conexão");
+		lblDadosAtualDa = new JLabel(LocaleUtils.getLocaleView().getString("lbl_dados_atuais"));
 		lblDadosAtualDa.setBounds(27, 5, 200, 20);
 		getContentPane().add(lblDadosAtualDa);
 		
-		lblNomeDB = new JLabel("Nome do Banco");
+		lblNomeDB = new JLabel(LocaleUtils.getLocaleView().getString("lbl_nome_banco"));
 		lblNomeDB.setBounds(25, 140, 150, 20);
 		getContentPane().add(lblNomeDB);
 		
@@ -54,7 +56,7 @@ public class ConfiguracaoConexaoGUI extends JDialog {
 		getContentPane().add(txtNomeDb);
 		txtNomeDb.setColumns(10);
 		
-		lblUsurio = new JLabel("Usuário");
+		lblUsurio = new JLabel(LocaleUtils.getLocaleView().getString("lbl_usuario"));
 		lblUsurio.setBounds(25, 195, 150, 20);
 		getContentPane().add(lblUsurio);
 		
@@ -63,7 +65,7 @@ public class ConfiguracaoConexaoGUI extends JDialog {
 		txtUsuario.setBounds(20, 215, 150, 30);
 		getContentPane().add(txtUsuario);
 		
-		lblSenha = new JLabel("Senha");
+		lblSenha = new JLabel(LocaleUtils.getLocaleView().getString("lbl_senha"));
 		lblSenha.setBounds(25, 245, 150, 20);
 		getContentPane().add(lblSenha);
 		
@@ -72,7 +74,7 @@ public class ConfiguracaoConexaoGUI extends JDialog {
 		txtSenha.setBounds(20, 265, 150, 30);
 		getContentPane().add(txtSenha);
 		
-		lblPorta = new JLabel("Porta");
+		lblPorta = new JLabel(LocaleUtils.getLocaleView().getString("lbl_porta"));
 		lblPorta.setBounds(25, 295, 150, 20);
 		getContentPane().add(lblPorta);
 		
