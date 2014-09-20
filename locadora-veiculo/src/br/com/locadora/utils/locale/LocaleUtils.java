@@ -29,7 +29,7 @@ public class LocaleUtils {
 	 * setLocaleId(<b>"pt_BR"</b>);
 	 * @param localeId Locale que será usado no sistema
 	 * @param defaultLocale <b>true</b> definir o localeId como default para o proximo
-	 *            acesso ao sistema
+	 * acesso ao sistema
 	 */
 	public static void setLocaleId(String localeId, boolean defaultLocale) {
 		// Carrega as configurações default
@@ -121,7 +121,7 @@ public class LocaleUtils {
 	public static ResourceBundle getLocaleView() {
 		// Carrega a internacionalização default caso não exista nenhum definida
 		if (SystemUtils.isNuloOuVazio(localeView)) {
-			carregarInternacionalizacao("pt_BR");
+			carregarInternacionalizacao(carregarPorpertyDefault().getProperty("locale_default"));
 		}
 		return localeView;
 	}
@@ -133,8 +133,12 @@ public class LocaleUtils {
 	public static ResourceBundle getLocaleMessages() {
 		// Carrega a internacionalização default caso não exista nenhum definida
 		if (SystemUtils.isNuloOuVazio(localeMessages)) {
-			carregarInternacionalizacao("pt_BR");
+			carregarInternacionalizacao(carregarPorpertyDefault().getProperty("locale_default"));
 		}
 		return localeMessages;
+	}
+	
+	public static String getDisplayLocale() {
+		return carregarPorpertyDefault().getProperty("locale_default");
 	}
 }

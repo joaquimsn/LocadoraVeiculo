@@ -19,8 +19,11 @@ import javax.swing.ListCellRenderer;
  *   /resoureces/images/icons/bandeira_us.png
  */
 public class CustomComboBox extends JPanel {
+	private static final long serialVersionUID = 5580773222724023182L;
+	
 	ImageIcon[] images;
     String[] bandeiraStrings = {"Brasil", "Espanha", "US"};
+    public JComboBox bandeiraList;
 
     /*
      * Despite its use of EmptyBorder, this panel makes a fine content
@@ -46,11 +49,11 @@ public class CustomComboBox extends JPanel {
         }
 
         //Create the combo box.
-        JComboBox bandeiraList = new JComboBox(intArray);
+        bandeiraList = new JComboBox(intArray);
         ComboBoxRenderer renderer= new ComboBoxRenderer();
         bandeiraList.setRenderer(renderer);
         bandeiraList.setMaximumRowCount(3);
-
+        
         //Lay out the demo.
         add(bandeiraList, BorderLayout.PAGE_START);
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
