@@ -44,7 +44,7 @@ public class TelaPrincipalGUI extends JFrame implements Serializable, ActionList
 	private MenuAcoesLateral menuAcoesLateral;
 
 	public TelaPrincipalGUI() {
-		super(LocaleUtils.getLocaleView().getString("titulo_cadastro_principal_sistema"));
+		super(LocaleUtils.getLocaleView().getString("titulo_tela_principal_sistema"));
 		
 		criarTela();
 	}

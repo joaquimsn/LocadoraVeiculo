@@ -12,6 +12,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 /*
  * 	CustomComboBox uses the following files:
  *   /resoureces/images/icons/bandeira_brasil.png
@@ -22,7 +24,8 @@ public class CustomComboBox extends JPanel {
 	private static final long serialVersionUID = 5580773222724023182L;
 	
 	ImageIcon[] images;
-    String[] bandeiraStrings = {"Brasil", "Espanha", "US"};
+    String[] bandeiraStrings = {LocaleUtils.getLocaleView().getString("cbx_value_portugues"), LocaleUtils.getLocaleView().getString("cbx_value_espanhol"),
+    		LocaleUtils.getLocaleView().getString("cbx_value_ingles")};
     public JComboBox bandeiraList;
 
     /*
@@ -41,8 +44,7 @@ public class CustomComboBox extends JPanel {
         Integer[] intArray = new Integer[bandeiraStrings.length];
         for (int i = 0; i < bandeiraStrings.length; i++) {
             intArray[i] = new Integer(i);
-            images[i] = createImageIcon("./src/br/com/locadora/resoureces/images/icons/bandeira_" + 
-            		bandeiraStrings[i].toLowerCase() + ".png");
+            images[i] = createImageIcon("./src/br/com/locadora/resoureces/images/icons/bandeira_" + i + ".png");
             if (images[i] != null) {
                 images[i].setDescription(bandeiraStrings[i]);
             }

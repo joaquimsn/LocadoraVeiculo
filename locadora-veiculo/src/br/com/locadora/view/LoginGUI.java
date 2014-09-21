@@ -88,7 +88,7 @@ public class LoginGUI extends JFrame implements ItemListener{
 		panelCabecalho = new JPanel(null);
 		panelCabecalho.setBounds(0, 5, 400, 160);
 		// logo para exibição no login
-		ImageIcon iconLogoSistema = new ImageIcon("./src/br/com/locadora/resoureces/images/Nintendo_Logo.png");
+		ImageIcon iconLogoSistema = new ImageIcon("./src/br/com/locadora/resoureces/images/logo-default.png");
 		JLabel logoSistema = new JLabel(iconLogoSistema);
 		logoSistema.setBounds(100, 60, 180, 90);
 		
@@ -116,14 +116,14 @@ public class LoginGUI extends JFrame implements ItemListener{
 		
 		// Input campo usuário
 		txtUsuario = new JTextField(20);
-		lblUsuario.setBounds(30, 5, 80, 30);
+		lblUsuario.setBounds(10, 5, 100, 30);
 		txtUsuario.setBounds(115, 5, 180, 30);
 		panelLogin.add(lblUsuario);
 		panelLogin.add(txtUsuario);
 		
 		// Input campo senha
 		passwordField = new JPasswordField();
-		lblSenha.setBounds(30, 40, 80, 30);
+		lblSenha.setBounds(10, 40, 100, 30);
 		passwordField.setBounds(115, 40, 180, 30);
 		panelLogin.add(lblSenha);
 		panelLogin.add(passwordField);
@@ -137,14 +137,14 @@ public class LoginGUI extends JFrame implements ItemListener{
 		
 		// Cria o panel dos botões da tela de login
 		panelBotoesLogin = new JPanel(null);
-		panelBotoesLogin.setBounds(200, 270, 200, 50);
+		panelBotoesLogin.setBounds(180, 270, 220, 50);
 		
 		btnAcessar = new JButton(LocaleUtils.getLocaleView().getString("btn_acessar"));
-		btnAcessar.setBounds(5, 10, 90, 30);
+		btnAcessar.setBounds(5, 10, 100, 30);
 		panelBotoesLogin.add(btnAcessar);
 		
 		btnCancelar = new JButton(LocaleUtils.getLocaleView().getString("btn_cancelar"));
-		btnCancelar.setBounds(100, 10, 90, 30);
+		btnCancelar.setBounds(110, 10, 100, 30);
 		panelBotoesLogin.add(btnCancelar);
 		
 		

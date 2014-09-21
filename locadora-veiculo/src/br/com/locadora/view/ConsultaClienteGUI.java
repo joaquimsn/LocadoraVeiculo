@@ -21,7 +21,7 @@ public class ConsultaClienteGUI extends JPanel {
 	private static final long serialVersionUID = 65619500338126805L;
 	
 	// Lables
-	private JLabel lblNewLabel;
+	private JLabel lblParametroPesquisa;
 	
 	// Inputs
 	private JComboBox cbxParametroPesquisa;
@@ -54,9 +54,9 @@ public class ConsultaClienteGUI extends JPanel {
 		add(panelParametroPesquisa);
 		panelParametroPesquisa.setLayout(null);
 		
-		lblNewLabel = new JLabel("Parâmetro da Pesquisa");
-		lblNewLabel.setBounds(10, 5, 200, 20);
-		panelParametroPesquisa.add(lblNewLabel);
+		lblParametroPesquisa = new JLabel("Parâmetro da Pesquisa");
+		lblParametroPesquisa.setBounds(10, 5, 200, 20);
+		panelParametroPesquisa.add(lblParametroPesquisa);
 		
 		cbxParametroPesquisa = new JComboBox();
 		cbxParametroPesquisa.setBounds(5, 25, 200, 30);
