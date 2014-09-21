@@ -17,6 +17,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public class ConsultaClienteGUI extends JPanel {
 	private static final long serialVersionUID = 65619500338126805L;
 	
@@ -44,7 +46,8 @@ public class ConsultaClienteGUI extends JPanel {
 	 * @author Joaquim Neto
 	 */
 	private void inicializar() {
-		setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), "Pesquisa Cliente", TitledBorder.LEADING, 
+		setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), 
+				LocaleUtils.getLocaleView().getString("lbl_pesquisar_cliente"), TitledBorder.LEADING, 
 				TitledBorder.TOP, null, Color.BLUE));
 		setLayout(null);
 		
@@ -53,8 +56,8 @@ public class ConsultaClienteGUI extends JPanel {
 		panelParametroPesquisa.setBounds(20, 20, 820, 62);
 		add(panelParametroPesquisa);
 		panelParametroPesquisa.setLayout(null);
-		
-		lblParametroPesquisa = new JLabel("Parâmetro da Pesquisa");
+		//LocaleUtils.getLocaleView().getString("lbl_parametro_pesquisa")
+		lblParametroPesquisa = new JLabel(LocaleUtils.getLocaleView().getString("lbl_parametro_pesquisa"));
 		lblParametroPesquisa.setBounds(10, 5, 200, 20);
 		panelParametroPesquisa.add(lblParametroPesquisa);
 		
@@ -67,7 +70,7 @@ public class ConsultaClienteGUI extends JPanel {
 		panelParametroPesquisa.add(txtPesquisa);
 		txtPesquisa.setColumns(10);
 		
-		btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar = new JButton(LocaleUtils.getLocaleView().getString("btn_pesquisar"));
 		btnPesquisar.setBounds(525, 25, 100, 30);
 		panelParametroPesquisa.add(btnPesquisar);
 		
@@ -154,12 +157,12 @@ public class ConsultaClienteGUI extends JPanel {
 				return false;
 			}
 		};
-		defaultTableModel.addColumn("Codigo");
-		defaultTableModel.addColumn("CPF");
-		defaultTableModel.addColumn("Nome");
-		defaultTableModel.addColumn("CNH");
-		defaultTableModel.addColumn("Cidade");
-		defaultTableModel.addColumn("UF");
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("col_codigo"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cpf"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_nome"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cnh"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cidade"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_uf"));
 
 		return defaultTableModel;
 	}
