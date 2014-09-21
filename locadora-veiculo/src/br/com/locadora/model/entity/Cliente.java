@@ -1,8 +1,14 @@
 package br.com.locadora.model.entity;
+import java.util.Date;
 public class Cliente {
+	private int id;
+	private String nome;
+	private Date dataNascimento;
+	private String cpf;
+	private String rg;
 	private String cnh;
 	private String estadoEmissor;
-	private int validadeCnh;
+	private Date validadeCnh;
 	private int genero;
 	private String logradouro;
 	private String bairro;
@@ -12,11 +18,15 @@ public class Cliente {
 	private int numero;
 	private String telefone;
 	private String email;
+	private int agencia;
 	
 	public Cliente(){
+		setId(0);
+		setNome("");
+		setDataNascimento(null);
 		setCnh("");
 		setEstadoEmissor("");
-		setValidadeCnh(0);
+		setValidadeCnh(null);
 		setGenero(0);
 		setLogradouro("");
 		setBairro("");
@@ -28,6 +38,46 @@ public class Cliente {
 		setEmail("");
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
 	public String getCnh() {
 		return cnh;
 	}
@@ -40,10 +90,10 @@ public class Cliente {
 	public void setEstadoEmissor(String estadoEmissor) {
 		this.estadoEmissor = estadoEmissor;
 	}
-	public int getValidadeCnh() {
+	public Date getValidadeCnh() {
 		return validadeCnh;
 	}
-	public void setValidadeCnh(int validadeCnh) {
+	public void setValidadeCnh(Date validadeCnh) {
 		this.validadeCnh = validadeCnh;
 	}
 	public int getGenero() {
@@ -100,6 +150,14 @@ public class Cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public int getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(int agencia) {
+		this.agencia = agencia;
+	}
+
 	public void cadastrar() {
 	
 	}
