@@ -114,6 +114,7 @@ public class VeiculoDAO extends MysqlConnect{
 			PreparedStatement sqlSt;
 			sqlSt = conn.prepareStatement(sqlString);
 			sqlSt.setInt(1, id);
+			sqlSt.executeQuery();
 			return true;
 		}catch(Exception deleteError){
 			return false;
