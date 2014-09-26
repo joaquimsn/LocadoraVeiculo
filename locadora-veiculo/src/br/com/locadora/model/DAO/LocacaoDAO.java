@@ -1,7 +1,10 @@
-package br.com.locadora.model.entity;
+package br.com.locadora.model.DAO;
 
-import java.util.List;
 import java.util.Date;
+import java.util.List;
+
+import br.com.locadora.model.entity.Cliente;
+import br.com.locadora.model.entity.Locacao;
 
 public class LocacaoDAO {
 

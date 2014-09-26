@@ -16,7 +16,7 @@ public class Autenticacao {
 
 		try {
 			// Ler o arquivo txt com o usuário e senha para validação
-			File file = new File("./src/br/usuario.txt");
+			File file = new File("usuario.txt");
 
 			Scanner scanner = new Scanner(file);
 			do {
@@ -33,4 +33,15 @@ public class Autenticacao {
 
 		return false;
 	}
+	
+	/**
+	 * Criptografa e retorna  uma string criptografada
+	 * @author Joaquim Neto
+	 * @return Senha criptografada
+	 */
+	public String criptografar(String string) {
+		
+		return null;
+	}
+
 }

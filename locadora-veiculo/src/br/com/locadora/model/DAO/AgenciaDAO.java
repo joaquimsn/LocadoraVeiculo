@@ -1,19 +1,24 @@
-package br.com.locadora.model.entity;
+package br.com.locadora.model.DAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import br.com.locadora.model.connection.MysqlConnect;
+import br.com.locadora.model.entity.Agencia;
 
 public class AgenciaDAO extends MysqlConnect {
 	public Agencia select(int id) {
 		PreparedStatement sqlSt;
 		ResultSet resultSet;
-		try{
+		
+		try {
 			String sql = "SELECT * FROM agencia where agencia_id=?";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setInt(1, id);
 			resultSet = sqlSt.executeQuery();
 			Agencia resultado = new Agencia();
-			if (resultSet.next()){
+			
+			if (resultSet.next()) {
 				resultado.setId(resultSet.getInt(1));
 				resultado.setRazaoSocial(resultSet.getString(2));
 				resultado.setNomeFantasia(resultSet.getString(3));
@@ -31,13 +36,12 @@ public class AgenciaDAO extends MysqlConnect {
 				resultado.setSite(resultSet.getString(15));
 			}
 			return resultado;
-		}catch(Exception selectError){
+		} catch (Exception selectError) {
 			return null;
 		}
 	}
 
 	public boolean update(Agencia agencia) {
-		
 		return false;
 	}
 
