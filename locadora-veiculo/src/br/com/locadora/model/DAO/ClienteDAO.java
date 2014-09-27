@@ -1,19 +1,24 @@
-package br.com.locadora.model.entity;
+package br.com.locadora.model.DAO;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import br.com.locadora.model.connection.MysqlConnect;
+import br.com.locadora.model.entity.Cliente;
 
 public class ClienteDAO extends MysqlConnect{
 
 	public Cliente select(int id) {
 		PreparedStatement sqlSt;
 		ResultSet resultSet;
+		
 		try{
 			String sql = "SELECT * FROM cliente where id_cliente=?";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setInt(1, id);
 			resultSet = sqlSt.executeQuery();
 			Cliente resultado = new Cliente();
+			
 			if (resultSet.next()){
 				resultado.setId(resultSet.getInt(1));
 				resultado.setNome(resultSet.getString(2));
@@ -92,14 +97,10 @@ public class ClienteDAO extends MysqlConnect{
 	public boolean insert(Cliente cliente) {
 		PreparedStatement sqlSt;
 		try{
-			String sql = "insert into cliente (nome, data_nascimento, cpf, rg, cnh, validadecnh, "
-												+ "estado_emissor, genero, logradouro, bairro, "
-												+ "numero, cep, cidade, uf, telefone, email, "
-												+ "id_agencia)"
-						+ " values (?, ?, ?, ?, ?, ?, "
-								+ "?, ?, ?, ?, "
-								+ "?, ?, ?, ?, ?, "
-								+ "?)";
+			String sql = "insert into cliente (nome, data_nascimento, cpf, rg, cnh, validadecnh, estado_emissor,"
+					+ " genero, logradouro, bairro, numero, cep, cidade, uf, telefone, email, id_agencia)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1,  cliente.getNome());
 			sqlSt.setDate(2, new java.sql.Date(cliente.getDataNascimento().getTime()));

@@ -11,6 +11,7 @@ import java.awt.event.ItemListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,7 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import br.com.locadora.controller.Autenticacao;
-import br.com.locadora.model.enums.LocalEnum;
+import br.com.locadora.model.enums.LocaleEnum;
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.CustomComboBox;
 
@@ -38,7 +40,7 @@ public class LoginGUI extends JFrame implements ItemListener{
 	
 	// inputs
 	private JTextField txtUsuario;
-	private JTextField txtCodigoAgencia;
+	private JFormattedTextField txtCodigoAgencia;
 	private JPasswordField passwordField;
 	
 	// panels
@@ -64,6 +66,15 @@ public class LoginGUI extends JFrame implements ItemListener{
 	}
 	
 	/**Inicializa todos os componetes da tela de login
+	 * @author Joaquim Neto
+	 */
+	/**
+	 * @author Joaquim Neto
+	 */
+	/**
+	 * @author Joaquim Neto
+	 */
+	/**
 	 * @author Joaquim Neto
 	 */
 	public void inicializar() {
@@ -99,7 +110,7 @@ public class LoginGUI extends JFrame implements ItemListener{
 		cbxSelecaoIdioma = new CustomComboBox();
 		
 		// Obtém o index do idioma default selecionado 
-		int index = LocalEnum.getValueByDisplay(LocaleUtils.getDisplayLocale());
+		int index = LocaleEnum.getValueByDisplay(LocaleUtils.getDisplayLocale());
 		// Deixa selecionado o idioma default no combobox
 		cbxSelecaoIdioma.bandeiraList.setSelectedIndex(index);
 		cbxSelecaoIdioma.bandeiraList.addItemListener(this);
@@ -129,7 +140,7 @@ public class LoginGUI extends JFrame implements ItemListener{
 		panelLogin.add(passwordField);
 		
 		// Input campo códifo agência
-		txtCodigoAgencia = new JTextField(10);
+		txtCodigoAgencia = new JFormattedTextField(Mask.soNumeros(8));
 		lblCodigoAgencia.setBounds(10, 80, 100, 30);
 		txtCodigoAgencia.setBounds(115, 80, 75, 30);
 		panelLogin.add(lblCodigoAgencia);
@@ -180,10 +191,31 @@ public class LoginGUI extends JFrame implements ItemListener{
 			}
 		});
 		
+		// Faz a validação do login
 		btnAcessar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Autenticacao.autenticar(txtUsuario.getText(), passwordField.getText())) {
+				// Armazena a mensagem de erro do login
+				StringBuilder mensagemErro = new StringBuilder();
+				String usuario = txtUsuario.getText(); // Obtém a String que representa o usuário
+				String senha = String.valueOf(passwordField.getPassword()); // Obtém a String que representa a senha
+				
+				// Verifica se usuário foi preenchido
+				if (SystemUtils.isNuloOuVazio(usuario) || usuario.length() == 0 ) {
+					mensagemErro.append("O usuário não foi informado");
+				
+				// Verifica se a senha foi preenchida
+				} if (SystemUtils.isNuloOuVazio(senha) || senha.length() == 0) {
+					mensagemErro.append("\n A senha não foi informada");
+				
+				// Verifica se foi gerada uma mesagem de erro
+				} if (mensagemErro.length() > 0) {
+					JOptionPane.showMessageDialog(panelCabecalho, mensagemErro);
+					return;
+				}
+				
+				// Valida o usuário, senha e código da agência
+				if (Autenticacao.autenticar(usuario, senha)) {
 					dispose();
 					new TelaPrincipalGUI();
 				} else {
@@ -201,10 +233,10 @@ public class LoginGUI extends JFrame implements ItemListener{
 	public void itemStateChanged(ItemEvent e) {
 		// Faz a troca do idioma
 		if (e.getSource() == cbxSelecaoIdioma.bandeiraList && cbxSelecaoIdioma.bandeiraList.getSelectedIndex() 
-				!= LocalEnum.getValueByDisplay(LocaleUtils.getDisplayLocale())) {
+				!= LocaleEnum.getValueByDisplay(LocaleUtils.getDisplayLocale())) {
 			
 			// Obtém a localeID
-			String localeId = LocalEnum.getDisplayByValue((Integer) cbxSelecaoIdioma.bandeiraList.getSelectedItem());
+			String localeId = LocaleEnum.getDisplayByValue((Integer) cbxSelecaoIdioma.bandeiraList.getSelectedItem());
 			LocaleUtils.setLocaleId(localeId, true);
 			
 			// Fecha a janela atual

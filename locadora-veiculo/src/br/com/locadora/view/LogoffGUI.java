@@ -93,7 +93,7 @@ public class LogoffGUI extends JDialog {
 		panelCabecalho = new JPanel(null);
 		panelCabecalho.setBounds(0, 5, 400, 160);
 		// logo para exibição no login
-		ImageIcon iconLogoSistema = new ImageIcon("./src/br/com/locadora/resoureces/images/Nintendo_Logo.png");
+		ImageIcon iconLogoSistema = new ImageIcon("./src/br/com/locadora/resoureces/images/logo-default.png");
 		JLabel logoSistema = new JLabel(iconLogoSistema);
 		logoSistema.setBounds(100, 60, 180, 90);
 		
