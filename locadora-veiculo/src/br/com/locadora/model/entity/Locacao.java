@@ -3,12 +3,16 @@ import java.util.Date;
 import java.util.List;
 
 public class Locacao {
+	public int id;
 	private int numeroLocacao;
 	private Date dataHoraLocacao;
 	private Date dataHoraDevolucao;
 	private int agenciaDevolucao;
 	private int tipoTarifa;
 	private double kmLocacao;
+	private double kmDevolucao;
+	private double valor;
+	private double valorAcrescimo;
 	private Pagamento pagamento;
 	private Devolucao devolucao;
 	private Cliente cliente;
@@ -22,6 +26,12 @@ public class Locacao {
 		setPagamento(null);
 		setDevolucao(null);
 		setCliente(null);
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public int getNumeroLocacao() {
 		return numeroLocacao;
@@ -58,6 +68,24 @@ public class Locacao {
 	}
 	public void setKmLocacao(double kmLocacao) {
 		this.kmLocacao = kmLocacao;
+	}
+	public double getKmDevolucao() {
+		return kmDevolucao;
+	}
+	public void setKmDevolucao(double kmDevolucao) {
+		this.kmDevolucao = kmDevolucao;
+	}
+	public double getValor() {
+		return valor;
+	}
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+	public double getValorAcrescimo() {
+		return valorAcrescimo;
+	}
+	public void setValorAcrescimo(double valorAcrescimo) {
+		this.valorAcrescimo = valorAcrescimo;
 	}
 	public Pagamento getPagamento() {
 		return pagamento;
