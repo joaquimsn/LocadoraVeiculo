@@ -2,6 +2,7 @@ package br.com.locadora.model.entity;
 import java.util.Date;
 
 public class Funcionario {
+	private int id;
 	private String nome;
 	private Date dataNascimento;
 	private String cpf;
@@ -20,7 +21,12 @@ public class Funcionario {
 	private int codigoAgencia;
 	private Funcionario funcionario;
 	private Usuario usuario;
+	private Date dataCadastro;
+	private Date dataManutencao;
+	private Funcionario supervisor;
+	private Agencia agencia;
 	public Funcionario(){
+		setId(0);
 		setNome("");
 		setDataNascimento(null);
 		setCpf("");
@@ -39,6 +45,16 @@ public class Funcionario {
 		setCodigoAgencia(0);
 		setFuncionario(null);
 		setUsuario(null);
+		setDataCadastro(null);
+		setDataManutencao(null);
+		setSupervisor(null);
+		setAgencia(null);
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getNome() {
 		return nome;
@@ -184,6 +200,30 @@ public class Funcionario {
 		this.usuario = usuario;
 	}
 
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+	public Date getDataManutencao() {
+		return dataManutencao;
+	}
+	public void setDataManutencao(Date dataManutencao) {
+		this.dataManutencao = dataManutencao;
+	}
+	public Funcionario getSupervisor() {
+		return supervisor;
+	}
+	public void setSupervisor(Funcionario supervisor) {
+		this.supervisor = supervisor;
+	}
+	public Agencia getAgencia() {
+		return agencia;
+	}
+	public void setAgencia(Agencia agencia) {
+		this.agencia = agencia;
+	}
 	public void cadastrar() {
 
 	}

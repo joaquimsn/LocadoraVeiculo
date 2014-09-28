@@ -10,7 +10,6 @@ public class AgenciaDAO extends MysqlConnect {
 	public Agencia select(int id) {
 		PreparedStatement sqlSt;
 		ResultSet resultSet;
-		
 		try {
 			String sql = "SELECT * FROM agencia where agencia_id=?";
 			sqlSt = conn.prepareStatement(sql);
@@ -42,15 +41,101 @@ public class AgenciaDAO extends MysqlConnect {
 	}
 
 	public boolean update(Agencia agencia) {
-		return false;
+		PreparedStatement sqlSt;
+		try {
+			String sql = "UPDATE agencia" +
+							"SET" +
+								"razao_social = ?," +
+								"fantasia = ?," +
+								"cnpj = ?," +
+								"insc_estadual = ?," +
+								"ins_municipal = ?," +
+								"logradouro = ?," +
+								"bairro = ?," +
+								"numero = ?," +
+								"cep = ?," +
+								"cidade = ?," +
+								"uf = ?," +
+								"telefone = ?," +
+								"email = ?," +
+								"site = ?" +
+							"WHERE id_agencia = ?";
+			sqlSt = conn.prepareStatement(sql);
+			sqlSt.setString(1, agencia.getRazaoSocial());
+			sqlSt.setString(2, agencia.getNomeFantasia());
+			sqlSt.setString(3, agencia.getCnpj());
+			sqlSt.setString(4, agencia.getInscricaoEstadual());
+			sqlSt.setString(5, agencia.getInscricaoMunicipal());
+			sqlSt.setString(6, agencia.getLogradouro());
+			sqlSt.setString(7, agencia.getBairro());
+			sqlSt.setInt(8, agencia.getNumero());
+			sqlSt.setString(9, agencia.getCep());
+			sqlSt.setString(10, agencia.getCidade());
+			sqlSt.setString(11, agencia.getUf());
+			sqlSt.setString(12,  agencia.getTelefone());
+			sqlSt.setString(13,  agencia.getEmail());
+			sqlSt.setString(14, agencia.getSite());
+			sqlSt.setInt(15, agencia.getId());
+			sqlSt.executeQuery();
+			return true;
+		} catch (Exception selectError) {
+			return false;
+		}
 	}
 
 	public boolean insert(Agencia agencia) {
-		return false;
+		PreparedStatement sqlSt;
+		try {
+			String sql = "INSERT INTO projeto.agencia" +
+							"(razao_social," +
+							"fantasia," +
+							"cnpj," +
+							"insc_estadual," +
+							"ins_municipal," +
+							"logradouro," +
+							"bairro," +
+							"numero," +
+							"cep," +
+							"cidade," +
+							"uf," +
+							"telefone," +
+							"email," +
+							"site)" +
+						"VALUES" +
+						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			sqlSt = conn.prepareStatement(sql);
+			sqlSt.setString(1, agencia.getRazaoSocial());
+			sqlSt.setString(2, agencia.getNomeFantasia());
+			sqlSt.setString(3, agencia.getCnpj());
+			sqlSt.setString(4, agencia.getInscricaoEstadual());
+			sqlSt.setString(5, agencia.getInscricaoMunicipal());
+			sqlSt.setString(6, agencia.getLogradouro());
+			sqlSt.setString(7, agencia.getBairro());
+			sqlSt.setInt(8, agencia.getNumero());
+			sqlSt.setString(9, agencia.getCep());
+			sqlSt.setString(10, agencia.getCidade());
+			sqlSt.setString(11, agencia.getUf());
+			sqlSt.setString(12,  agencia.getTelefone());
+			sqlSt.setString(13,  agencia.getEmail());
+			sqlSt.setString(14, agencia.getSite());
+			sqlSt.executeQuery();
+			return true;
+		} catch (Exception selectError) {
+			return false;
+		}
 	}
 
-	public int delete(int id) {
-		return 0;
+	public boolean delete(int id) {
+		try{
+			String sqlString = "delete from cliente where id_cliente=?";
+			PreparedStatement sqlSt;
+			sqlSt = conn.prepareStatement(sqlString);
+			sqlSt.setInt(1, id);
+			sqlSt.executeQuery();
+			return true;
+		}catch(Exception deleteError){
+			return false;
+		}
 	}
 
 }

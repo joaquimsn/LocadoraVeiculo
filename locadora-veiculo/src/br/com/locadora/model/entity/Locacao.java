@@ -13,9 +13,11 @@ public class Locacao {
 	private double kmDevolucao;
 	private double valor;
 	private double valorAcrescimo;
+	private String tipoPagamento;
 	private Pagamento pagamento;
 	private Devolucao devolucao;
 	private Cliente cliente;
+	private Veiculo veiculo;
 	public Locacao(){
 		setNumeroLocacao(0);
 		setDataHoraLocacao(null);
@@ -87,6 +89,12 @@ public class Locacao {
 	public void setValorAcrescimo(double valorAcrescimo) {
 		this.valorAcrescimo = valorAcrescimo;
 	}
+	public String getTipoPagamento() {
+		return tipoPagamento;
+	}
+	public void setTipoPagamento(String tipoPagamento) {
+		this.tipoPagamento = tipoPagamento;
+	}
 	public Pagamento getPagamento() {
 		return pagamento;
 	}
@@ -104,6 +112,12 @@ public class Locacao {
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	public Veiculo getVeiculo() {
+		return veiculo;
+	}
+	public void setVeiculo(Veiculo veiculo) {
+		this.veiculo = veiculo;
 	}
 	public void consultar() {
 	}
