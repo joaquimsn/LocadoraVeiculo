@@ -7,16 +7,17 @@ public class Veiculo {
 	private int ano;
 	private int grupo;
 	private String acessorio;
-	private int chassi;
+	private String chassi;
 	private String placa;
 	private String cidade;
 	private String uf;
 	private double kmRodado;
 	private double precoKmLivre;
 	private double precoKmControlado;
-	private int status;
+	private String status;
 	private Devolucao devolucao;
 	private Locacao locacao;
+	private Agencia agencia;
 	
 	public Veiculo(){
 		
@@ -66,10 +67,10 @@ public class Veiculo {
 	public void setAcessorio(String acessorio) {
 		this.acessorio = acessorio;
 	}
-	public int getChassi() {
+	public String getChassi() {
 		return chassi;
 	}
-	public void setChassi(int chassi) {
+	public void setChassi(String chassi) {
 		this.chassi = chassi;
 	}
 	public String getPlaca() {
@@ -108,10 +109,10 @@ public class Veiculo {
 	public void setPrecoKmControlado(double precoKmControlado) {
 		this.precoKmControlado = precoKmControlado;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public Devolucao getDevolucao() {
@@ -126,6 +127,14 @@ public class Veiculo {
 	public void setLocacao(Locacao locacao) {
 		this.locacao = locacao;
 	}
+	public Agencia getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(Agencia agencia) {
+		this.agencia = agencia;
+	}
+
 	public void Cadastrar() {
 	}
 	public void Consultar() {
