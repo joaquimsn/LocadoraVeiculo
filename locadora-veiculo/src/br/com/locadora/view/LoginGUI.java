@@ -199,23 +199,31 @@ public class LoginGUI extends JFrame implements ItemListener{
 				StringBuilder mensagemErro = new StringBuilder();
 				String usuario = txtUsuario.getText(); // Obtém a String que representa o usuário
 				String senha = String.valueOf(passwordField.getPassword()); // Obtém a String que representa a senha
-				
+				String codigoAgencia = txtCodigoAgencia.getValue().toString();
 				// Verifica se usuário foi preenchido
 				if (SystemUtils.isNuloOuVazio(usuario) || usuario.length() == 0 ) {
 					mensagemErro.append("O usuário não foi informado");
 				
 				// Verifica se a senha foi preenchida
-				} if (SystemUtils.isNuloOuVazio(senha) || senha.length() == 0) {
+				} 
+				
+				if (SystemUtils.isNuloOuVazio(senha) || senha.length() == 0) {
 					mensagemErro.append("\n A senha não foi informada");
 				
 				// Verifica se foi gerada uma mesagem de erro
-				} if (mensagemErro.length() > 0) {
+				} 
+				
+				if (SystemUtils.isNuloOuVazio(codigoAgencia) || codigoAgencia.length() == 0){
+					mensagemErro.append("\nA agência é obrigatória");
+				}
+				
+				if (mensagemErro.length() > 0) {
 					JOptionPane.showMessageDialog(panelCabecalho, mensagemErro);
 					return;
 				}
 				
 				// Valida o usuário, senha e código da agência
-				if (Autenticacao.autenticar(usuario, senha)) {
+				if (Autenticacao.autenticar(usuario, senha, codigoAgencia)) {
 					dispose();
 					new TelaPrincipalGUI();
 				} else {

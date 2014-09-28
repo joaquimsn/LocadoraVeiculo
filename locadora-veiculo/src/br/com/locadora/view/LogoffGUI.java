@@ -183,7 +183,7 @@ public class LogoffGUI extends JDialog {
 		btnAcessar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Autenticacao.autenticar(txtUsuario.getText(), passwordField.getText())) {
+				if (Autenticacao.autenticar(txtUsuario.getText(), passwordField.getText(), txtCodigoAgencia.getText())) {
 					dispose();
 					liberarAcoesSistema();
 				} else {
