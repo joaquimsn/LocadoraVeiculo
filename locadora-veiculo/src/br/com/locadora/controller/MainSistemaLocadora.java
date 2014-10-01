@@ -21,6 +21,10 @@ public class MainSistemaLocadora {
 			e.printStackTrace();
 		}
 		
-		LoginGUI loginGUI = new LoginGUI();
+		Autenticacao autenticacao = new Autenticacao();
+		autenticacao.criptografar();
+		System.out.println(autenticacao.descriptografar());
+		
+		new LoginGUI();
 	}	
 }

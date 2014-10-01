@@ -11,7 +11,6 @@ import java.awt.event.ItemListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -40,7 +39,7 @@ public class LoginGUI extends JFrame implements ItemListener{
 	
 	// inputs
 	private JTextField txtUsuario;
-	private JFormattedTextField txtCodigoAgencia;
+	private JTextField txtCodigoAgencia;
 	private JPasswordField passwordField;
 	
 	// panels
@@ -68,15 +67,6 @@ public class LoginGUI extends JFrame implements ItemListener{
 	/**Inicializa todos os componetes da tela de login
 	 * @author Joaquim Neto
 	 */
-	/**
-	 * @author Joaquim Neto
-	 */
-	/**
-	 * @author Joaquim Neto
-	 */
-	/**
-	 * @author Joaquim Neto
-	 */
 	public void inicializar() {
 		/*======================================
 		 *  Instância as label da tela de login
@@ -99,7 +89,7 @@ public class LoginGUI extends JFrame implements ItemListener{
 		panelCabecalho = new JPanel(null);
 		panelCabecalho.setBounds(0, 5, 400, 160);
 		// logo para exibição no login
-		ImageIcon iconLogoSistema = new ImageIcon("./src/br/com/locadora/resoureces/images/logo-default.png");
+		ImageIcon iconLogoSistema = new ImageIcon(ClassLoader.getSystemResource("br/com/locadora/resoureces/images/logo-default.png"));
 		JLabel logoSistema = new JLabel(iconLogoSistema);
 		logoSistema.setBounds(100, 60, 180, 90);
 		
@@ -140,7 +130,7 @@ public class LoginGUI extends JFrame implements ItemListener{
 		panelLogin.add(passwordField);
 		
 		// Input campo códifo agência
-		txtCodigoAgencia = new JFormattedTextField(Mask.soNumeros(8));
+		txtCodigoAgencia = new JTextField(10);
 		lblCodigoAgencia.setBounds(10, 80, 100, 30);
 		txtCodigoAgencia.setBounds(115, 80, 75, 30);
 		panelLogin.add(lblCodigoAgencia);
@@ -199,7 +189,7 @@ public class LoginGUI extends JFrame implements ItemListener{
 				StringBuilder mensagemErro = new StringBuilder();
 				String usuario = txtUsuario.getText(); // Obtém a String que representa o usuário
 				String senha = String.valueOf(passwordField.getPassword()); // Obtém a String que representa a senha
-				String codigoAgencia = txtCodigoAgencia.getValue().toString();
+				String codigoAgencia = txtCodigoAgencia.getText();
 				// Verifica se usuário foi preenchido
 				if (SystemUtils.isNuloOuVazio(usuario) || usuario.length() == 0 ) {
 					mensagemErro.append("O usuário não foi informado");

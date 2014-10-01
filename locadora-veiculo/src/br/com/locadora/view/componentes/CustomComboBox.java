@@ -44,7 +44,7 @@ public class CustomComboBox extends JPanel {
         Integer[] intArray = new Integer[bandeiraStrings.length];
         for (int i = 0; i < bandeiraStrings.length; i++) {
             intArray[i] = new Integer(i);
-            images[i] = createImageIcon("./src/br/com/locadora/resoureces/images/icons/bandeira_" + i + ".png");
+            images[i] = createImageIcon("br/com/locadora/resoureces/images/icons/bandeira_" + i + ".png");
             if (images[i] != null) {
                 images[i].setDescription(bandeiraStrings[i]);
             }
@@ -63,7 +63,7 @@ public class CustomComboBox extends JPanel {
 
     /** Returns an ImageIcon, or null if the path was invalid. */
     protected static ImageIcon createImageIcon(String path) {
-            return new ImageIcon(path);
+            return new ImageIcon(ClassLoader.getSystemResource(path));
     }
     
     @SuppressWarnings("rawtypes")
