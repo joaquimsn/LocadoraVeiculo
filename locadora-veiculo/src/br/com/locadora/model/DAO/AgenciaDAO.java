@@ -76,7 +76,7 @@ public class AgenciaDAO extends MysqlConnect {
 			sqlSt.setString(13,  agencia.getEmail());
 			sqlSt.setString(14, agencia.getSite());
 			sqlSt.setInt(15, agencia.getId());
-			sqlSt.executeQuery();
+			sqlSt.executeUpdate();
 			return true;
 		} catch (Exception selectError) {
 			return false;
@@ -86,12 +86,11 @@ public class AgenciaDAO extends MysqlConnect {
 	public boolean insert(Agencia agencia) {
 		PreparedStatement sqlSt;
 		try {
-			String sql = "INSERT INTO projeto.agencia" +
+			String sql = "INSERT INTO agencia" +
 							"(razao_social," +
 							"fantasia," +
 							"cnpj," +
 							"insc_estadual," +
-							"ins_municipal," +
 							"logradouro," +
 							"bairro," +
 							"numero," +
@@ -102,25 +101,25 @@ public class AgenciaDAO extends MysqlConnect {
 							"email," +
 							"site)" +
 						"VALUES" +
-						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, agencia.getRazaoSocial());
 			sqlSt.setString(2, agencia.getNomeFantasia());
 			sqlSt.setString(3, agencia.getCnpj());
 			sqlSt.setString(4, agencia.getInscricaoEstadual());
-			sqlSt.setString(5, agencia.getInscricaoMunicipal());
-			sqlSt.setString(6, agencia.getLogradouro());
-			sqlSt.setString(7, agencia.getBairro());
-			sqlSt.setInt(8, agencia.getNumero());
-			sqlSt.setString(9, agencia.getCep());
-			sqlSt.setString(10, agencia.getCidade());
-			sqlSt.setString(11, agencia.getUf());
-			sqlSt.setString(12,  agencia.getTelefone());
-			sqlSt.setString(13,  agencia.getEmail());
-			sqlSt.setString(14, agencia.getSite());
-			sqlSt.executeQuery();
+			sqlSt.setString(5, agencia.getLogradouro());
+			sqlSt.setString(6, agencia.getBairro());
+			sqlSt.setInt(7, agencia.getNumero());
+			sqlSt.setString(8, agencia.getCep());
+			sqlSt.setString(9, agencia.getCidade());
+			sqlSt.setString(10, agencia.getUf());
+			sqlSt.setString(11,  agencia.getTelefone());
+			sqlSt.setString(12,  agencia.getEmail());
+			sqlSt.setString(13, agencia.getSite());
+			sqlSt.execute();
 			return true;
-		} catch (Exception selectError) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
