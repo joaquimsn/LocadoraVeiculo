@@ -1,14 +1,24 @@
 package br.com.locadora.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import br.com.locadora.controller.ConfiguracaoBancoDadosControl;
+import br.com.locadora.model.vo.ParametrosConexao;
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 
 public class ConfiguracaoConexaoGUI extends JDialog {
+	private static final long serialVersionUID = -3210390027755116287L;
+	
 	private JButton btnSalvar;
 	private JTextArea txtInfoConexao;
 	private JLabel lblDadosAtualDa;
@@ -17,7 +27,7 @@ public class ConfiguracaoConexaoGUI extends JDialog {
 	private JLabel lblUsurio;
 	private JTextField txtUsuario;
 	private JLabel lblSenha;
-	private JTextField txtSenha;
+	private JPasswordField jPasswordSenha;
 	private JLabel lblPorta;
 	private JTextField txtPorta;
 
@@ -29,6 +39,7 @@ public class ConfiguracaoConexaoGUI extends JDialog {
 	 * @author Joaquim Neto
 	 */
 	private void inicializar() {
+		setTitle(LocaleUtils.getLocaleView().getString("titulo_tela_principal_configuracao_banco"));
 		getContentPane().setLayout(null);
 		
 		// Cria o JTextArea e adicionar ao Panel para exibição
@@ -69,10 +80,10 @@ public class ConfiguracaoConexaoGUI extends JDialog {
 		lblSenha.setBounds(25, 245, 150, 20);
 		getContentPane().add(lblSenha);
 		
-		txtSenha = new JTextField();
-		txtSenha.setColumns(10);
-		txtSenha.setBounds(20, 265, 150, 30);
-		getContentPane().add(txtSenha);
+		jPasswordSenha = new JPasswordField();
+		jPasswordSenha.setColumns(10);
+		jPasswordSenha.setBounds(20, 265, 150, 30);
+		getContentPane().add(jPasswordSenha);
 		
 		lblPorta = new JLabel(LocaleUtils.getLocaleView().getString("lbl_porta"));
 		lblPorta.setBounds(25, 295, 150, 20);
@@ -88,5 +99,35 @@ public class ConfiguracaoConexaoGUI extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
+		
+		// Altera os parâmetros de conexão com o banco de dados
+		btnSalvar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Cria uma instancia do Objeto ParamtrosConexao
+				ParametrosConexao parametrosConexao = new ParametrosConexao();
+				
+				// Preenche os atributos do objetos com as informações fornecida pelo usuário
+				parametrosConexao.setNomeDb(txtNomeDb.getText());
+				parametrosConexao.setUsuario(txtUsuario.getText());
+				parametrosConexao.setSenha(String.valueOf(jPasswordSenha.getPassword()));
+				parametrosConexao.setPorta(txtPorta.getText());
+				
+				if (!SystemUtils.isCamposObrigatoriosPreenchidos(parametrosConexao)) {
+					return;
+				}
+				
+				ConfiguracaoBancoDadosControl control = new ConfiguracaoBancoDadosControl();
+				control.salvar(parametrosConexao);
+				
+				JOptionPane.showMessageDialog(txtInfoConexao, "Parâmetros alterados com suscesso");
+				
+				// Limpar o valor dos campos
+				txtNomeDb.setText("");
+				txtPorta.setText("");
+				jPasswordSenha.setText("");
+				txtUsuario.setText("");
+			}
+		});
 	}
 }

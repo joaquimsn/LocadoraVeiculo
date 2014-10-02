@@ -15,6 +15,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.swing.JOptionPane;
+
 import br.com.locadora.utils.annotation.Required;
 
 public class SystemUtils {
@@ -51,7 +53,7 @@ public class SystemUtils {
 						mensagem.append(required.label());
 
 						// Adicionando mensagem de validação
-						System.out.println(mensagem.toString());
+						JOptionPane.showMessageDialog(null, mensagem);
 						camposValidos = false;
 					}
 				} catch (Exception e) {
