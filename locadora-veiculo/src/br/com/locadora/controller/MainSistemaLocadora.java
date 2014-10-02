@@ -1,12 +1,9 @@
 package br.com.locadora.controller;
 
 
-import java.io.File;
-
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
-import br.com.locadora.utils.IOUtils;
 import br.com.locadora.view.LoginGUI;
 
 public class MainSistemaLocadora {
@@ -24,10 +21,12 @@ public class MainSistemaLocadora {
 			e.printStackTrace();
 		}
 		
+		// Garante que a lista de login está ordernada
 		Autenticacao autenticacao = new Autenticacao();
-		autenticacao.criptografar();
-		System.out.println(autenticacao.descriptografar());
+		autenticacao.ordenarListaLogins();
 		
+//		System.out.println(autenticacao.getQuantidadeUsuarios());
+//		autenticacao.criptografar();
 		new LoginGUI();
 	}	
 }
