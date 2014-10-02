@@ -1,9 +1,12 @@
 package br.com.locadora.controller;
 
 
+import java.io.File;
+
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import br.com.locadora.utils.TxtUtils;
 import br.com.locadora.view.LoginGUI;
 
 public class MainSistemaLocadora {

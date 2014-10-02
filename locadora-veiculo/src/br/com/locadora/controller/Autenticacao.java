@@ -2,6 +2,7 @@ package br.com.locadora.controller;
 
 import java.io.File;
 import java.io.Serializable;
+import java.nio.charset.Charset;
 
 import br.com.locadora.utils.TxtUtils;
 
@@ -13,7 +14,7 @@ public class Autenticacao implements Serializable{
 	private CryptoAES cryptoAES;
 
 	/**
-	 * Faz a autenticação do usuário, verificando se o usuario e a senha são iguais aos
+	 * Faz a autenticaÃ§Ã£o do usuÃ¡rio, verificando se o usuario e a senha sÃ£o iguais aos
 	 * cadastrados
 	 * @param usuario
 	 * @param senha
@@ -33,25 +34,21 @@ public class Autenticacao implements Serializable{
 		// Objeto responsavel por ler e gravar aquivos txt
 		txtUtils = new TxtUtils();
 		
-		String msgClaraString = txtUtils.lerTxt(new File("usuario.txt"));
+		String msgClaraString = new String(txtUtils.lerTxt(new File("usuario.txt")).getBytes(), Charset.forName("ISO-8859-1"));
 		String msgCifradaString;
 		
 		byte[] msgClaraArrayByte = msgClaraString.getBytes();
-		byte[] bMsgCifrada = null;
+		byte[] bMsgCifrada =  null;
 		
-		/*
-		 * Criptografia AES
-		 * --------------------------------------------------------------
-		 */
 		// Instancia um objeto da classe CryptoAES
 		cryptoAES = new CryptoAES();
-		// Gera a Chave criptografica AES simetrica e o nome do arquivo onde será armazenada
+		// Gera a Chave criptografica AES simetrica e o nome do arquivo onde serÃ¡ armazenada
 		try {
 			// Gera a chave
-			cryptoAES.geraChave(new File("chave.simetrica"));
+			cryptoAES.geraChave(new File("chave"));
 			
 			// Gera a cifra AES da mensagem dada, com a chave simetrica dada
-			cryptoAES.geraCifra(msgClaraArrayByte, new File("chave.simetrica"));
+			cryptoAES.geraCifra(msgClaraArrayByte, new File("chave"));
 			
 			// Recebe o texto cifrado
 			bMsgCifrada = cryptoAES.getTextoCifrado();
@@ -60,7 +57,7 @@ public class Autenticacao implements Serializable{
 			msgCifradaString = (new String(bMsgCifrada, "ISO-8859-1"));
 			
 			// Grava a mensagem cifrada no txt
-			txtUtils.gravarTxt(new File("controle-usuario.txt"), msgCifradaString);
+			txtUtils.gravarTxt(new File("controle-usuario"), cryptoAES.getTextoCifrado().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -72,18 +69,18 @@ public class Autenticacao implements Serializable{
 		// Objeto responsavel por ler e gravar aquivos txt
 		txtUtils = new TxtUtils();
 		
-		String msgCifradaString = txtUtils.lerTxt(new File("controle-usuario"));
-		String msgDecifradaString = null;
+		String msgCifradaString = new String(txtUtils.lerTxt(new File("controle-usuario")).getBytes(), Charset.forName("ISO-8859-1"));
+		String msgDecifradaString;
 				
 		byte[] msgCifradaArrayByte = msgCifradaString.getBytes();
 		byte[] msgDecifradaArrayByte = null;
 		
 		// Instancia um objeto da classe CryptoAES
 		cryptoAES = new CryptoAES();
-		// Gera a Chave criptografica AES simetrica e o nome do arquivo onde será armazenada
+		// Gera a Chave criptografica AES simetrica e o nome do arquivo onde serÃ¡ armazenada
 		try { 
 			
-			File chave = new File("chave.simetrica");
+			File chave = new File("chave");
 			
 			// Gera a decifra AES da mensagem dada, segundo a chave simetrica gerada
 			cryptoAES.geraDecifra(msgCifradaArrayByte, chave);
@@ -94,7 +91,7 @@ public class Autenticacao implements Serializable{
 			// recebe o texto decifrado
 			msgDecifradaArrayByte = cryptoAES.getTextoDecifrado();
 			txtUtils.gravarTxt(new File("usuario.txt"), msgDecifradaString);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
