@@ -22,7 +22,7 @@ public class MainSistemaLocadora {
 		}
 		
 		// Garante que a lista de login foi criada e está ordernada
-		Autenticacao.criptografar();
+//		Autenticacao.criptografar();
 		Autenticacao.descriptografar();
 		Autenticacao.ordenarListaLogins();
 		
