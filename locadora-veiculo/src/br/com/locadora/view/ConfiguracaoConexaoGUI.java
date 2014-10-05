@@ -120,7 +120,7 @@ public class ConfiguracaoConexaoGUI extends JDialog {
 				ConfiguracaoBancoDadosControl control = new ConfiguracaoBancoDadosControl();
 				control.salvar(parametrosConexao);
 				
-				JOptionPane.showMessageDialog(txtInfoConexao, "Parâmetros alterados com suscesso");
+				JOptionPane.showMessageDialog(txtInfoConexao, LocaleUtils.getLocaleMessages().getString("sucesso_conexao_parametrosalt"));
 				
 				// Limpar o valor dos campos
 				txtNomeDb.setText("");
