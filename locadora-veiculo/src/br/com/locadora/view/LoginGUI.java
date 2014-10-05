@@ -196,19 +196,19 @@ public class LoginGUI extends JFrame implements ItemListener{
 				
 				// Verifica se usuário foi preenchido
 				if (SystemUtils.isNuloOuVazio(usuario) || usuario.length() == 0 ) {
-					mensagemErro.append("O usuário não foi informado");
+					mensagemErro.append(LocaleUtils.getLocaleMessages().getString("falha_login_usuariobranco"));
 				
 				// Verifica se a senha foi preenchida
 				} 
 				
 				if (SystemUtils.isNuloOuVazio(senha) || senha.length() == 0) {
-					mensagemErro.append("\n A senha não foi informada");
+					mensagemErro.append(LocaleUtils.getLocaleMessages().getString("falha_login_senhabranco"));
 				
 				// Verifica se foi gerada uma mesagem de erro
 				} 
 				
 				if (SystemUtils.isNuloOuVazio(codigoAgencia) || codigoAgencia.length() == 0){
-					mensagemErro.append("\nA agência é obrigatória");
+					mensagemErro.append(LocaleUtils.getLocaleMessages().getString("falha_login_agenciabranco"));
 				}
 				
 				if (mensagemErro.length() > 0) {
