@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import br.com.locadora.model.vo.Endereco;
 import br.com.locadora.utils.locale.LocaleUtils;
 
 public class FormularioEnderecoComponente extends JPanel implements Serializable {
@@ -25,7 +26,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 
 	// Inputs
 	private JTextField txtLogradouro;
-	private JTextField textNumero;
+	private JTextField txtNumero;
 	private JTextField txtCep;
 	private JComboBox cbxUf;
 	private JComboBox cbxCidade;
@@ -72,9 +73,9 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		lblNumero.setBounds(460, 5, 88, 20);
 		add(lblNumero);
 		
-		textNumero = new JTextField(10);
-		textNumero.setBounds(455, 25, 125, 30);
-		add(textNumero);
+		txtNumero = new JTextField(10);
+		txtNumero.setBounds(455, 25, 125, 30);
+		add(txtNumero);
 		
 		lblBairro = new JLabel(LocaleUtils.getLocaleView().getString("lbl_bairro"));
 		lblBairro.setBounds(590, 5, 125, 20);
@@ -95,16 +96,18 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		lblUf = new JLabel(LocaleUtils.getLocaleView().getString("lbl_uf"));
 		lblUf.setBounds(210, 60, 50, 20);
 		add(lblUf);
-
-		cbxUf = new JComboBox();
+		
+		String[] uf = {"SP", "RJ"};
+		cbxUf = new JComboBox(uf);
 		cbxUf.setBounds(205, 80, 80, 30);
 		add(cbxUf);
 
 		lblCidade = new JLabel(LocaleUtils.getLocaleView().getString("lbl_cidade"));
 		lblCidade.setBounds(295, 60, 150, 20);
 		add(lblCidade);
-
-		cbxCidade = new JComboBox();
+		
+		String[] cidade = {"São Paulo", "Santos", "Guarulhos"};
+		cbxCidade = new JComboBox(cidade);
 		cbxCidade.setBounds(290, 80, 250, 30);
 		add(cbxCidade);
 
@@ -133,5 +136,48 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		add(txtSite);
 		
 		setVisible(true);
+	}
+	
+	/**
+	 * Retornar um objeto endereço
+	 * @author Joaquim Neto
+	 * @return Objeto Endereço
+	 */
+	public Endereco getEndereco() {
+		Endereco endereco = new Endereco();
+		
+		// Atribui os dados preenchido pelo usuário ao objeto endereço
+		endereco.setBairro(txtBairro.getText());
+		endereco.setCep(txtCep.getText());
+		endereco.setCidade((String) cbxCidade.getSelectedItem());
+		endereco.setEmail(txtEmail.getText());
+		endereco.setLogradouro(txtLogradouro.getText());
+
+		try {
+			int numero = Integer.parseInt(txtNumero.getText());
+			endereco.setNumero(numero);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		endereco.setSite(txtSite.getText());
+		endereco.setTelefone(txtTelefone.getText());
+		endereco.setUf((String) cbxUf.getSelectedItem());
+		
+		return endereco;
+	}
+	
+	/**
+	 * Limpa os campos do componente endereço
+	 * @author Joaquim Neto
+	 */
+	public void limparCampos() {
+		txtBairro.setText("");
+		txtCep.setText("");
+		txtEmail.setText("");
+		txtLogradouro.setText("");
+		txtNumero.setText("");
+		txtSite.setText("");
+		txtTelefone.setText("");
 	}
 }

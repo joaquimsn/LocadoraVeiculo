@@ -8,8 +8,10 @@ import javax.swing.JPanel;
 import br.com.locadora.utils.locale.LocaleUtils;
 
 public class BotoesCrudComponente extends JPanel {
-	private JButton btnSalvar;
-	private JButton btnCancelar;
+	private static final long serialVersionUID = -9047999478547788235L;
+	
+	public JButton btnSalvar;
+	public JButton btnCancelar;
 
 	public BotoesCrudComponente() {
 		inicializar();

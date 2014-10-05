@@ -25,13 +25,10 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 	
 	private JPanel telaParaControle;
 	
-	private JButton btnInicio;
 	private JButton btnLocacao;
 	private JButton btnDevolucao;
 	private JButton btnCadastrar;
 	private JButton btnPesquisar;
-	private JButton btnAlterar;
-	private JButton btnExcluir;
 	
 	private static TelaPrincipalGUI telaPrincipalGUI;
 	
@@ -77,17 +74,15 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 	}
 
 	private void criarBotoesCrud() {
-		btnInicio = new JButton(LocaleUtils.getLocaleView().getString("btn_inicio"));
-		btnInicio.addActionListener(this);
-		btnInicio.setActionCommand("btnInicio");
 		
 		btnPesquisar = new JButton(LocaleUtils.getLocaleView().getString("btn_pesquisar"));
 		btnPesquisar.addActionListener(this);
-		panelContainer.add(btnInicio);
-		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_alterar")));
-		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_cadastrar")));
+		
+		btnCadastrar = new JButton(LocaleUtils.getLocaleView().getString("btn_cadastrar"));
+		btnCadastrar.addActionListener(this);
+		
+		panelContainer.add(btnCadastrar);
 		panelContainer.add(btnPesquisar);
-		panelContainer.add(new JButton(LocaleUtils.getLocaleView().getString("btn_excluir")));
 	}
 	
 	public void setTelaParaControle(JPanel tela) {
@@ -108,11 +103,6 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnLocacao) {
 			new LocacaoGUI();
-		} else if (e.getSource() == btnInicio) {
-			setTelaParaControle(null);
-			panelContainer.repaint();
-			telaPrincipalGUI.mudarTelaContainer(null);
-			this.add(panelContainer);
 		} else if (e.getSource() == btnPesquisar) {
 			ConsultaClienteGUI consultaClienteGUI = new ConsultaClienteGUI();
 			telaPrincipalGUI.mudarTelaContainer(consultaClienteGUI);

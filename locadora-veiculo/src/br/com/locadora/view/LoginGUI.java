@@ -24,6 +24,7 @@ import br.com.locadora.model.enums.LocaleEnum;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.CustomComboBox;
+import br.com.locadora.view.componentes.InputSoTexto;
 
 public class LoginGUI extends JFrame implements ItemListener{
 	private static final long serialVersionUID = -3763913627489904669L;
@@ -116,7 +117,9 @@ public class LoginGUI extends JFrame implements ItemListener{
 		panelLogin.setBounds(25, 160, 350, 110);
 		
 		// Input campo usuário
+		InputSoTexto inputSoTexto = new InputSoTexto();
 		txtUsuario = new JTextField(20);
+		txtUsuario.setInputVerifier(inputSoTexto);
 		lblUsuario.setBounds(10, 5, 100, 30);
 		txtUsuario.setBounds(115, 5, 180, 30);
 		panelLogin.add(lblUsuario);
@@ -190,6 +193,7 @@ public class LoginGUI extends JFrame implements ItemListener{
 				String usuario = txtUsuario.getText(); // Obtém a String que representa o usuário
 				String senha = String.valueOf(passwordField.getPassword()); // Obtém a String que representa a senha
 				String codigoAgencia = txtCodigoAgencia.getText();
+				
 				// Verifica se usuário foi preenchido
 				if (SystemUtils.isNuloOuVazio(usuario) || usuario.length() == 0 ) {
 					mensagemErro.append("O usuário não foi informado");

@@ -23,7 +23,6 @@ public class AgenciaDAO extends MysqlConnect {
 				resultado.setNomeFantasia(resultSet.getString(3));
 				resultado.setCnpj(resultSet.getString(4));
 				resultado.setInscricaoEstadual(resultSet.getString(5));
-				resultado.setInscricaoMunicipal(resultSet.getString(6));
 				resultado.setLogradouro(resultSet.getString(7));
 				resultado.setBairro(resultSet.getString(8));
 				resultado.setNumero(resultSet.getInt(9));
@@ -49,7 +48,6 @@ public class AgenciaDAO extends MysqlConnect {
 								"fantasia = ?," +
 								"cnpj = ?," +
 								"insc_estadual = ?," +
-								"ins_municipal = ?," +
 								"logradouro = ?," +
 								"bairro = ?," +
 								"numero = ?," +
@@ -65,7 +63,6 @@ public class AgenciaDAO extends MysqlConnect {
 			sqlSt.setString(2, agencia.getNomeFantasia());
 			sqlSt.setString(3, agencia.getCnpj());
 			sqlSt.setString(4, agencia.getInscricaoEstadual());
-			sqlSt.setString(5, agencia.getInscricaoMunicipal());
 			sqlSt.setString(6, agencia.getLogradouro());
 			sqlSt.setString(7, agencia.getBairro());
 			sqlSt.setInt(8, agencia.getNumero());

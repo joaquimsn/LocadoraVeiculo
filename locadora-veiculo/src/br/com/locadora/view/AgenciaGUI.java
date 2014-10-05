@@ -1,6 +1,8 @@
 package br.com.locadora.view;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 
 import javax.swing.JLabel;
@@ -9,6 +11,9 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import br.com.locadora.controller.AgenciaControl;
+import br.com.locadora.model.entity.Agencia;
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.FormularioEnderecoComponente;
@@ -26,6 +31,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 	private JTextField txtIncEstadual;
 	private JLabel lblResponsavel;
 	private JTextField txtResponsavel;
+	private FormularioEnderecoComponente formularioEndereco;
 	
 	private String tituloTela;
 	
@@ -91,7 +97,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		add(txtResponsavel);
 		
 		// Componete formulário para endereço
-		FormularioEnderecoComponente formularioEndereco = new FormularioEnderecoComponente();
+		formularioEndereco = new FormularioEnderecoComponente();
 		formularioEndereco.setBounds(30, 200, 800, 170);
 		add(formularioEndereco);
 		
@@ -102,5 +108,82 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		
 		this.setBounds(15, 10, 859, 500);
 		this.setVisible(true);
+		
+		botoesCrudComponente.btnSalvar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Agencia agencia = new Agencia();
+				
+				// Preenche o objeto agência com as informações infromada pelo usuário
+				agencia.setRazaoSocial(txtRazaoSocial.getText());
+				agencia.setNomeFantasia(txtFantasia.getText());
+				agencia.setCnpj(txtCnpj.getText());
+				agencia.setInscricaoEstadual(txtIncEstadual.getText());
+				agencia.setResponsavel(txtResponsavel.getText());
+				agencia.setLogradouro(formularioEndereco.getEndereco().getLogradouro());
+				agencia.setNumero(formularioEndereco.getEndereco().getNumero());
+				agencia.setBairro(formularioEndereco.getEndereco().getBairro());
+				agencia.setCep(formularioEndereco.getEndereco().getCep());
+				agencia.setUf(formularioEndereco.getEndereco().getUf());
+				agencia.setCidade(formularioEndereco.getEndereco().getCidade());
+				agencia.setTelefone(formularioEndereco.getEndereco().getTelefone());
+				agencia.setEmail(formularioEndereco.getEndereco().getEmail());
+				agencia.setSite(formularioEndereco.getEndereco().getSite());
+				
+				// Valida os dados preenchido pelo usuário
+				if (!validar(agencia)) {
+					return;
+				}
+				
+				// Persiste o objeto agência
+				AgenciaControl agenciaControl = new AgenciaControl();
+				agenciaControl.salvar(agencia);
+				
+				// Limpa os campos preenchidos
+				limparCampos();
+				formularioEndereco.limparCampos();
+				
+			}
+		});
+	}
+	
+	/**
+	 * Valida os campos preenchido pelo usuário
+	 * @author Joaquim Neto
+	 * @param agencia
+	 * @return <b>true</b> Se for valido
+	 */
+	private boolean validar(Agencia agencia) {
+		
+		// Verifica se os campos obrigatorios referente a agencia foram preenchido
+		if (!SystemUtils.isCamposObrigatoriosPreenchidos(agencia)) {
+			return false;
+		}
+		
+		// Verifica se os campos obrigatorios referente ao endereço foram preenchido
+		if (!SystemUtils.isCamposObrigatoriosPreenchidos(formularioEndereco.getEndereco())) {
+			return false;
+		}
+		
+		// Valida o cnpj
+		if (!SystemUtils.isCnpjValido(agencia.getCnpj())) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Limpa todos os valores inseridos
+	 * @author Joaquim Neto
+	 */
+	private void limparCampos() {
+		// Limpa os valores fields agência
+		txtCnpj.setText("");
+		txtFantasia.setText("");
+		txtIncEstadual.setText("");
+		txtRazaoSocial.setText("");
+		txtResponsavel.setText("");
 	}
 }

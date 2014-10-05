@@ -21,30 +21,10 @@ public class MainSistemaLocadora {
 			e.printStackTrace();
 		}
 		
-		// Garante que a lista de login está ordernada
-		Autenticacao autenticacao = new Autenticacao();
-		autenticacao.ordenarListaLogins();
-		
-//		System.out.println(autenticacao.getQuantidadeUsuarios());
-//		autenticacao.criptografar();
-	
-		
-		//Teste insert
-//		AgenciaDAO agenciaDAO = new AgenciaDAO();
-//		Agencia agencia = new Agencia();
-//		agencia.setBairro("Centro");
-//		agencia.setCep("02224-010");
-//		agencia.setCidade("São Paulo");
-//		agencia.setCnpj("17.481.473/0001-50");
-//		agencia.setEmail("teste@teste.com");
-//		agencia.setInscricaoEstadual("000.000.000");
-//		agencia.setLogradouro("Rua central");
-//		agencia.setNomeFantasia("ID & OTA Locação LTDA");
-//		agencia.setNumero(20);
-//		agencia.setRazaoSocial("Zé da esquina locação e venda LTDA");
-//		agencia.setUf("SP");
-//		
-//		agenciaDAO.insert(agencia);
+		// Garante que a lista de login foi criada e está ordernada
+		Autenticacao.criptografar();
+		Autenticacao.descriptografar();
+		Autenticacao.ordenarListaLogins();
 		
 		new LoginGUI();
 	}	

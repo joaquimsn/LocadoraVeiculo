@@ -9,8 +9,8 @@ import br.com.locadora.utils.IOUtils;
 public class Autenticacao implements Serializable{
 	private static final long serialVersionUID = -8361564707515153741L;
 	
-	private IOUtils iOUtils;
-	private CryptoAES cryptoAES;
+	private static IOUtils iOUtils;
+	private static CryptoAES cryptoAES;
 	private static String[] listaLoginsOrdernada;
 
 	/**
@@ -24,8 +24,10 @@ public class Autenticacao implements Serializable{
 	public static Boolean autenticar(String usuario, String senha, String agencia) {
 		String login = usuario + "-" + agencia + "-" + senha;
 		
+		// Descriptografa o arquivo de autentiação para validar o login
+		descriptografar();
+		
 		int meio = 0;
-		int numeroIteracao = 0;
 		int inicio = 0;
 		int fim = listaLoginsOrdernada.length - 1;
 		
@@ -35,8 +37,6 @@ public class Autenticacao implements Serializable{
 		}
 
 		while (inicio <= fim) {
-			numeroIteracao++;
-			
 			// Obtém o meio do array
 			meio = ((inicio + fim) / 2);
 			
@@ -61,7 +61,7 @@ public class Autenticacao implements Serializable{
 	 * @author Joaquim Neto
 	 * @return texto criptografado
 	 */
-	public String criptografar() {
+	public static String criptografar() {
 		// Objeto responsavel por ler e gravar aquivos
 		iOUtils = new IOUtils();
 		
@@ -99,7 +99,7 @@ public class Autenticacao implements Serializable{
 	 * @author Joaquim Neto
 	 * @return String o conteúdo descriptografado
 	 */
-	private String descriptografar() {
+	public static String descriptografar() {
 		// Objeto responsavel por ler e gravar aquivos txt
 		iOUtils = new IOUtils();
 		
@@ -122,7 +122,7 @@ public class Autenticacao implements Serializable{
 			// Converte o texto byte[] no equivalente String
 			msgDecifradaString = (new String(cryptoAES.getTextoDecifrado(), "ISO-8859-1"));
 			
-			iOUtils.gravarArquivo(new File("usuario-decifrado.txt"), msgDecifradaString);
+//			iOUtils.gravarArquivo(new File("usuario-decifrado.txt"), msgDecifradaString);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -135,7 +135,7 @@ public class Autenticacao implements Serializable{
 	 * Ordena a lista de logins em ordem ASC
 	 * @author Joaquim Neto
 	 */
-	public void ordenarListaLogins() {
+	public static void ordenarListaLogins() {
 		listaLoginsOrdernada = getListaLogins();
 		
 		// Variável auxiliar para ordernação da lista
@@ -165,7 +165,7 @@ public class Autenticacao implements Serializable{
 	 * @author Joaquim Neto
 	 * @return int quantidade de login registrados
 	 */
-	public int getQuantidadeUsuarios() {
+	public static int getQuantidadeUsuarios() {
 		String aux[] = descriptografar().split("[^a-z-A-Z0-9\\-]");
 		
 		return aux.length + 1;
@@ -177,7 +177,7 @@ public class Autenticacao implements Serializable{
 	 * @author Joaquim Neto
 	 * @return String[] com os logins
 	 */
-	private String[] getListaLogins() {
+	private static String[] getListaLogins() {
 		// Os logins são separados por ';' então é usada  a expressão abaixo para 
 		// para criar um array, onde cada index corresponde a um login
 		// obs: o ponto e virgula não está presente no novo array

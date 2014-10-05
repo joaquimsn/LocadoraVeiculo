@@ -59,7 +59,7 @@ public class LocaleUtils {
 
 		try {
 			// Carrega o properties
-			inputStream = new FileInputStream("./src/br/com/locadora/utils/locale/defaultLocale.properties");
+			inputStream = new FileInputStream(ClassLoader.getSystemResource("br/com/locadora/utils/locale/defaultLocale.properties").getFile());
 			property.load(inputStream);
 
 		} catch (Exception e) {
@@ -80,7 +80,7 @@ public class LocaleUtils {
 		OutputStream outputStream = null;
 
 		try {
-			outputStream = new FileOutputStream("./src/br/com/locadora/utils/locale/defaultLocale.properties");
+			outputStream = new FileOutputStream(ClassLoader.getSystemResource("br/com/locadora/utils/locale/defaultLocale.properties").getFile());
 			property.setProperty("locale_default", localeId);
 
 			property.store(outputStream, null);

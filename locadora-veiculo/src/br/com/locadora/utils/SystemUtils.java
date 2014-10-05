@@ -31,6 +31,7 @@ public class SystemUtils {
 		Class<?> classe = objeto.getClass();
 		Field[] atributos = classe.getDeclaredFields();
 		boolean camposValidos = true;
+		StringBuilder mensagem = new StringBuilder("Mínimo ");
 
 		for (Field atributo : atributos) {
 			// Tentando obter a annotation Required
@@ -47,13 +48,11 @@ public class SystemUtils {
 					// Verificando o tamanho mínimo (length) para este atributo
 					if (valor == null || valor.toString().length() < required.minimo()) {
 						// Criando mensagem de validação
-						StringBuilder mensagem = new StringBuilder("Mínimo ");
 						mensagem.append(required.minimo());
 						mensagem.append(" caractere(s) para ");
 						mensagem.append(required.label());
-
-						// Adicionando mensagem de validação
-						JOptionPane.showMessageDialog(null, mensagem);
+						mensagem.append("\n");
+						
 						camposValidos = false;
 					}
 				} catch (Exception e) {
@@ -61,6 +60,12 @@ public class SystemUtils {
 				}
 			}
 		}
+		
+		// Adicionando mensagem de validação
+		if (!mensagem.toString().equals("Mínimo ")) {
+			JOptionPane.showMessageDialog(null, mensagem);
+		}
+		
 		return camposValidos;
 	}
 
