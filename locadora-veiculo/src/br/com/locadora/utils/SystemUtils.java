@@ -18,6 +18,7 @@ import java.util.UUID;
 import javax.swing.JOptionPane;
 
 import br.com.locadora.utils.annotation.Required;
+import br.com.locadora.utils.locale.LocaleUtils;
 
 public class SystemUtils {
 	/**
@@ -31,7 +32,7 @@ public class SystemUtils {
 		Class<?> classe = objeto.getClass();
 		Field[] atributos = classe.getDeclaredFields();
 		boolean camposValidos = true;
-		StringBuilder mensagem = new StringBuilder("Mínimo ");
+		StringBuilder mensagem = new StringBuilder(LocaleUtils.getLocaleMessages().getString("falha_minimo")+" ");
 
 		for (Field atributo : atributos) {
 			// Tentando obter a annotation Required
@@ -49,7 +50,7 @@ public class SystemUtils {
 					if (valor == null || valor.toString().length() < required.minimo()) {
 						// Criando mensagem de validação
 						mensagem.append(required.minimo());
-						mensagem.append(" caractere(s) para ");
+						mensagem.append(" " + LocaleUtils.getLocaleMessages().getString("falha_caracteres") + " ");
 						mensagem.append(required.label());
 						mensagem.append("\n");
 						
@@ -62,7 +63,7 @@ public class SystemUtils {
 		}
 		
 		// Adicionando mensagem de validação
-		if (!mensagem.toString().equals("Mínimo ")) {
+		if (!mensagem.toString().equals(LocaleUtils.getLocaleMessages().getString("falha_minimo") + " ")) {
 			JOptionPane.showMessageDialog(null, mensagem);
 		}
 		
@@ -98,9 +99,9 @@ public class SystemUtils {
 					// Verificando o tamanho mínimo (length) para este atributo
 					if (valor == null || valor.toString().length() < required.minimo()) {
 						// Criando mensagem de validação
-						StringBuilder mensagem = new StringBuilder("Mínimo ");
+						StringBuilder mensagem = new StringBuilder(LocaleUtils.getLocaleMessages().getString("falha_minimo") + " ");
 						mensagem.append(required.minimo());
-						mensagem.append(" caractere(s) para ");
+						mensagem.append(" " + LocaleUtils.getLocaleMessages().getString("falha_caracteres") + " ");
 						mensagem.append(required.label());
 
 						// Adicionando mensagem de validação
@@ -358,8 +359,9 @@ public class SystemUtils {
 	 * @return <b>true</b> se CPF é válido
 	 */
 	public static boolean isCpfValido(String CPF) {
+		String erroInvalido = LocaleUtils.getLocaleMessages().getString("falha_cpfinvalido");
 		if (CPF == null) {
-			System.out.println("CPF informado é inválido");
+			System.out.println(erroInvalido);
 			return false;
 		}
 
@@ -372,7 +374,7 @@ public class SystemUtils {
 				|| CPF.equals("33333333333") || CPF.equals("44444444444") || CPF.equals("55555555555")
 				|| CPF.equals("66666666666") || CPF.equals("77777777777") || CPF.equals("88888888888")
 				|| CPF.equals("99999999999") || (CPF.length() != 11)) {
-			System.out.println("CPF informado é inválido");
+			System.out.println(erroInvalido);
 			return false;
 		}
 
@@ -417,12 +419,12 @@ public class SystemUtils {
 			if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10)))
 				return (true);
 			else {
-				System.out.println("CPF informado é inválido");
+				System.out.println(erroInvalido);
 				return false;
 			}
 
 		} catch (InputMismatchException erro) {
-			System.err.println("Erro ao validar o CPF");
+			System.err.println(LocaleUtils.getLocaleMessages().getString("falha_validacaocpf"));
 			return false;
 		}
 	}
@@ -434,8 +436,9 @@ public class SystemUtils {
 	 * @return <b>true</b> se CNPJ é válido
 	 */
 	public static boolean isCnpjValido(String CNPJ) {
+		String erroInvalido = LocaleUtils.getLocaleMessages().getString("falha_validacaocpf");
 		if (CNPJ == null) {
-			System.out.println("CNPJ informado é inválido");
+			System.out.println(erroInvalido);
 			return false;
 		}
 
@@ -449,7 +452,7 @@ public class SystemUtils {
 				|| CNPJ.equals("33333333333333") || CNPJ.equals("44444444444444") || CNPJ.equals("55555555555555")
 				|| CNPJ.equals("66666666666666") || CNPJ.equals("77777777777777") || CNPJ.equals("88888888888888")
 				|| CNPJ.equals("99999999999999") || (CNPJ.length() != 14)) {
-			System.out.println("CNPJ informado é inválido");
+			System.out.println(erroInvalido);
 			return false;
 		}
 
@@ -498,12 +501,12 @@ public class SystemUtils {
 			if ((dig13 == CNPJ.charAt(12)) && (dig14 == CNPJ.charAt(13)))
 				return (true);
 			else {
-				System.out.println("CNPJ informado é inválido");
+				System.out.println(erroInvalido);
 				return false;
 			}
 
 		} catch (InputMismatchException erro) {
-			System.err.println("Erro ao validar o CNPJ");
+			System.err.println(LocaleUtils.getLocaleMessages().getString("falha_validacaocnpj"));
 			return false;
 		}
 	}

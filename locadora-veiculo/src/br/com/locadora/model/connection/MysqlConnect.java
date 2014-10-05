@@ -3,6 +3,8 @@ package br.com.locadora.model.connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public class MysqlConnect {
 
 	public Connection conn = null;
@@ -21,7 +23,7 @@ public class MysqlConnect {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url + dbName, userName, password);
 		} catch (Exception e) {
-			System.out.println("erro:\n");
+			System.out.println(LocaleUtils.getLocaleMessages().getString("falha_erro")+"\n");
 			e.printStackTrace();
 		}
 	}
