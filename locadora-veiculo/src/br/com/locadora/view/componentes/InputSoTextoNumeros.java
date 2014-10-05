@@ -9,16 +9,16 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 /**
- * Validação para campos que aceita apenas texto
- * forma de usar: <b>InputSoTexto soTexto = new InputSoTexto();</br>
- * textField.setInputVerifier(soTexto);</b>
+ * Validação para campos que aceita apenas numeros
+ * forma de usar: <b>InputSoTextoNumeros soTextoNumeros = new InputSoTextoNumeros();</br>
+ * textField.setInputVerifier(soTextoNumeros);</b>
  * @author Joaquim Neto
  */
-public class InputSoTexto extends InputVerifier{
+public class InputSoTextoNumeros extends InputVerifier {
 	
 	private boolean upperCase;
 	
-	public InputSoTexto() {
+	public InputSoTextoNumeros() {
 		upperCase = true;
 	}
 	
@@ -27,18 +27,17 @@ public class InputSoTexto extends InputVerifier{
 	 * @author Joaquim Neto
 	 * @param upperCase boolean
 	 */
-	public InputSoTexto(boolean upperCase) {
+	public InputSoTextoNumeros(boolean upperCase) {
 		this.upperCase = upperCase;
 	}
-
+	
 	@Override
 	public boolean verify(JComponent input) {
-		
 		if (input.getClass() == JTextField.class) {
 			JTextField textField = (JTextField) input;
 			
 			// Obtém apenas o texto do campo
-			String[] campo = textField.getText().split("[^a-z A-ZÁáÃãÂâÉéÊêÍíÓóÕõÔôÚúÑñÇç]");
+			String[] campo = textField.getText().split("[^a-z A-Z0-9.,ÁáÃãÂâÉéÊêÍíÓóÕõÔôÚúÑñÇç]");
 			
 			// Se o campo não for vazio, faz a validação
 			if (campo.length > 0) {
@@ -61,7 +60,7 @@ public class InputSoTexto extends InputVerifier{
 				
 				return true;
 			} else {
-				JOptionPane.showMessageDialog(input, "Esse campo só aceita texto");
+				JOptionPane.showMessageDialog(input, "Esse campo só aceita texto e números");
 				
 				// Define a cor vermelha para o background
 				input.setBackground( Color.red );

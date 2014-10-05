@@ -24,7 +24,9 @@ import br.com.locadora.model.enums.LocaleEnum;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.CustomComboBox;
+import br.com.locadora.view.componentes.InputSoNumeros;
 import br.com.locadora.view.componentes.InputSoTexto;
+import br.com.locadora.view.componentes.inputSenha;
 
 public class LoginGUI extends JFrame implements ItemListener{
 	private static final long serialVersionUID = -3763913627489904669L;
@@ -117,7 +119,7 @@ public class LoginGUI extends JFrame implements ItemListener{
 		panelLogin.setBounds(25, 160, 350, 110);
 		
 		// Input campo usuário
-		InputSoTexto inputSoTexto = new InputSoTexto();
+		InputSoTexto inputSoTexto = new InputSoTexto(false);
 		txtUsuario = new JTextField(20);
 		txtUsuario.setInputVerifier(inputSoTexto);
 		lblUsuario.setBounds(10, 5, 100, 30);
@@ -126,14 +128,18 @@ public class LoginGUI extends JFrame implements ItemListener{
 		panelLogin.add(txtUsuario);
 		
 		// Input campo senha
+		inputSenha inputSenha = new inputSenha();
 		passwordField = new JPasswordField();
+		passwordField.setInputVerifier(inputSenha);
 		lblSenha.setBounds(10, 40, 100, 30);
 		passwordField.setBounds(115, 40, 180, 30);
 		panelLogin.add(lblSenha);
 		panelLogin.add(passwordField);
 		
 		// Input campo códifo agência
+		InputSoNumeros soNumeros = new InputSoNumeros();
 		txtCodigoAgencia = new JTextField(10);
+		txtCodigoAgencia.setInputVerifier(soNumeros);
 		lblCodigoAgencia.setBounds(10, 80, 100, 30);
 		txtCodigoAgencia.setBounds(115, 80, 75, 30);
 		panelLogin.add(lblCodigoAgencia);

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,6 +18,9 @@ import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.FormularioEnderecoComponente;
+import br.com.locadora.view.componentes.InputSoNumeros;
+import br.com.locadora.view.componentes.InputSoTexto;
+import br.com.locadora.view.componentes.InputSoTextoNumeros;
 
 public class AgenciaGUI extends JPanel implements Serializable{
 	private static final long serialVersionUID = 48295538249135551L;
@@ -26,7 +30,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 	private JLabel lblFantasia;
 	private JTextField txtFantasia;
 	private JLabel lblCnpj;
-	private JTextField txtCnpj;
+	private JFormattedTextField txtCnpj;
 	private JLabel lblInscEstadual;
 	private JTextField txtIncEstadual;
 	private JLabel lblResponsavel;
@@ -56,11 +60,17 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), tituloTela, TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		setLayout(null);
 		
+		// InputVerifier para validações genéricas dos campos
+		InputSoNumeros soNumeros = new InputSoNumeros();
+		InputSoTextoNumeros soTextoNumeros = new InputSoTextoNumeros();
+		InputSoTexto soTexto = new InputSoTexto();
+		
 		lblRazoSocial = new JLabel(LocaleUtils.getLocaleView().getString("lbl_razao_social"));
 		lblRazoSocial.setBounds(35, 40, 125, 20);
 		add(lblRazoSocial);
 		
 		txtRazaoSocial = new JTextField(10);
+		txtRazaoSocial.setInputVerifier(soTextoNumeros); // Adiciona validação soTextoNumeros
 		txtRazaoSocial.setBounds(30, 60, 800, 30);
 		add(txtRazaoSocial);
 		
@@ -69,6 +79,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		add(lblFantasia);
 		
 		txtFantasia = new JTextField(10);
+		txtFantasia.setInputVerifier(soTextoNumeros); // Adiciona validação soTextoNumeros
 		txtFantasia.setBounds(30, 110, 370, 30);
 		add(txtFantasia);
 		
@@ -76,7 +87,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		lblCnpj.setBounds(410, 90, 125, 20);
 		add(lblCnpj);
 		
-		txtCnpj = new JTextField(10);
+		txtCnpj = new JFormattedTextField(Mask.maskCnpj());
 		txtCnpj.setBounds(405, 110, 220, 30);
 		add(txtCnpj);
 		
@@ -85,6 +96,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		add(lblInscEstadual);
 		
 		txtIncEstadual = new JTextField(10);
+		txtIncEstadual.setInputVerifier(soNumeros); // Adiciona validação soNumeros
 		txtIncEstadual.setBounds(630, 110, 200, 30);
 		add(txtIncEstadual);
 		
@@ -93,6 +105,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		add(lblResponsavel);
 		
 		txtResponsavel = new JTextField(10);
+		txtResponsavel.setInputVerifier(soTexto); // Adiciona validação soTexto
 		txtResponsavel.setBounds(30, 165, 600, 30);
 		add(txtResponsavel);
 		
@@ -138,7 +151,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 				
 				// Persiste o objeto agência
 				AgenciaControl agenciaControl = new AgenciaControl();
-				agenciaControl.salvar(agencia);
+				agenciaControl.salvarOuAlterar(agencia);
 				
 				// Limpa os campos preenchidos
 				limparCampos();
@@ -151,7 +164,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 	/**
 	 * Valida os campos preenchido pelo usuário
 	 * @author Joaquim Neto
-	 * @param agencia
+	 * @param agencia Objeto Agencia
 	 * @return <b>true</b> Se for valido
 	 */
 	private boolean validar(Agencia agencia) {
@@ -175,7 +188,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 	}
 	
 	/**
-	 * Limpa todos os valores inseridos
+	 * Limpa todos os campos preenchidos pelo usuário
 	 * @author Joaquim Neto
 	 */
 	private void limparCampos() {

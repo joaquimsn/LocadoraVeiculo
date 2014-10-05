@@ -3,12 +3,14 @@ package br.com.locadora.view.componentes;
 import java.io.Serializable;
 
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import br.com.locadora.model.vo.Endereco;
 import br.com.locadora.utils.locale.LocaleUtils;
+import br.com.locadora.view.Mask;
 
 public class FormularioEnderecoComponente extends JPanel implements Serializable {
 	private static final long serialVersionUID = 2863741403200090086L;
@@ -27,7 +29,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 	// Inputs
 	private JTextField txtLogradouro;
 	private JTextField txtNumero;
-	private JTextField txtCep;
+	private JFormattedTextField txtCep;
 	private JComboBox cbxUf;
 	private JComboBox cbxCidade;
 	private JTextField txtEmail;
@@ -59,13 +61,18 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 	 */
 	private void inicializar() {
 		setLayout(null);
-		setSize(800, 170);
-
+		
+		// InputVerifier para validações genéricas dos campos
+		InputSoNumeros soNumeros = new InputSoNumeros();
+		InputSoTextoNumeros soTextoNumeros = new InputSoTextoNumeros();
+		InputSoTexto soTexto = new InputSoTexto();
+		
 		lblLogradouro = new JLabel(LocaleUtils.getLocaleView().getString("lbl_logradouro"));
 		lblLogradouro.setBounds(5, 5, 150, 20);
 		add(lblLogradouro);
 		
 		txtLogradouro = new JTextField(10);
+		txtLogradouro.setInputVerifier(soTextoNumeros); // Adiciona a validação soTextoNumeros
 		txtLogradouro.setBounds(0, 25, 450, 30);
 		add(txtLogradouro);
 		
@@ -74,6 +81,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		add(lblNumero);
 		
 		txtNumero = new JTextField(10);
+		txtNumero.setInputVerifier(soNumeros);// Adiciona a validação soNumeros
 		txtNumero.setBounds(455, 25, 125, 30);
 		add(txtNumero);
 		
@@ -82,6 +90,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		add(lblBairro);
 		
 		txtBairro = new JTextField(10);
+		txtBairro.setInputVerifier(soTexto);// Adiciona a validação soTexto
 		txtBairro.setBounds(585, 25, 210, 30);
 		add(txtBairro);
 		
@@ -89,7 +98,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		lblCep.setBounds(5, 60, 141, 20);
 		add(lblCep);
 		
-		txtCep = new JTextField(10);
+		txtCep = new JFormattedTextField(Mask.maskCep()); // Adiciona a mascara de CEP
 		txtCep.setBounds(0, 80, 200, 30);
 		add(txtCep);
 		
@@ -116,6 +125,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		add(lblTelefone);
 		
 		txtTelefone = new JTextField(10);
+		txtTelefone.setInputVerifier(soNumeros); // Adiciona a validação soNumeros
 		txtTelefone.setBounds(545, 80, 250, 30);
 		add(txtTelefone);
 		
@@ -135,6 +145,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		txtSite.setBounds(305, 135, 305, 30);
 		add(txtSite);
 		
+		setSize(800, 170);
 		setVisible(true);
 	}
 	
