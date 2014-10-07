@@ -12,7 +12,7 @@ CREATE TABLE agencia (
  logradouro VARCHAR(50) NOT NULL,
  bairro VARCHAR(25) NOT NULL,
  numero VARCHAR(7) NOT NULL,
- cep VARCHAR(8) NOT NULL,
+ cep VARCHAR(9) NOT NULL,
  cidade VARCHAR(30) NOT NULL,
  uf VARCHAR(2) NOT NULL,
  telefone VARCHAR(11),

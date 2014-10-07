@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -151,12 +152,15 @@ public class AgenciaGUI extends JPanel implements Serializable{
 				
 				// Persiste o objeto agência
 				AgenciaControl agenciaControl = new AgenciaControl();
-				agenciaControl.salvarOuAlterar(agencia);
 				
-				// Limpa os campos preenchidos
-				limparCampos();
-				formularioEndereco.limparCampos();
-				
+				// Verifica se foi cadastrado com sucesso
+				if (agenciaControl.salvarOuAlterar(agencia)) {
+					// Limpa os campos preenchidos
+					limparCampos();
+					formularioEndereco.limparCampos();
+				} else {
+					JOptionPane.showMessageDialog(lblRazoSocial, "Erro fatal ao salvar os dados");
+				}
 			}
 		});
 	}

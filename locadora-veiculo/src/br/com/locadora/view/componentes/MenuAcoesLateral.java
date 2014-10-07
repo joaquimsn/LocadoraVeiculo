@@ -15,6 +15,9 @@ import javax.swing.border.TitledBorder;
 
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
+import br.com.locadora.view.AgenciaGUI;
+import br.com.locadora.view.ClienteGUI;
+import br.com.locadora.view.ConsultaAgenciaGUI;
 import br.com.locadora.view.ConsultaClienteGUI;
 import br.com.locadora.view.DevolucaoGUI;
 import br.com.locadora.view.LocacaoGUI;
@@ -104,8 +107,15 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 		if (e.getSource() == btnLocacao) {
 			new LocacaoGUI();
 		} else if (e.getSource() == btnPesquisar) {
-			ConsultaClienteGUI consultaClienteGUI = new ConsultaClienteGUI();
-			telaPrincipalGUI.mudarTelaContainer(consultaClienteGUI);
+			// Tela pesquisa cliente
+			if (telaParaControle.getClass() == ClienteGUI.class) {
+				telaPrincipalGUI.mudarTelaContainer(new ConsultaClienteGUI());
+			
+			// Tela pesquisa agência	
+			} else if (telaParaControle.getClass() == AgenciaGUI.class) {
+				telaPrincipalGUI.mudarTelaContainer(new ConsultaAgenciaGUI());
+			}
+			
 		} else if (e.getSource() == btnDevolucao) {
 			new DevolucaoGUI();
 		}

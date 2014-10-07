@@ -2,6 +2,8 @@ package br.com.locadora.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,9 +19,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import br.com.locadora.model.enums.ParametroPesquisaAgenciaEnum;
 import br.com.locadora.utils.locale.LocaleUtils;
+import br.com.locadora.view.componentes.InputSoTextoNumeros;
 
-public class ConsultaAgenciaGUI extends JPanel {
+public class ConsultaAgenciaGUI extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 65619500338126805L;
 	
 	// Lables
@@ -56,16 +60,18 @@ public class ConsultaAgenciaGUI extends JPanel {
 		panelParametroPesquisa.setBounds(20, 20, 820, 62);
 		add(panelParametroPesquisa);
 		panelParametroPesquisa.setLayout(null);
-		//LocaleUtils.getLocaleView().getString("lbl_parametro_pesquisa")
 		lblParametroPesquisa = new JLabel(LocaleUtils.getLocaleView().getString("lbl_parametro_pesquisa"));
 		lblParametroPesquisa.setBounds(10, 5, 200, 20);
 		panelParametroPesquisa.add(lblParametroPesquisa);
 		
-		cbxParametroPesquisa = new JComboBox();
+		cbxParametroPesquisa = new JComboBox(ParametroPesquisaAgenciaEnum.getDisplayList().toArray());
 		cbxParametroPesquisa.setBounds(5, 25, 200, 30);
 		panelParametroPesquisa.add(cbxParametroPesquisa);
 		
-		txtPesquisa = new JTextField();
+		// Validação para campo soTextoNumero
+		InputSoTextoNumeros soTextoNumeros = new InputSoTextoNumeros();
+		txtPesquisa = new JTextField(10);
+		txtPesquisa.setInputVerifier(soTextoNumeros);
 		txtPesquisa.setBounds(215, 25, 300, 30);
 		panelParametroPesquisa.add(txtPesquisa);
 		txtPesquisa.setColumns(10);
@@ -109,25 +115,17 @@ public class ConsultaAgenciaGUI extends JPanel {
 		col = table.getColumnModel().getColumn(0);
 		col.setPreferredWidth(60);
 		col.setCellRenderer(centerRenderer1);
-
+		
 		col = table.getColumnModel().getColumn(1);
 		col.setPreferredWidth(150);
 		col.setCellRenderer(centerRenderer);
 
 		col = table.getColumnModel().getColumn(2);
-		col.setPreferredWidth(250);
+		col.setPreferredWidth(350);
 		col.setCellRenderer(centerRenderer);
 
 		col = table.getColumnModel().getColumn(3);
-		col.setPreferredWidth(150);
-		col.setCellRenderer(centerRenderer);
-
-		col = table.getColumnModel().getColumn(4);
-		col.setPreferredWidth(150);
-		col.setCellRenderer(centerRenderer1);
-
-		col = table.getColumnModel().getColumn(5);
-		col.setPreferredWidth(50);
+		col.setPreferredWidth(250);
 		col.setCellRenderer(centerRenderer);
 
 		return table;
@@ -158,12 +156,16 @@ public class ConsultaAgenciaGUI extends JPanel {
 			}
 		};
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("col_codigo"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cpf"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_nome"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cnh"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cidade"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_uf"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cnpj"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_razao_social"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_responsavel"));
 
 		return defaultTableModel;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

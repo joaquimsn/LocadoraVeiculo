@@ -24,12 +24,10 @@ public class AgenciaControl implements Serializable{
 	 */
 	public boolean salvarOuAlterar(Agencia agencia) {
 		if (!SystemUtils.isNuloOuVazio(agencia) && agencia.getId() == 0) {
-			salvar(agencia);
+			return salvar(agencia);
 		} else {
-			alterar(agencia);
+			return alterar(agencia);
 		}
-		
-		return true;
 	}
 	
 	/**
