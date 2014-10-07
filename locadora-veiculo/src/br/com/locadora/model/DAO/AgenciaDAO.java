@@ -112,12 +112,13 @@ public class AgenciaDAO extends MysqlConnect {
 							"uf," +
 							"telefone," +
 							"email," +
-							"site" +
-							"data_cadastro = ?" +
-							"data_manutencao = ?" +
-							"ativo = ?" +
+							"site," +
+							"data_cadastro," +
+							"data_manutencao," +
+							"ativo)" +
 						"VALUES" +
 						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, agencia.getRazaoSocial());
 			sqlSt.setString(2, agencia.getNomeFantasia());

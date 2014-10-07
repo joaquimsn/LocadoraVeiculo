@@ -23,7 +23,7 @@ import br.com.locadora.model.enums.ParametroPesquisaAgenciaEnum;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.InputSoTextoNumeros;
 
-public class ConsultaAgenciaGUI extends JPanel implements ActionListener{
+public class ConsultaAgenciaGUI extends JPanel {
 	private static final long serialVersionUID = 65619500338126805L;
 	
 	// Lables
@@ -91,6 +91,17 @@ public class ConsultaAgenciaGUI extends JPanel implements ActionListener{
 		
 		this.setBounds(15, 10, 860, 600);
 		setVisible(true);
+		
+		btnPesquisar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pesquisar();
+				
+				new AlteraAgenciaGUI();
+				
+			}
+		});
 	}
 	
 	/**
@@ -155,6 +166,7 @@ public class ConsultaAgenciaGUI extends JPanel implements ActionListener{
 				return false;
 			}
 		};
+		
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("col_codigo"));
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cnpj"));
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_razao_social"));
@@ -162,10 +174,13 @@ public class ConsultaAgenciaGUI extends JPanel implements ActionListener{
 
 		return defaultTableModel;
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	
+	public void pesquisar() {
+		String[] linha = {"000","43.443.581/0001-49","João Mané", "Joao"}; 
+		defaultTableModel.addRow(linha);
+		defaultTableModel.addRow(linha);
+		defaultTableModel.addRow(linha);
+		defaultTableModel.addRow(linha);
 		
 	}
 }

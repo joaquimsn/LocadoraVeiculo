@@ -1,3 +1,4 @@
+
 package br.com.locadora.controller;
 
 import java.io.Serializable;
@@ -37,9 +38,7 @@ public class AgenciaControl implements Serializable{
 	 * @return <b>true</b> Se for cadastrado com sucesso
 	 */
 	private boolean salvar(Agencia agencia) {
-		agenciaDAO.insert(agencia);
-		
-		return true;
+		return agenciaDAO.insert(agencia);
 	}
 	
 	/**
@@ -60,6 +59,20 @@ public class AgenciaControl implements Serializable{
 	 * @return List com todas as agências cadastradas
 	 */
 	public List<Agencia> buscarTodos() {
+		return null;
+	}
+	
+	/**
+	 * Busca uma agência na base pelo id informado por parâmetro
+	 * @author Joaquim Neto
+	 * @param id INT ind
+	 * @return Agencia
+	 */
+	public Agencia buscarPorId(int id) {
+		return null;
+	}
+	
+	public List<Agencia> buscarPorCondicao(String parametro, String valor) {
 		return null;
 	}
 }
