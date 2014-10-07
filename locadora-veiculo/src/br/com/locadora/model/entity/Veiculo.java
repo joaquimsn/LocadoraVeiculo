@@ -1,4 +1,7 @@
 package br.com.locadora.model.entity;
+
+import java.util.Date;
+
 public class Veiculo {
 	private int id;
 	private String modelo;
@@ -6,7 +9,7 @@ public class Veiculo {
 	private String imagem;
 	private int ano;
 	private int grupo;
-	private String acessorio;
+	private int acessorio;
 	private String chassi;
 	private String placa;
 	private String cidade;
@@ -14,133 +17,198 @@ public class Veiculo {
 	private double kmRodado;
 	private double precoKmLivre;
 	private double precoKmControlado;
-	private String status;
-	private Devolucao devolucao;
-	private Locacao locacao;
-	private Agencia agencia;
-	
-	public Veiculo(){
-		
+	private int status;
+	private int idAgencia;
+	private int idFuncionario;
+	private Date dataCadastro;
+	private Date dataManutencao;
+	private boolean ativo;
+
+	public Veiculo() {
+
 	}
 
-	public int getId(){
+	public int getId() {
 		return id;
 	}
-	
-	public void setId(int id){
+
+	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getModelo() {
 		return modelo;
 	}
+
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
+
 	public String getFabricante() {
 		return fabricante;
 	}
+
 	public void setFabricante(String fabricante) {
 		this.fabricante = fabricante;
 	}
+
 	public String getImagem() {
 		return imagem;
 	}
+
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
 	}
+
 	public int getAno() {
 		return ano;
 	}
+
 	public void setAno(int ano) {
 		this.ano = ano;
 	}
+
 	public int getGrupo() {
 		return grupo;
 	}
+
 	public void setGrupo(int grupo) {
 		this.grupo = grupo;
 	}
-	public String getAcessorio() {
+
+	public int getAcessorio() {
 		return acessorio;
 	}
-	public void setAcessorio(String acessorio) {
+
+	public void setAcessorio(int acessorio) {
 		this.acessorio = acessorio;
 	}
+
 	public String getChassi() {
 		return chassi;
 	}
+
 	public void setChassi(String chassi) {
 		this.chassi = chassi;
 	}
+
 	public String getPlaca() {
 		return placa;
 	}
+
 	public void setPlaca(String placa) {
 		this.placa = placa;
 	}
+
 	public String getCidade() {
 		return cidade;
 	}
+
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
+
 	public String getUf() {
 		return uf;
 	}
+
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
+
 	public double getKmRodado() {
 		return kmRodado;
 	}
+
 	public void setKmRodado(double kmRodado) {
 		this.kmRodado = kmRodado;
 	}
+
 	public double getPrecoKmLivre() {
 		return precoKmLivre;
 	}
+
 	public void setPrecoKmLivre(double precoKmLivre) {
 		this.precoKmLivre = precoKmLivre;
 	}
+
 	public double getPrecoKmControlado() {
 		return precoKmControlado;
 	}
+
 	public void setPrecoKmControlado(double precoKmControlado) {
 		this.precoKmControlado = precoKmControlado;
 	}
-	public String getStatus() {
+
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+
+	public void setStatus(int status) {
 		this.status = status;
 	}
-	public Devolucao getDevolucao() {
-		return devolucao;
-	}
-	public void setDevolucao(Devolucao devolucao) {
-		this.devolucao = devolucao;
-	}
-	public Locacao getLocacao() {
-		return locacao;
-	}
-	public void setLocacao(Locacao locacao) {
-		this.locacao = locacao;
-	}
-	public Agencia getAgencia() {
-		return agencia;
+
+	public int getIdAgencia() {
+		return idAgencia;
 	}
 
-	public void setAgencia(Agencia agencia) {
-		this.agencia = agencia;
+	public void setIdAgencia(int idAgencia) {
+		this.idAgencia = idAgencia;
 	}
 
-	public void Cadastrar() {
+	/**
+	 * @return the idFuncionario
+	 */
+	public int getIdFuncionario() {
+		return idFuncionario;
 	}
-	public void Consultar() {
+
+	/**
+	 * @param idFuncionario the idFuncionario to set
+	 */
+	public void setIdFuncionario(int idFuncionario) {
+		this.idFuncionario = idFuncionario;
 	}
-	public void Alterar() {
+
+	/**
+	 * @return the dataCadastro
+	 */
+	public Date getDataCadastro() {
+		return dataCadastro;
 	}
-	public void Inativar() {
+
+	/**
+	 * @param dataCadastro the dataCadastro to set
+	 */
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	/**
+	 * @return the dataManutenção
+	 */
+	public Date getDataManutencao() {
+		return dataManutencao;
+	}
+
+	/**
+	 * @param dataManutencao the dataManutencao to set
+	 */
+	public void setDataManutencao(Date dataManutencao) {
+		this.dataManutencao = dataManutencao;
+	}
+
+	/**
+	 * @return the ativo
+	 */
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	/**
+	 * @param ativo the ativo to set
+	 */
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 }

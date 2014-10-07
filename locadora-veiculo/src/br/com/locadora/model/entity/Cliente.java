@@ -18,7 +18,11 @@ public class Cliente {
 	private int numero;
 	private String telefone;
 	private String email;
-	private int agencia;
+	private int idAgencia;
+	private int idFncionario;
+	private Date dataCadastro;
+	private Date dataManutencao;
+	private boolean ativo;
 	
 	public Cliente(){
 		setId(0);
@@ -150,19 +154,68 @@ public class Cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getAgencia() {
-		return agencia;
+	public int getIdAgencia() {
+		return idAgencia;
 	}
 
-	public void setAgencia(int agencia) {
-		this.agencia = agencia;
+	public void setIdAgencia(int agencia) {
+		this.idAgencia = agencia;
 	}
 
-	public void cadastrar() {
-	
+	/**
+	 * @return the idFncionario
+	 */
+	public int getIdFncionario() {
+		return idFncionario;
 	}
-	public void consultar() {
 
+	/**
+	 * @param idFncionario the idFncionario to set
+	 */
+	public void setIdFncionario(int idFncionario) {
+		this.idFncionario = idFncionario;
+	}
+
+	/**
+	 * @return the dataCadastro
+	 */
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	/**
+	 * @param dataCadastro the dataCadastro to set
+	 */
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	/**
+	 * @return the dataManutenção
+	 */
+	public Date getDataManutencao() {
+		return dataManutencao;
+	}
+
+	/**
+	 * @param dataManutencao the dataManutenção to set
+	 */
+	public void setDataManutencao(Date dataManutencao) {
+		this.dataManutencao = dataManutencao;
+	}
+
+	/**
+	 * @return the ativo
+	 */
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	/**
+	 * @param ativo the ativo to set
+	 */
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }

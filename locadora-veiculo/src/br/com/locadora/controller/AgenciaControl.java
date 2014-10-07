@@ -23,7 +23,7 @@ public class AgenciaControl implements Serializable{
 	 * @return <b>true</b> Se for cadastrado/Alterado com sucesso
 	 */
 	public boolean salvarOuAlterar(Agencia agencia) {
-		if (!SystemUtils.isNuloOuVazio(agencia) && agencia.getId() == 0) {
+		if (!SystemUtils.isNuloOuVazio(agencia) && agencia.getIdAgencia() == 0) {
 			return salvar(agencia);
 		} else {
 			return alterar(agencia);

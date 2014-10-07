@@ -20,11 +20,12 @@ public class AgenciaDAO extends MysqlConnect {
 			Agencia resultado = new Agencia();
 			
 			if (resultSet.next()) {
-				resultado.setId(resultSet.getInt(1));
+				resultado.setIdAgencia(resultSet.getInt(1));
 				resultado.setRazaoSocial(resultSet.getString(2));
 				resultado.setNomeFantasia(resultSet.getString(3));
 				resultado.setCnpj(resultSet.getString(4));
 				resultado.setInscricaoEstadual(resultSet.getString(5));
+				resultado.setResponsavel(resultSet.getString(6));
 				resultado.setLogradouro(resultSet.getString(7));
 				resultado.setBairro(resultSet.getString(8));
 				resultado.setNumero(resultSet.getInt(9));
@@ -34,6 +35,9 @@ public class AgenciaDAO extends MysqlConnect {
 				resultado.setTelefone(resultSet.getString(13));
 				resultado.setEmail(resultSet.getString(14));
 				resultado.setSite(resultSet.getString(15));
+				resultado.setDataCadastro(resultSet.getDate(16));
+				resultado.setDataManutencao(resultSet.getDate(17));
+				resultado.setAtivo(resultSet.getBoolean(18));
 			}
 			return resultado;
 		} catch (Exception selectError) {
@@ -52,6 +56,7 @@ public class AgenciaDAO extends MysqlConnect {
 								"fantasia = ?," +
 								"cnpj = ?," +
 								"insc_estadual = ?," +
+								"responsavel = ?," +
 								"logradouro = ?," +
 								"bairro = ?," +
 								"numero = ?," +
@@ -61,12 +66,15 @@ public class AgenciaDAO extends MysqlConnect {
 								"telefone = ?," +
 								"email = ?," +
 								"site = ?" +
+								"data_manutencao = ?" +
+								"ativo = ?" +
 							"WHERE id_agencia = ?";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, agencia.getRazaoSocial());
 			sqlSt.setString(2, agencia.getNomeFantasia());
 			sqlSt.setString(3, agencia.getCnpj());
 			sqlSt.setString(4, agencia.getInscricaoEstadual());
+			sqlSt.setString(5, agencia.getResponsavel());
 			sqlSt.setString(6, agencia.getLogradouro());
 			sqlSt.setString(7, agencia.getBairro());
 			sqlSt.setInt(8, agencia.getNumero());
@@ -76,7 +84,8 @@ public class AgenciaDAO extends MysqlConnect {
 			sqlSt.setString(12,  agencia.getTelefone());
 			sqlSt.setString(13,  agencia.getEmail());
 			sqlSt.setString(14, agencia.getSite());
-			sqlSt.setInt(15, agencia.getId());
+			sqlSt.setDate(15, agencia.getDataManutencao());
+			sqlSt.setBoolean(16, agencia.isAtivo());
 			sqlSt.executeUpdate();
 			return true;
 		} catch (Exception selectError) {
@@ -103,9 +112,12 @@ public class AgenciaDAO extends MysqlConnect {
 							"uf," +
 							"telefone," +
 							"email," +
-							"site)" +
+							"site" +
+							"data_cadastro = ?" +
+							"data_manutencao = ?" +
+							"ativo = ?" +
 						"VALUES" +
-						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, agencia.getRazaoSocial());
 			sqlSt.setString(2, agencia.getNomeFantasia());
@@ -121,6 +133,9 @@ public class AgenciaDAO extends MysqlConnect {
 			sqlSt.setString(12,  agencia.getTelefone());
 			sqlSt.setString(13,  agencia.getEmail());
 			sqlSt.setString(14, agencia.getSite());
+			sqlSt.setDate(15, agencia.getDataCadastro());
+			sqlSt.setDate(16, agencia.getDataManutencao());
+			sqlSt.setBoolean(17, agencia.isAtivo());
 			sqlSt.execute();
 			return true;
 		} catch (Exception e) {
@@ -133,7 +148,7 @@ public class AgenciaDAO extends MysqlConnect {
 
 	public boolean delete(int id) {
 		try{
-			String sqlString = "delete from cliente where id_cliente=?";
+			String sqlString = "delete from cliente where id_cliente = ?";
 			PreparedStatement sqlSt;
 			sqlSt = conn.prepareStatement(sqlString);
 			sqlSt.setInt(1, id);
@@ -167,11 +182,12 @@ public class AgenciaDAO extends MysqlConnect {
 			
 			while(resultSet.next()){
 				agencia = new Agencia();
-				agencia.setId(resultSet.getInt(1));
+				agencia.setIdAgencia(resultSet.getInt(1));
 				agencia.setRazaoSocial(resultSet.getString(2));
 				agencia.setNomeFantasia(resultSet.getString(3));
 				agencia.setCnpj(resultSet.getString(4));
 				agencia.setInscricaoEstadual(resultSet.getString(5));
+				agencia.setResponsavel(resultSet.getString(6));
 				agencia.setLogradouro(resultSet.getString(7));
 				agencia.setBairro(resultSet.getString(8));
 				agencia.setNumero(resultSet.getInt(9));
@@ -181,6 +197,9 @@ public class AgenciaDAO extends MysqlConnect {
 				agencia.setTelefone(resultSet.getString(13));
 				agencia.setEmail(resultSet.getString(14));
 				agencia.setSite(resultSet.getString(15));
+				agencia.setDataCadastro(resultSet.getDate(16));
+				agencia.setDataManutencao(resultSet.getDate(17));
+				agencia.setAtivo(resultSet.getBoolean(18));
 				lista.add(agencia);
 			}
 		}

@@ -52,7 +52,7 @@ public class FuncionarioDAO extends MysqlConnect{
 			sqlSt.setString(15, funcionario.getUsuario().getUsuario());
 			//as datas de cadastro e manutenção serão dadas pelo servidor, portanto número 16 e 17 pulados
 			sqlSt.setInt(18,  funcionario.getSupervisor().getId());
-			sqlSt.setInt(19, funcionario.getAgencia().getId());		
+			sqlSt.setInt(19, funcionario.getAgencia().getIdAgencia());		
 			sqlSt.executeQuery();
 			return true;
 		}catch(Exception updateError){
@@ -93,7 +93,7 @@ public class FuncionarioDAO extends MysqlConnect{
 			supervisor.setId(resultSet.getInt(18));
 			resultado.setSupervisor(supervisor);
 			Agencia agencia = new Agencia();
-			agencia.setId(resultSet.getInt(19));
+			agencia.setIdAgencia(resultSet.getInt(19));
 			resultado.setAgencia(agencia);
 			return resultado;
 		}catch(Exception selectError){
@@ -147,7 +147,7 @@ public class FuncionarioDAO extends MysqlConnect{
 			sqlSt.setDate(16, new java.sql.Date(funcionario.getDataCadastro().getTime()));
 			sqlSt.setDate(17, new java.sql.Date(funcionario.getDataManutencao().getTime()));
 			sqlSt.setInt(18, funcionario.getSupervisor().getId());
-			sqlSt.setInt(19, funcionario.getAgencia().getId());
+			sqlSt.setInt(19, funcionario.getAgencia().getIdAgencia());
 			sqlSt.setInt(20, funcionario.getId());
 			return true;
 		}catch(Exception selectError){

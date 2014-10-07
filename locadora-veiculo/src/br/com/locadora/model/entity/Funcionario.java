@@ -1,8 +1,9 @@
 package br.com.locadora.model.entity;
+
 import java.util.Date;
 
 public class Funcionario {
-	private int id;
+	private int idFuncionario;
 	private String nome;
 	private Date dataNascimento;
 	private String cpf;
@@ -17,15 +18,14 @@ public class Funcionario {
 	private String telefone;
 	private String email;
 	private int nivel;
+	private Usuario usuario;
 	private int funcionarioSupervisor;
 	private int codigoAgencia;
-	private Funcionario funcionario;
-	private Usuario usuario;
 	private Date dataCadastro;
 	private Date dataManutencao;
-	private Funcionario supervisor;
-	private Agencia agencia;
-	public Funcionario(){
+	private boolean ativo;
+
+	public Funcionario() {
 		setId(0);
 		setNome("");
 		setDataNascimento(null);
@@ -43,19 +43,18 @@ public class Funcionario {
 		setNivel(0);
 		setFuncionarioSupervisor(0);
 		setCodigoAgencia(0);
-		setFuncionario(null);
-		setUsuario(null);
 		setDataCadastro(null);
 		setDataManutencao(null);
-		setSupervisor(null);
-		setAgencia(null);
 	}
+
 	public int getId() {
-		return id;
+		return idFuncionario;
 	}
+
 	public void setId(int id) {
-		this.id = id;
+		this.idFuncionario = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -184,14 +183,6 @@ public class Funcionario {
 		this.codigoAgencia = codigoAgencia;
 	}
 
-	public Funcionario getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
-	}
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -203,41 +194,31 @@ public class Funcionario {
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}
+
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
+
 	public Date getDataManutencao() {
 		return dataManutencao;
 	}
+
 	public void setDataManutencao(Date dataManutencao) {
 		this.dataManutencao = dataManutencao;
 	}
-	public Funcionario getSupervisor() {
-		return supervisor;
-	}
-	public void setSupervisor(Funcionario supervisor) {
-		this.supervisor = supervisor;
-	}
-	public Agencia getAgencia() {
-		return agencia;
-	}
-	public void setAgencia(Agencia agencia) {
-		this.agencia = agencia;
-	}
-	public void cadastrar() {
 
+	/**
+	 * @return the ativo
+	 */
+	public boolean isAtivo() {
+		return ativo;
 	}
 
-	public void consultar() {
-
-	}
-
-	public void alterar() {
-
-	}
-
-	public void inativar() {
-
+	/**
+	 * @param ativo the ativo to set
+	 */
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }
