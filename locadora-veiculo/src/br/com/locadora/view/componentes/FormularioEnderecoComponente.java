@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import br.com.locadora.model.vo.Endereco;
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.Mask;
 
@@ -176,6 +177,25 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		endereco.setUf((String) cbxUf.getSelectedItem());
 		
 		return endereco;
+	}
+	
+	/**
+	 * Preenche os campos do formularioEndereco com os dados do
+	 * objeto Endereço passado por parâmetro
+	 * @author Joaquim Neto
+	 * @param endereco Objeto Endereço
+	 */
+	public void preencherEndereco(Endereco endereco) {
+		if (!SystemUtils.isNuloOuVazio(endereco)) {
+			txtLogradouro.setText(endereco.getLogradouro());
+			txtNumero.setText(String.valueOf(endereco.getNumero()));
+			txtBairro.setText(endereco.getBairro());
+			txtCep.setText(endereco.getCep());
+			txtTelefone.setText(endereco.getTelefone());
+			
+			cbxCidade.setSelectedItem(endereco.getCidade());
+			cbxCidade.setSelectedItem(endereco.getUf());
+		}
 	}
 	
 	/**

@@ -72,7 +72,14 @@ public class AgenciaControl implements Serializable{
 		return null;
 	}
 	
-	public List<Agencia> buscarPorCondicao(String parametro, String valor) {
+	public List<Agencia> buscarPorCondicao(int parametro, String valor) {
+		String condicao = "";
+		if (parametro == 1) {
+			condicao = "WHERE " + "id_agencia  = " + valor;
+			agenciaDAO.pesquisaPorCondicao(condicao);
+		}
+		
+		
 		return null;
 	}
 }

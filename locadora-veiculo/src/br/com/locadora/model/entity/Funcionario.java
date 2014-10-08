@@ -18,7 +18,7 @@ public class Funcionario {
 	private String telefone;
 	private String email;
 	private int nivel;
-	private Usuario usuario;
+	private String nomeUsuario;
 	private int funcionarioSupervisor;
 	private int codigoAgencia;
 	private Date dataCadastro;
@@ -183,12 +183,12 @@ public class Funcionario {
 		this.codigoAgencia = codigoAgencia;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public String getUsuario() {
+		return nomeUsuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
 	}
 
 	public Date getDataCadastro() {

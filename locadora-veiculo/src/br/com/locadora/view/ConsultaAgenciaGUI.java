@@ -98,7 +98,7 @@ public class ConsultaAgenciaGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				pesquisar();
 				
-				new AlteraAgenciaGUI();
+				new ModalAlterarcaoGUI(new AgenciaGUI(), "Alteração da agência");
 				
 			}
 		});

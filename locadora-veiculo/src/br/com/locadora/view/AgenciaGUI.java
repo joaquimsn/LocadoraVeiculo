@@ -203,4 +203,23 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		txtRazaoSocial.setText("");
 		txtResponsavel.setText("");
 	}
+	
+	/**
+	 * Preenche os campos da tela agência com os valores obtidos do 
+	 * objeto Agência passado por parâmentro
+	 * @author Joaquim Neto
+	 * @param agencia Objeto agência
+	 */
+	public void preencherCampos(Agencia agencia) {
+		if (!SystemUtils.isNuloOuVazio(agencia)) {
+			txtRazaoSocial.setText(agencia.getRazaoSocial());
+			txtFantasia.setText(agencia.getNomeFantasia());
+			txtCnpj.setText(agencia.getCnpj());
+			txtIncEstadual.setText(agencia.getInscricaoEstadual());
+			txtResponsavel.setText(agencia.getResponsavel());
+			
+			// Preenche o endereço
+			formularioEndereco.preencherEndereco(agencia.getEndereco());
+		}
+	}
 }
