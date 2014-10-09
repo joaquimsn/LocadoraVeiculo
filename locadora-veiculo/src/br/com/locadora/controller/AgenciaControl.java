@@ -2,6 +2,8 @@
 package br.com.locadora.controller;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.locadora.model.DAO.AgenciaDAO;
@@ -38,6 +40,11 @@ public class AgenciaControl implements Serializable{
 	 * @return <b>true</b> Se for cadastrado com sucesso
 	 */
 	private boolean salvar(Agencia agencia) {
+		// Cria uma nova conexão com o banco de dados
+		agenciaDAO = new AgenciaDAO();
+		
+		agencia.setAtivo(true);
+		agencia.setDataCadastro(new Date(Calendar.getInstance().getTimeInMillis()));
 		return agenciaDAO.insert(agencia);
 	}
 	
@@ -48,9 +55,11 @@ public class AgenciaControl implements Serializable{
 	 * @return <b>true</b> Se for alterado com sucesso
 	 */
 	private boolean alterar(Agencia agencia) {
-		agenciaDAO.update(agencia);
+		// Cria uma nova conexão com o banco de dados
+		agenciaDAO = new AgenciaDAO();
+		agencia.setDataManutencao(new Date(Calendar.getInstance().getTimeInMillis()));
 		
-		return true;
+		return agenciaDAO.update(agencia);
 	}
 	
 	/**
@@ -59,7 +68,9 @@ public class AgenciaControl implements Serializable{
 	 * @return List com todas as agências cadastradas
 	 */
 	public List<Agencia> buscarTodos() {
-		return null;
+		// Cria uma nova conexão com o banco de dados
+		agenciaDAO = new AgenciaDAO();		
+		return agenciaDAO.pesquisaPorCondicao("");
 	}
 	
 	/**
@@ -69,17 +80,41 @@ public class AgenciaControl implements Serializable{
 	 * @return Agencia
 	 */
 	public Agencia buscarPorId(int id) {
-		return null;
+		// Cria uma nova conexão com o banco de dados
+		agenciaDAO = new AgenciaDAO();
+		return agenciaDAO.select(id);
 	}
 	
+	/**
+	 * Consulta todas as agências cadastradas na base
+	 * @author Joaquim Neto
+	 * @param parametro
+	 * @param valor
+	 * @return List com as agências encontradas
+	 */
 	public List<Agencia> buscarPorCondicao(int parametro, String valor) {
+		// Cria uma nova conexão com o banco de dados
+		agenciaDAO = new AgenciaDAO();
+		
 		String condicao = "";
-		if (parametro == 1) {
-			condicao = "WHERE " + "id_agencia  = " + valor;
-			agenciaDAO.pesquisaPorCondicao(condicao);
-		}
 		
+		switch (parametro) {
+		case 1:
+			condicao = " WHERE " + "id_agencia  = " + valor + ";";
+			break;
 		
-		return null;
+		case 2:
+			condicao = " WHERE " + "cnpj  = %" + valor  + ";";
+			break;
+		
+		case 3:
+			condicao = " WHERE " + "razao_social  = %'" + valor  + "';";
+			break;
+			
+		default:
+			break;
+		}	
+		
+		return agenciaDAO.pesquisaPorCondicao(condicao);
 	}
 }

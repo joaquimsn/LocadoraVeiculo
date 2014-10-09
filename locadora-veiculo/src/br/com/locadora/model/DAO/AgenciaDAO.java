@@ -175,10 +175,9 @@ public class AgenciaDAO extends MysqlConnect {
 		Agencia agencia;
 		
 		try{
-			String sql = "select * from agencia ?";
+			String sql = "SELECT * FROM agencia " + conditional;
 			
 			PreparedStatement st = conn.prepareStatement(sql);
-			st.setString(1, conditional);
 			resultSet = st.executeQuery();
 			
 			while(resultSet.next()){

@@ -123,6 +123,9 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		this.setBounds(15, 10, 859, 500);
 		this.setVisible(true);
 		
+		/*
+		 * EVENTOS DOS BOTÕES
+		 */
 		botoesCrudComponente.btnSalvar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -161,6 +164,14 @@ public class AgenciaGUI extends JPanel implements Serializable{
 				} else {
 					JOptionPane.showMessageDialog(lblRazoSocial, "Erro fatal ao salvar os dados");
 				}
+			}
+		});
+		
+		botoesCrudComponente.btnCancelar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				limparCampos();
 			}
 		});
 	}
