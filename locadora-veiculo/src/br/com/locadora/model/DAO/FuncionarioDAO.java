@@ -49,10 +49,10 @@ public class FuncionarioDAO extends MysqlConnect{
 			sqlSt.setString(12, funcionario.getTelefone());
 			sqlSt.setString(13, funcionario.getEmail());
 			sqlSt.setInt(14, funcionario.getNivel());
-			sqlSt.setString(15, funcionario.getUsuario().getUsuario());
+			sqlSt.setString(15, funcionario.getUsuario());
 			//as datas de cadastro e manutenção serão dadas pelo servidor, portanto número 16 e 17 pulados
-			sqlSt.setInt(18,  funcionario.getSupervisor().getId());
-			sqlSt.setInt(19, funcionario.getAgencia().getIdAgencia());		
+			sqlSt.setInt(18,  funcionario.getFuncionarioSupervisor());
+			sqlSt.setInt(19, funcionario.getCodigoAgencia());		
 			sqlSt.executeQuery();
 			return true;
 		}catch(Exception updateError){
@@ -86,15 +86,11 @@ public class FuncionarioDAO extends MysqlConnect{
 			resultado.setNivel(resultSet.getInt(14));
 			Usuario usuario = new Usuario();
 			usuario.setUsuario(resultSet.getString(15));
-			resultado.setUsuario(usuario);
+			resultado.setUsuario(usuario.getUsuario());
 			resultado.setDataCadastro(resultSet.getDate(16));
 			resultado.setDataManutencao(resultSet.getDate(17));
-			Funcionario supervisor = new Funcionario();
-			supervisor.setId(resultSet.getInt(18));
-			resultado.setSupervisor(supervisor);
-			Agencia agencia = new Agencia();
-			agencia.setIdAgencia(resultSet.getInt(19));
-			resultado.setAgencia(agencia);
+			resultado.setFuncionarioSupervisor(resultSet.getInt(18));
+			resultado.setCodigoAgencia(resultSet.getInt(19));
 			return resultado;
 		}catch(Exception selectError){
 			return null;
@@ -143,11 +139,11 @@ public class FuncionarioDAO extends MysqlConnect{
 			sqlSt.setString(12, funcionario.getTelefone());
 			sqlSt.setString(13, funcionario.getEmail());
 			sqlSt.setInt(14, funcionario.getNivel());
-			sqlSt.setString(15, funcionario.getUsuario().getUsuario());
+			sqlSt.setString(15, funcionario.getUsuario());
 			sqlSt.setDate(16, new java.sql.Date(funcionario.getDataCadastro().getTime()));
 			sqlSt.setDate(17, new java.sql.Date(funcionario.getDataManutencao().getTime()));
-			sqlSt.setInt(18, funcionario.getSupervisor().getId());
-			sqlSt.setInt(19, funcionario.getAgencia().getIdAgencia());
+			sqlSt.setInt(18, funcionario.getFuncionarioSupervisor());
+			sqlSt.setInt(19, funcionario.getCodigoAgencia());
 			sqlSt.setInt(20, funcionario.getId());
 			return true;
 		}catch(Exception selectError){

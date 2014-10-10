@@ -50,25 +50,25 @@ public class AgenciaDAO extends MysqlConnect {
 	public boolean update(Agencia agencia) {
 		PreparedStatement sqlSt;
 		try {
-			String sql = "UPDATE agencia" +
-							"SET" +
-								"razao_social = ?," +
-								"fantasia = ?," +
-								"cnpj = ?," +
-								"insc_estadual = ?," +
-								"responsavel = ?," +
-								"logradouro = ?," +
-								"bairro = ?," +
-								"numero = ?," +
-								"cep = ?," +
-								"cidade = ?," +
-								"uf = ?," +
-								"telefone = ?," +
-								"email = ?," +
-								"site = ?" +
-								"data_manutencao = ?" +
-								"ativo = ?" +
-							"WHERE id_agencia = ?";
+			String sql = "UPDATE agencia " +
+							"SET " +
+								"razao_social = ?, " +
+								"fantasia = ?, " +
+								"cnpj = ?, " +
+								"insc_estadual = ?, " +
+								"responsavel = ?, " +
+								"logradouro = ?, " +
+								"bairro = ?, " +
+								"numero = ?, " +
+								"cep = ?, " +
+								"cidade = ?, " +
+								"uf = ?, " +
+								"telefone = ?, " +
+								"email = ?, " +
+								"site = ?, " +
+								"data_manutencao = ?, " +
+								"ativo = ? " +
+							"WHERE id_agencia = ? ";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, agencia.getRazaoSocial());
 			sqlSt.setString(2, agencia.getNomeFantasia());
@@ -86,9 +86,12 @@ public class AgenciaDAO extends MysqlConnect {
 			sqlSt.setString(14, agencia.getSite());
 			sqlSt.setDate(15, agencia.getDataManutencao());
 			sqlSt.setBoolean(16, agencia.isAtivo());
+			sqlSt.setInt(17, agencia.getIdAgencia());
+			sqlSt.toString();
 			sqlSt.executeUpdate();
 			return true;
 		} catch (Exception selectError) {
+			selectError.printStackTrace();
 			return false;
 		} finally {
 			closeConnection();

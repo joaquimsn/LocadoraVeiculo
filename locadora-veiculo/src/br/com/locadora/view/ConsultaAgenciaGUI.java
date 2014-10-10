@@ -127,7 +127,9 @@ public class ConsultaAgenciaGUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!SystemUtils.isNuloOuVazio(txtPesquisa.getText())) {
+				int parametroSelecionado = ParametroPesquisaAgenciaEnum.getValueByDisplay((String) cbxParametroPesquisa.getSelectedItem());
+				
+				if (!(SystemUtils.isNuloOuVazio(txtPesquisa.getText()) && parametroSelecionado != ParametroPesquisaAgenciaEnum.SELECIONA_TODOS.getValue())) {
 					pesquisar();
 				} else {
 					JOptionPane.showMessageDialog(txtPesquisa, "Digite o conteúdo para pesquisa");
@@ -152,6 +154,7 @@ public class ConsultaAgenciaGUI extends JPanel {
 				ModalAlterarcaoGUI modalAlterarcaoGUI = new ModalAlterarcaoGUI(agenciaGUI, "Alteração da agência");
 				modalAlterarcaoGUI.setLocationRelativeTo(table);
 				modalAlterarcaoGUI.setModal(true);
+				limparTabela();
 				
 			}
 		});
@@ -168,7 +171,12 @@ public class ConsultaAgenciaGUI extends JPanel {
 				Agencia agencia = getAgenciaSelecionado();
 				agencia.setAtivo(false);
 				
-				agenciaControl.salvarOuAlterar(agencia);
+				if (agenciaControl.salvarOuAlterar(agencia)) {
+					JOptionPane.showMessageDialog(table, "Agência desativada com sucesso");
+					limparTabela();
+				} else {
+					JOptionPane.showMessageDialog(table, "Erro ao desativar a agência");
+				}
 				
 			}
 		});
@@ -252,10 +260,7 @@ public class ConsultaAgenciaGUI extends JPanel {
 	 * @author Joaquim Neto
 	 */
 	public void pesquisar() {
-		// Limpa a pesquisa anterior
-		if (!SystemUtils.isNuloOuVazio(listaAgencia)) {
-			table.removeRowSelectionInterval(0, listaAgencia.size() -1); 
-		}
+		limparTabela();
 		
 		int parametro = ParametroPesquisaAgenciaEnum.getValueByDisplay((String) cbxParametroPesquisa.getSelectedItem());
 		
@@ -274,6 +279,17 @@ public class ConsultaAgenciaGUI extends JPanel {
 		}
 	}
 	
+	private void limparTabela() {
+		// Verifica se já foi realizada uma pesquisa
+		if (!SystemUtils.isNuloOuVazio(listaAgencia)) {
+			// Remove as linhas da pesquisa anterior
+			for (int i = 0; i < listaAgencia.size(); i++) {
+				defaultTableModel.removeRow(0);
+			}
+		}
+		
+	}
+
 	/**
 	 * Retorna a agência selecionado
 	 * @author Joaquim Neto

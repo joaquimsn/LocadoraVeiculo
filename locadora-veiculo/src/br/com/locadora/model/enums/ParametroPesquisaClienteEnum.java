@@ -3,23 +3,24 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum ParametroPesquisaAgenciaEnum {
+public enum ParametroPesquisaClienteEnum {
 	SELECIONA_TODOS("Buscar todos", 1),
 	CODIGO("Código", 2),
-	CNPJ("CNPJ", 3),
-	RAZAO_SOCAIL("Razão Social", 4);
+	CNH("CNH", 3),
+	NOME("Nome", 4),
+	EMAIL("E-Mail", 5);
 	
 	private String display;
 	private int value;
 	
-	private ParametroPesquisaAgenciaEnum(String display, int value) {
+	private ParametroPesquisaClienteEnum(String display, int value) {
 		this.display = display;
 		this.value = value;
 	}
 	
 	public static List<Integer> getValueList() {
 		List<Integer> lista = new ArrayList<Integer>();
-		for(ParametroPesquisaAgenciaEnum objeto : values()) {
+		for(ParametroPesquisaClienteEnum objeto : values()) {
 			lista.add(objeto.value);
 		}
 		return lista;
@@ -27,14 +28,14 @@ public enum ParametroPesquisaAgenciaEnum {
 	
 	public static List<String> getDisplayList() {
 		List<String> lista = new ArrayList<String>();
-		for(ParametroPesquisaAgenciaEnum objeto : values()) {
+		for(ParametroPesquisaClienteEnum objeto : values()) {
 			lista.add(objeto.display);
 		}
 		return lista;
 	}
 	
 	public static int getValueByDisplay(String display) {
-		for(ParametroPesquisaAgenciaEnum objeto : values()) {
+		for(ParametroPesquisaClienteEnum objeto : values()) {
 			if(objeto.display.equals(display)) {
 				return objeto.value;
 			}
@@ -43,7 +44,7 @@ public enum ParametroPesquisaAgenciaEnum {
 	}
 	
 	public static String getDisplayByValue(Integer value) {
-		for(ParametroPesquisaAgenciaEnum objeto : values()) {
+		for(ParametroPesquisaClienteEnum objeto : values()) {
 			if(objeto.value == value.intValue()) {
 				return objeto.display;
 			}
@@ -51,8 +52,8 @@ public enum ParametroPesquisaAgenciaEnum {
 		return null;
 	}
 	
-	public static ParametroPesquisaAgenciaEnum getEnumByValue(Integer value) {
-		for(ParametroPesquisaAgenciaEnum objeto : values()) {
+	public static ParametroPesquisaClienteEnum getEnumByValue(Integer value) {
+		for(ParametroPesquisaClienteEnum objeto : values()) {
 			if(objeto.value == value.intValue()) {
 				return objeto;
 			}

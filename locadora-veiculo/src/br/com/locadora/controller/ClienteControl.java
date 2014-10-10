@@ -6,60 +6,60 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
-import br.com.locadora.model.DAO.AgenciaDAO;
-import br.com.locadora.model.entity.Agencia;
+import br.com.locadora.model.DAO.ClienteDAO;
+import br.com.locadora.model.entity.Cliente;
 import br.com.locadora.utils.SystemUtils;
 
-public class AgenciaControl implements Serializable{
+public class ClienteControl implements Serializable{
 	private static final long serialVersionUID = 4056318420856682823L;
 	
-	private AgenciaDAO agenciaDAO;
+	private ClienteDAO clienteDAO;
 	
-	public AgenciaControl() {
-		agenciaDAO = new AgenciaDAO();
+	public ClienteControl() {
+		clienteDAO = new ClienteDAO();
 	}
 	
 	/**
 	 * Persiste ou altera uma agência na base de dados
 	 * @author Joaquim Neto
-	 * @param agencia Objeto Agência
+	 * @param cliente Objeto Agência
 	 * @return <b>true</b> Se for cadastrado/Alterado com sucesso
 	 */
-	public boolean salvarOuAlterar(Agencia agencia) {
-		if (!SystemUtils.isNuloOuVazio(agencia) && agencia.getIdAgencia() == 0) {
-			return salvar(agencia);
+	public boolean salvarOuAlterar(Cliente cliente) {
+		if (!SystemUtils.isNuloOuVazio(cliente) && cliente.getId() == 0) {
+			return salvar(cliente);
 		} else {
-			return alterar(agencia);
+			return alterar(cliente);
 		}
 	}
 	
 	/**
 	 * Persiste uma agência na base de dados
 	 * @author Joaquim Neto
-	 * @param agencia Objeto Agência
+	 * @param cliente Objeto Agência
 	 * @return <b>true</b> Se for cadastrado com sucesso
 	 */
-	private boolean salvar(Agencia agencia) {
+	private boolean salvar(Cliente cliente) {
 		// Cria uma nova conexão com o banco de dados
-		agenciaDAO = new AgenciaDAO();
+		clienteDAO = new ClienteDAO();
 		
-		agencia.setAtivo(true);
-		agencia.setDataCadastro(new Date(Calendar.getInstance().getTimeInMillis()));
-		return agenciaDAO.insert(agencia);
+		cliente.setAtivo(true);
+		cliente.setDataCadastro(new Date(Calendar.getInstance().getTimeInMillis()));
+		return clienteDAO.insert(cliente);
 	}
 	
 	/**
 	 * Altera uma agência já persistida na base de dados
 	 * @author Joaquim Neto
-	 * @param agencia Objeto Agência
+	 * @param cliente Objeto Agência
 	 * @return <b>true</b> Se for alterado com sucesso
 	 */
-	private boolean alterar(Agencia agencia) {
+	private boolean alterar(Cliente cliente) {
 		// Cria uma nova conexão com o banco de dados
-		agenciaDAO = new AgenciaDAO();
-		agencia.setDataManutencao(new Date(Calendar.getInstance().getTimeInMillis()));
+		clienteDAO = new ClienteDAO();
+		cliente.setDataManutencao(new Date(Calendar.getInstance().getTimeInMillis()));
 		
-		return agenciaDAO.update(agencia);
+		return clienteDAO.update(cliente);
 	}
 	
 	/**
@@ -67,22 +67,22 @@ public class AgenciaControl implements Serializable{
 	 * @author Joaquim Neto
 	 * @return List com todas as agências cadastradas
 	 */
-	public List<Agencia> buscarTodos() {
+	public List<Cliente> buscarTodos() {
 		// Cria uma nova conexão com o banco de dados
-		agenciaDAO = new AgenciaDAO();		
-		return agenciaDAO.pesquisaPorCondicao("");
+		clienteDAO = new ClienteDAO();		
+		return clienteDAO.pesquisaPorCondicao("");
 	}
 	
 	/**
 	 * Busca uma agência na base pelo id informado por parâmetro
 	 * @author Joaquim Neto
 	 * @param id INT ind
-	 * @return Agencia
+	 * @return Cliente
 	 */
-	public Agencia buscarPorId(int id) {
+	public Cliente buscarPorId(int id) {
 		// Cria uma nova conexão com o banco de dados
-		agenciaDAO = new AgenciaDAO();
-		return agenciaDAO.select(id);
+		clienteDAO = new ClienteDAO();
+		return clienteDAO.select(id);
 	}
 	
 	/**
@@ -92,9 +92,9 @@ public class AgenciaControl implements Serializable{
 	 * @param valor
 	 * @return List com as agências encontradas
 	 */
-	public List<Agencia> buscarPorCondicao(int parametro, String valor) {
+	public List<Cliente> buscarPorCondicao(int parametro, String valor) {
 		// Cria uma nova conexão com o banco de dados
-		agenciaDAO = new AgenciaDAO();
+		clienteDAO = new ClienteDAO();
 		
 		String condicao = "";
 		
@@ -103,15 +103,19 @@ public class AgenciaControl implements Serializable{
 			condicao = " WHERE ativo = 1";
 			break;
 		case 2:
-			condicao = " WHERE " + "id_agencia  = " + valor + " AND ativo = 1";
+			condicao = " WHERE " + "id_cliente  = " + valor + " AND ativo = 1";
 			break;
 		
 		case 3:
-			condicao = " WHERE " + "cnpj  LIKE '" + valor  + "%' AND ativo = 1";
+			condicao = " WHERE " + "cnh  LIKE '" + valor  + "%' AND ativo = 1";
 			break;
 		
 		case 4:
-			condicao = " WHERE " + "razao_social LIKE '" + valor + "%' AND ativo = 1";
+			condicao = " WHERE " + "nome LIKE '" + valor + "%' AND ativo = 1";
+			break;
+		
+		case 5:
+			condicao = " WHERE " + "email LIKE '" + valor + "%' AND ativo = 1";
 			break;
 			
 		default:
@@ -119,6 +123,6 @@ public class AgenciaControl implements Serializable{
 			break;
 		}	
 		
-		return agenciaDAO.pesquisaPorCondicao(condicao);
+		return clienteDAO.pesquisaPorCondicao(condicao);
 	}
 }

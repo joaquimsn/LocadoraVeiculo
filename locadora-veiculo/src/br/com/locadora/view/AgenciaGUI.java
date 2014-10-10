@@ -39,6 +39,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 	private FormularioEnderecoComponente formularioEndereco;
 	
 	private String tituloTela;
+	private int idAgencia;
 	
 	public AgenciaGUI() {
 		inicializar();
@@ -133,6 +134,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 				Agencia agencia = new Agencia();
 				
 				// Preenche o objeto agência com as informações infromada pelo usuário
+				agencia.setIdAgencia(idAgencia);
 				agencia.setRazaoSocial(txtRazaoSocial.getText());
 				agencia.setNomeFantasia(txtFantasia.getText());
 				agencia.setCnpj(txtCnpj.getText());
@@ -147,6 +149,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 				agencia.setTelefone(formularioEndereco.getEndereco().getTelefone());
 				agencia.setEmail(formularioEndereco.getEndereco().getEmail());
 				agencia.setSite(formularioEndereco.getEndereco().getSite());
+				agencia.setAtivo(true);
 				
 				// Valida os dados preenchido pelo usuário
 				if (!validar(agencia)) {
@@ -162,7 +165,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 					limparCampos();
 					formularioEndereco.limparCampos();
 				} else {
-					JOptionPane.showMessageDialog(lblRazoSocial, "Erro fatal ao salvar os dados");
+					JOptionPane.showMessageDialog(lblRazoSocial, LocaleUtils.getLocaleMessages().getString("falha_errofatal"));
 				}
 			}
 		});
@@ -223,6 +226,7 @@ public class AgenciaGUI extends JPanel implements Serializable{
 	 */
 	public void preencherCampos(Agencia agencia) {
 		if (!SystemUtils.isNuloOuVazio(agencia)) {
+			idAgencia = agencia.getIdAgencia();
 			txtRazaoSocial.setText(agencia.getRazaoSocial());
 			txtFantasia.setText(agencia.getNomeFantasia());
 			txtCnpj.setText(agencia.getCnpj());

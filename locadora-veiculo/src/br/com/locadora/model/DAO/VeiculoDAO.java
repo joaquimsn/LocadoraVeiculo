@@ -26,7 +26,7 @@ public class VeiculoDAO extends MysqlConnect{
 			veiculo.setImagem(resultSet.getString(4));
 			veiculo.setAno(Integer.parseInt(resultSet.getDate(5).toString()));
 			veiculo.setGrupo(resultSet.getInt(6));
-			veiculo.setAcessorio(resultSet.getString(7));
+			veiculo.setAcessorio(resultSet.getInt(7));
 			veiculo.setChassi(resultSet.getString(8));
 			veiculo.setPlaca(resultSet.getString(9));
 			veiculo.setCidade(resultSet.getString(10));
@@ -34,10 +34,8 @@ public class VeiculoDAO extends MysqlConnect{
 			veiculo.setKmRodado(resultSet.getDouble(12));
 			veiculo.setPrecoKmLivre(resultSet.getDouble(13));
 			veiculo.setPrecoKmControlado(resultSet.getDouble(14));
-			veiculo.setStatus(resultSet.getString(15));
-			Agencia agencia = new Agencia();
-			agencia.setIdAgencia(resultSet.getInt(16));
-			veiculo.setAgencia(agencia);
+			veiculo.setStatus(resultSet.getInt(15));
+			veiculo.setIdAgencia(resultSet.getInt(16));
 			return veiculo;
 		}catch(Exception selectError){
 			return null;
@@ -72,7 +70,7 @@ public class VeiculoDAO extends MysqlConnect{
 			sqlSt.setString(3, veiculo.getImagem());
 			sqlSt.setInt(4, veiculo.getAno());
 			sqlSt.setInt(5, veiculo.getGrupo());
-			sqlSt.setString(6, veiculo.getAcessorio());
+			sqlSt.setInt(6, veiculo.getAcessorio());
 			sqlSt.setString(7, veiculo.getChassi());
 			sqlSt.setString(8, veiculo.getPlaca());
 			sqlSt.setString(9, veiculo.getCidade());
@@ -80,8 +78,8 @@ public class VeiculoDAO extends MysqlConnect{
 			sqlSt.setDouble(11, veiculo.getKmRodado());
 			sqlSt.setDouble(12, veiculo.getPrecoKmLivre());
 			sqlSt.setDouble(13, veiculo.getPrecoKmControlado());
-			sqlSt.setString(14, veiculo.getStatus());
-			sqlSt.setInt(15, veiculo.getAgencia().getIdAgencia());
+			sqlSt.setInt(14, veiculo.getStatus());
+			sqlSt.setInt(15, veiculo.getIdAgencia());
 			sqlSt.setInt(16, veiculo.getId());
 			sqlSt.executeQuery();
 			return true;
@@ -117,7 +115,7 @@ public class VeiculoDAO extends MysqlConnect{
 			sqlSt.setString(3, veiculo.getImagem());
 			sqlSt.setInt(4, veiculo.getAno());
 			sqlSt.setInt(5, veiculo.getGrupo());
-			sqlSt.setString(6, veiculo.getAcessorio());
+			sqlSt.setInt(6, veiculo.getAcessorio());
 			sqlSt.setString(7, veiculo.getChassi());
 			sqlSt.setString(8, veiculo.getPlaca());
 			sqlSt.setString(9, veiculo.getCidade());
@@ -125,8 +123,8 @@ public class VeiculoDAO extends MysqlConnect{
 			sqlSt.setDouble(11, veiculo.getKmRodado());
 			sqlSt.setDouble(12, veiculo.getPrecoKmLivre());
 			sqlSt.setDouble(13, veiculo.getPrecoKmControlado());
-			sqlSt.setString(14, veiculo.getStatus());
-			sqlSt.setInt(15, veiculo.getAgencia().getIdAgencia());
+			sqlSt.setInt(14, veiculo.getStatus());
+			sqlSt.setInt(15, veiculo.getIdAgencia());
 			sqlSt.executeQuery();
 			return true;
 		}catch(Exception updateError){

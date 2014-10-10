@@ -1,5 +1,7 @@
 package br.com.locadora.model.entity;
-import java.util.Date;
+import java.sql.Date;
+
+import br.com.locadora.model.vo.Endereco;
 public class Cliente {
 	private int id;
 	private String nome;
@@ -216,6 +218,27 @@ public class Cliente {
 	 */
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	
+	/**
+	 * Retorna um objeto endereço com os dados presente
+	 * na instacia atual do objeto
+	 * @author Joaquim Neto
+	 * @return Objeto Endereço
+	 */
+	public Endereco getEndereco() {
+		Endereco endereco = new Endereco();
+		endereco.setLogradouro(getLogradouro());
+		endereco.setBairro(getBairro());
+		endereco.setNumero(getNumero());
+		endereco.setCep(getCep());
+		endereco.setUf(getUf());
+		endereco.setCidade(getCidade());
+		endereco.setTelefone(getTelefone());
+		endereco.setEmail(getEmail());
+		endereco.setSite("");
+		
+		return endereco;
 	}
 
 }

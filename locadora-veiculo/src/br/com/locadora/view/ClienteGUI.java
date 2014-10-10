@@ -1,15 +1,23 @@
 package br.com.locadora.view;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import br.com.locadora.controller.AgenciaControl;
+import br.com.locadora.controller.ClienteControl;
+import br.com.locadora.model.entity.Agencia;
+import br.com.locadora.model.entity.Cliente;
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.FormularioEnderecoComponente;
@@ -39,7 +47,10 @@ public class ClienteGUI extends JPanel {
 	private JTextField txtCnh;
 	private JDateChooser dataVencimentoCnh;
 	
+	private FormularioEnderecoComponente formularioEndereco;
+	
 	private String tituloTela;
+	private int idCliente;
 	
 	public ClienteGUI() {
 		inicializar();
@@ -130,7 +141,7 @@ public class ClienteGUI extends JPanel {
 		add(dataVencimentoCnh);
 		
 		// Componete formulário para endereço
-		FormularioEnderecoComponente formularioEndereco = new FormularioEnderecoComponente();
+		formularioEndereco = new FormularioEnderecoComponente();
 		formularioEndereco.setBounds(30, 200, 800, 170);
 		add(formularioEndereco);
 		
@@ -141,5 +152,119 @@ public class ClienteGUI extends JPanel {
 		
 		this.setBounds(15, 10, 859, 500);
 		this.setVisible(true);
+		
+		/*
+		 * EVENTOS DOS BOTÕES
+		 */
+		botoesCrudComponente.btnSalvar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Cliente cliente = new Cliente();
+				
+				// Preenche o objeto agência com as informações infromada pelo usuário
+				cliente.setId(idCliente);
+				cliente.setNome(txtNome.getText());
+				cliente.setCpf(txtCpf.getText());
+				cliente.setRg(txtRg.getText());
+				cliente.setDataNascimento((java.sql.Date) dataNascimentoChooser.getDate());
+				cliente.setCnh(txtCnh.getText());
+				cliente.setValidadeCnh((java.sql.Date) dataVencimentoCnh.getDate());
+				cliente.setEstadoEmissor(txtEstadoEmissor.getText());
+				//TODO cliente.setGenero(cbxGenero.getSelectedItem());
+				cliente.setLogradouro(formularioEndereco.getEndereco().getLogradouro());
+				cliente.setNumero(formularioEndereco.getEndereco().getNumero());
+				cliente.setBairro(formularioEndereco.getEndereco().getBairro());
+				cliente.setCep(formularioEndereco.getEndereco().getCep());
+				cliente.setUf(formularioEndereco.getEndereco().getUf());
+				cliente.setCidade(formularioEndereco.getEndereco().getCidade());
+				cliente.setTelefone(formularioEndereco.getEndereco().getTelefone());
+				cliente.setEmail(formularioEndereco.getEndereco().getEmail());
+				cliente.setAtivo(true);
+				
+				// Valida os dados preenchido pelo usuário
+				if (!validar(cliente)) {
+					return;
+				}
+				
+				// Persiste o objeto agência
+				ClienteControl clienteControl = new ClienteControl();
+				
+				// Verifica se foi cadastrado com sucesso
+				if (clienteControl.salvarOuAlterar(cliente)) {
+					// Limpa os campos preenchidos
+					limparCampos();
+					formularioEndereco.limparCampos();
+				} else {
+					JOptionPane.showMessageDialog(lblNome, LocaleUtils.getLocaleMessages().getString("falha_errofatal"));
+				}
+			}
+		});
+		
+		botoesCrudComponente.btnCancelar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				limparCampos();
+			}
+		});
+	}
+	
+	/**
+	 * Valida os campos preenchido pelo usuário
+	 * @author Joaquim Neto
+	 * @param cliente Objeto Cliente
+	 * @return <b>true</b> Se for valido
+	 */
+	private boolean validar(Cliente cliente) {
+		
+		// Verifica se os campos obrigatorios referente a cliente foram preenchido
+		if (!SystemUtils.isCamposObrigatoriosPreenchidos(cliente)) {
+			return false;
+		}
+		
+		// Verifica se os campos obrigatorios referente ao endereço foram preenchido
+		if (!SystemUtils.isCamposObrigatoriosPreenchidos(formularioEndereco.getEndereco())) {
+			return false;
+		}
+		
+		// Valida o cnpj
+		if (!SystemUtils.isCpfValido(cliente.getCpf())) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Limpa todos os campos preenchidos pelo usuário
+	 * @author Joaquim Neto
+	 */
+	private void limparCampos() {
+		// Limpa os valores fields cliente
+		txtCnh.setText("");
+		txtCpf.setText("");
+		txtEstadoEmissor.setText("");
+		txtNome.setText("");
+		txtRg.setText("");
+	}
+	
+	/**
+	 * Preenche os campos da tela agência com os valores obtidos do 
+	 * objeto Agência passado por parâmentro
+	 * @author Joaquim Neto
+	 * @param cliente Objeto agência
+	 */
+	public void preencherCampos(Cliente cliente) {
+		if (!SystemUtils.isNuloOuVazio(cliente)) {
+			idCliente = cliente.getId();
+			txtCnh.setText(cliente.getCnh());
+			txtCpf.setText(cliente.getCpf());
+			txtEstadoEmissor.setText(cliente.getEstadoEmissor());
+			txtNome.setText(cliente.getNome());
+			txtRg.setText(cliente.getRg());			
+			// Preenche o endereço
+			formularioEndereco.preencherEndereco(cliente.getEndereco());
+		}
 	}
 }
