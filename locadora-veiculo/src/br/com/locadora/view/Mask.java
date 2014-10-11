@@ -40,6 +40,23 @@ public class Mask {
 	}
 	
 	/**
+	 * Máscara para Telefone
+	 * @author Joaquim Neto
+	 * @return MaskFormatter (00) 0000-0000
+	 */
+	public static final MaskFormatter maskTelefone() {
+		MaskFormatter maskFormatter = null;
+		
+		try {
+			maskFormatter = new MaskFormatter("(##) ####-####");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return maskFormatter;
+	}
+	
+	/**
 	 * Máscara para CNPJ
 	 * @author Joaquim Neto
 	 * @return MaskFormatter

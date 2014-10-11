@@ -1,6 +1,6 @@
 package br.com.locadora.model.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import br.com.locadora.model.vo.Endereco;
 import br.com.locadora.utils.annotation.Required;

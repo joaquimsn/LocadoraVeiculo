@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.com.locadora.model.connection.MysqlConnect;
 import br.com.locadora.model.entity.Cliente;
+import br.com.locadora.utils.SystemUtils;
 
 public class ClienteDAO extends MysqlConnect{
 
@@ -75,23 +76,23 @@ public class ClienteDAO extends MysqlConnect{
 					+ " where id_cliente=?";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1,  cliente.getNome());
-			sqlSt.setDate(2, new java.sql.Date(cliente.getDataNascimento().getTime()));
+			sqlSt.setDate(2, SystemUtils.dataConverter(cliente.getDataNascimento()));
 			sqlSt.setString(3,  cliente.getCpf());
 			sqlSt.setString(4, cliente.getRg());
 			sqlSt.setString(5, cliente.getCnh());
-			sqlSt.setDate(5, new java.sql.Date(cliente.getValidadeCnh().getTime()));
-			sqlSt.setString(6, cliente.getEstadoEmissor());
-			sqlSt.setInt(7, cliente.getGenero());
-			sqlSt.setString(8, cliente.getLogradouro());
-			sqlSt.setString(9, cliente.getBairro());
-			sqlSt.setInt(10, cliente.getNumero());
-			sqlSt.setString(11, cliente.getCep());
-			sqlSt.setString(12, cliente.getCidade());
-			sqlSt.setString(13, cliente.getUf());
-			sqlSt.setString(14, cliente.getTelefone());
-			sqlSt.setString(15, cliente.getEmail());
-			sqlSt.setInt(16, cliente.getIdAgencia());
-			sqlSt.setInt(17, cliente.getId());
+			sqlSt.setDate(6, SystemUtils.dataConverter(cliente.getValidadeCnh()));
+			sqlSt.setString(7, cliente.getEstadoEmissor());
+			sqlSt.setInt(8, cliente.getGenero());
+			sqlSt.setString(9, cliente.getLogradouro());
+			sqlSt.setString(10, cliente.getBairro());
+			sqlSt.setInt(11, cliente.getNumero());
+			sqlSt.setString(12, cliente.getCep());
+			sqlSt.setString(13, cliente.getCidade());
+			sqlSt.setString(14, cliente.getUf());
+			sqlSt.setString(15, cliente.getTelefone());
+			sqlSt.setString(16, cliente.getEmail());
+			sqlSt.setInt(17, cliente.getIdAgencia());
+			sqlSt.setInt(18, cliente.getId());
 			sqlSt.execute();
 			return true;
 		}catch(Exception selectError){
@@ -105,17 +106,17 @@ public class ClienteDAO extends MysqlConnect{
 	public boolean insert(Cliente cliente) {
 		PreparedStatement sqlSt;
 		try{
-			String sql = "insert into cliente (nome, data_nascimento, cpf, rg, cnh, validadecnh, estado_emissor,"
-					+ " genero, logradouro, bairro, numero, cep, cidade, uf, telefone, email, id_agencia)"
-					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into cliente (nome, data_nascimento, cpf, rg, cnh, validade_cnh, estado_emissor,"
+					+ " genero, logradouro, bairro, numero, cep, cidade, uf, telefone, email, id_agencia, id_funcionario, data_cadastro, ativo)"
+					+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1,  cliente.getNome());
-			sqlSt.setDate(2, new java.sql.Date(cliente.getDataNascimento().getTime()));
+			sqlSt.setDate(2, SystemUtils.dataConverter(cliente.getDataNascimento()));
 			sqlSt.setString(3,  cliente.getCpf());
 			sqlSt.setString(4, cliente.getRg());
 			sqlSt.setString(5, cliente.getCnh());
-			sqlSt.setDate(6, new java.sql.Date(cliente.getValidadeCnh().getTime()));
+			sqlSt.setDate(6, SystemUtils.dataConverter(cliente.getValidadeCnh()));
 			sqlSt.setString(7, cliente.getEstadoEmissor());
 			sqlSt.setInt(8, cliente.getGenero());
 			sqlSt.setString(9, cliente.getLogradouro());
@@ -127,10 +128,9 @@ public class ClienteDAO extends MysqlConnect{
 			sqlSt.setString(15, cliente.getTelefone());
 			sqlSt.setString(16, cliente.getEmail());
 			sqlSt.setInt(17, cliente.getIdAgencia());
-			sqlSt.setDate(18, cliente.getDataCadastro());
-			sqlSt.setDate(19, cliente.getDataManutencao());
+			sqlSt.setInt(18, cliente.getIdFncionario());
+			sqlSt.setDate(19, SystemUtils.dataConverter(cliente.getDataCadastro()));
 			sqlSt.setBoolean(20, cliente.isAtivo());
-			sqlSt.toString();
 			sqlSt.execute();
 			return true;
 		}catch(Exception selectError){

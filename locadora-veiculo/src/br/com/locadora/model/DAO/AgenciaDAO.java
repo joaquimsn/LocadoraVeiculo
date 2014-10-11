@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.com.locadora.model.connection.MysqlConnect;
 import br.com.locadora.model.entity.Agencia;
+import br.com.locadora.utils.SystemUtils;
 
 public class AgenciaDAO extends MysqlConnect {
 	public Agencia select(int id) {
@@ -84,7 +85,7 @@ public class AgenciaDAO extends MysqlConnect {
 			sqlSt.setString(12,  agencia.getTelefone());
 			sqlSt.setString(13,  agencia.getEmail());
 			sqlSt.setString(14, agencia.getSite());
-			sqlSt.setDate(15, agencia.getDataManutencao());
+			sqlSt.setDate(15, SystemUtils.dataConverter(agencia.getDataManutencao()));
 			sqlSt.setBoolean(16, agencia.isAtivo());
 			sqlSt.setInt(17, agencia.getIdAgencia());
 			sqlSt.toString();
@@ -137,8 +138,8 @@ public class AgenciaDAO extends MysqlConnect {
 			sqlSt.setString(12,  agencia.getTelefone());
 			sqlSt.setString(13,  agencia.getEmail());
 			sqlSt.setString(14, agencia.getSite());
-			sqlSt.setDate(15, agencia.getDataCadastro());
-			sqlSt.setDate(16, agencia.getDataManutencao());
+			sqlSt.setDate(15, SystemUtils.dataConverter(agencia.getDataCadastro()));
+			sqlSt.setDate(16,SystemUtils.dataConverter(agencia.getDataManutencao()));
 			sqlSt.setBoolean(17, agencia.isAtivo());
 			sqlSt.execute();
 			return true;

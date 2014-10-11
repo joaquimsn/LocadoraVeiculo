@@ -2,8 +2,7 @@
 package br.com.locadora.controller;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import br.com.locadora.model.DAO.AgenciaDAO;
@@ -44,7 +43,7 @@ public class AgenciaControl implements Serializable{
 		agenciaDAO = new AgenciaDAO();
 		
 		agencia.setAtivo(true);
-		agencia.setDataCadastro(new Date(Calendar.getInstance().getTimeInMillis()));
+		agencia.setDataCadastro(new Date());
 		return agenciaDAO.insert(agencia);
 	}
 	
@@ -57,7 +56,7 @@ public class AgenciaControl implements Serializable{
 	private boolean alterar(Agencia agencia) {
 		// Cria uma nova conexão com o banco de dados
 		agenciaDAO = new AgenciaDAO();
-		agencia.setDataManutencao(new Date(Calendar.getInstance().getTimeInMillis()));
+		agencia.setDataManutencao(new Date());
 		
 		return agenciaDAO.update(agencia);
 	}

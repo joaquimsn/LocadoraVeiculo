@@ -174,7 +174,12 @@ public class AgenciaGUI extends JPanel implements Serializable{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				limparCampos();
+				
+				int escolha = JOptionPane.showConfirmDialog(txtResponsavel, "Todos os dados serão perdidos", "Atenção",JOptionPane.YES_NO_OPTION, 1);
+				
+				if (escolha == JOptionPane.YES_OPTION) {
+					limparCampos();
+				}
 			}
 		});
 	}
@@ -216,6 +221,8 @@ public class AgenciaGUI extends JPanel implements Serializable{
 		txtIncEstadual.setText("");
 		txtRazaoSocial.setText("");
 		txtResponsavel.setText("");
+		
+		formularioEndereco.limparCampos();
 	}
 	
 	/**

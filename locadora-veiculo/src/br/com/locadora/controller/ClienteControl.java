@@ -2,8 +2,7 @@
 package br.com.locadora.controller;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import br.com.locadora.model.DAO.ClienteDAO;
@@ -44,7 +43,7 @@ public class ClienteControl implements Serializable{
 		clienteDAO = new ClienteDAO();
 		
 		cliente.setAtivo(true);
-		cliente.setDataCadastro(new Date(Calendar.getInstance().getTimeInMillis()));
+		cliente.setDataCadastro(new Date());
 		return clienteDAO.insert(cliente);
 	}
 	
@@ -57,7 +56,7 @@ public class ClienteControl implements Serializable{
 	private boolean alterar(Cliente cliente) {
 		// Cria uma nova conexão com o banco de dados
 		clienteDAO = new ClienteDAO();
-		cliente.setDataManutencao(new Date(Calendar.getInstance().getTimeInMillis()));
+		cliente.setDataManutencao(new Date());
 		
 		return clienteDAO.update(cliente);
 	}

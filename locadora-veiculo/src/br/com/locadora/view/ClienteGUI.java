@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -13,14 +14,15 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import br.com.locadora.controller.AgenciaControl;
 import br.com.locadora.controller.ClienteControl;
-import br.com.locadora.model.entity.Agencia;
 import br.com.locadora.model.entity.Cliente;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.FormularioEnderecoComponente;
+import br.com.locadora.view.componentes.InputSoNumeros;
+import br.com.locadora.view.componentes.InputSoTexto;
+import br.com.locadora.view.componentes.InputSoTextoNumeros;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -40,7 +42,7 @@ public class ClienteGUI extends JPanel {
 	// Inputs
 	private JTextField txtNome;
 	private JComboBox cbxGenero;
-	private JTextField txtCpf;
+	private JFormattedTextField txtCpf;
 	private JTextField txtRg;
 	private JDateChooser dataNascimentoChooser;
 	private JTextField txtEstadoEmissor;
@@ -70,6 +72,12 @@ public class ClienteGUI extends JPanel {
 	 * @author Joaquim Neto
 	 */
 	private void inicializar() {
+		
+		// InputVerifier para validações genéricas dos campos
+		InputSoNumeros soNumeros = new InputSoNumeros();
+		InputSoTextoNumeros soTextoNumeros = new InputSoTextoNumeros();
+		InputSoTexto soTexto = new InputSoTexto();
+		
 		setLayout(null);
 		setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), tituloTela, TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		
@@ -78,6 +86,7 @@ public class ClienteGUI extends JPanel {
 		add(lblNome);
 		
 		txtNome = new JTextField(10);
+		txtNome.setInputVerifier(soTexto);
 		txtNome.setBounds(30, 60, 400, 30);
 		add(txtNome);
 		
@@ -102,7 +111,7 @@ public class ClienteGUI extends JPanel {
 		lblCpf.setBounds(35, 90, 125, 20);
 		add(lblCpf);
 		
-		txtCpf = new JTextField(10);
+		txtCpf = new JFormattedTextField(Mask.maskCpf());
 		txtCpf.setBounds(30, 110, 200, 30);
 		add(txtCpf);
 		
@@ -115,10 +124,12 @@ public class ClienteGUI extends JPanel {
 		add(lblCnh);
 		
 		txtCnh = new JTextField(10);
+		txtCnh.setInputVerifier(soNumeros);
 		txtCnh.setBounds(435, 111, 195, 30);
 		add(txtCnh);
 		
 		txtRg = new JTextField(10);
+		txtRg.setInputVerifier(soNumeros);
 		txtRg.setBounds(235, 110, 195, 30);
 		add(txtRg);
 		
@@ -127,6 +138,7 @@ public class ClienteGUI extends JPanel {
 		add(lblEstadoEmissor);
 		
 		txtEstadoEmissor = new JTextField(10);
+		txtEstadoEmissor.setInputVerifier(soTexto);
 		txtEstadoEmissor.setBounds(30, 165, 150, 30);
 		add(txtEstadoEmissor);
 		
@@ -167,9 +179,9 @@ public class ClienteGUI extends JPanel {
 				cliente.setNome(txtNome.getText());
 				cliente.setCpf(txtCpf.getText());
 				cliente.setRg(txtRg.getText());
-				cliente.setDataNascimento((java.sql.Date) dataNascimentoChooser.getDate());
+				cliente.setDataNascimento(dataNascimentoChooser.getDate());
 				cliente.setCnh(txtCnh.getText());
-				cliente.setValidadeCnh((java.sql.Date) dataVencimentoCnh.getDate());
+				cliente.setValidadeCnh(dataVencimentoCnh.getDate());
 				cliente.setEstadoEmissor(txtEstadoEmissor.getText());
 				//TODO cliente.setGenero(cbxGenero.getSelectedItem());
 				cliente.setLogradouro(formularioEndereco.getEndereco().getLogradouro());
@@ -205,7 +217,11 @@ public class ClienteGUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				limparCampos();
+				int escolha = JOptionPane.showConfirmDialog(txtEstadoEmissor, "Todos os dados serão perdidos", "Atenção",JOptionPane.YES_NO_OPTION, 1);
+				
+				if (escolha == JOptionPane.YES_OPTION) {
+					limparCampos();
+				}
 			}
 		});
 	}
@@ -247,6 +263,8 @@ public class ClienteGUI extends JPanel {
 		txtEstadoEmissor.setText("");
 		txtNome.setText("");
 		txtRg.setText("");
+		
+		formularioEndereco.limparCampos();
 	}
 	
 	/**

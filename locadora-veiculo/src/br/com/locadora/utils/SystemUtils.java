@@ -574,4 +574,15 @@ public class SystemUtils {
 	public static int getRamdomId() {
 		return (int) UUID.randomUUID().getLeastSignificantBits();
 	}
+	
+	/**
+	 * Converte uma java.util.Date para java.sql.Date
+	 * @author Joaquim Neto
+	 * @param data Objeto java.util.Date
+	 * @return java.sql.Date
+	 */
+	public static java.sql.Date dataConverter(java.util.Date data) {
+		java.sql.Date dateSql = new java.sql.Date(data.getTime());
+		return dateSql;
+	}
 }

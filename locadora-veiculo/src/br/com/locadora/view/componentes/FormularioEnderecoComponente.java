@@ -36,7 +36,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 	private JTextField txtEmail;
 	private JTextField txtSite;
 	private JTextField txtBairro;
-	private JTextField txtTelefone;
+	private JFormattedTextField txtTelefone;
 
 	/**
 	 * Componente formulário enederço contém todos os campos
@@ -125,8 +125,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		lblTelefone.setBounds(545, 60, 150, 20);
 		add(lblTelefone);
 		
-		txtTelefone = new JTextField(10);
-		txtTelefone.setInputVerifier(soNumeros); // Adiciona a validação soNumeros
+		txtTelefone = new JFormattedTextField(Mask.maskTelefone());
 		txtTelefone.setBounds(545, 80, 250, 30);
 		add(txtTelefone);
 		
