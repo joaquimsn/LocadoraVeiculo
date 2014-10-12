@@ -8,7 +8,8 @@ public class Usuario{
 	@Required(label = "Senha", minimo = 4)
 	private String senha;
 	private Funcionario funcionario;
-	public Usuario(){
+
+	public Usuario() {
 		setUsuario("");
 		setSenha("");
 		setFuncionario(null);

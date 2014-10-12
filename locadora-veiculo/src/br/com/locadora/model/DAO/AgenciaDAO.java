@@ -10,37 +10,38 @@ import br.com.locadora.model.entity.Agencia;
 import br.com.locadora.utils.SystemUtils;
 
 public class AgenciaDAO extends MysqlConnect {
+	
 	public Agencia select(int id) {
 		PreparedStatement sqlSt;
 		ResultSet resultSet;
 		try {
-			String sql = "SELECT * FROM agencia where agencia_id=?";
+			String sql = "SELECT * FROM agencia WHERE id_agencia = ?";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setInt(1, id);
 			resultSet = sqlSt.executeQuery();
-			Agencia resultado = new Agencia();
+			Agencia agencia = new Agencia();
 			
 			if (resultSet.next()) {
-				resultado.setIdAgencia(resultSet.getInt(1));
-				resultado.setRazaoSocial(resultSet.getString(2));
-				resultado.setNomeFantasia(resultSet.getString(3));
-				resultado.setCnpj(resultSet.getString(4));
-				resultado.setInscricaoEstadual(resultSet.getString(5));
-				resultado.setResponsavel(resultSet.getString(6));
-				resultado.setLogradouro(resultSet.getString(7));
-				resultado.setBairro(resultSet.getString(8));
-				resultado.setNumero(resultSet.getInt(9));
-				resultado.setCep(resultSet.getString(10));
-				resultado.setCidade(resultSet.getString(11));
-				resultado.setUf(resultSet.getString(12));
-				resultado.setTelefone(resultSet.getString(13));
-				resultado.setEmail(resultSet.getString(14));
-				resultado.setSite(resultSet.getString(15));
-				resultado.setDataCadastro(resultSet.getDate(16));
-				resultado.setDataManutencao(resultSet.getDate(17));
-				resultado.setAtivo(resultSet.getBoolean(18));
+				agencia.setIdAgencia(resultSet.getInt(1));
+				agencia.setRazaoSocial(resultSet.getString(2));
+				agencia.setNomeFantasia(resultSet.getString(3));
+				agencia.setCnpj(resultSet.getString(4));
+				agencia.setInscricaoEstadual(resultSet.getString(5));
+				agencia.setResponsavel(resultSet.getString(6));
+				agencia.setLogradouro(resultSet.getString(7));
+				agencia.setBairro(resultSet.getString(8));
+				agencia.setNumero(resultSet.getInt(9));
+				agencia.setCep(resultSet.getString(10));
+				agencia.setCidade(resultSet.getString(11));
+				agencia.setUf(resultSet.getString(12));
+				agencia.setTelefone(resultSet.getString(13));
+				agencia.setEmail(resultSet.getString(14));
+				agencia.setSite(resultSet.getString(15));
+				agencia.setDataCadastro(resultSet.getDate(16));
+				agencia.setDataManutencao(resultSet.getDate(17));
+				agencia.setAtivo(resultSet.getBoolean(18));
 			}
-			return resultado;
+			return agencia;
 		} catch (Exception selectError) {
 			return null;
 		} finally {

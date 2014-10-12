@@ -116,6 +116,15 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 				telaPrincipalGUI.mudarTelaContainer(new ConsultaAgenciaGUI());
 			}
 			
+		} else if (e.getSource() == btnCadastrar) {
+			// Tela cadastro cliente
+			if (telaParaControle.getClass() == ConsultaClienteGUI.class) {
+				telaPrincipalGUI.mudarTelaContainer(new ClienteGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_cliente")));
+			
+			// Tela cadastro agência	
+			} else if (telaParaControle.getClass() == ConsultaAgenciaGUI.class) {
+				telaPrincipalGUI.mudarTelaContainer(new AgenciaGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_agencia")));
+			}
 		} else if (e.getSource() == btnDevolucao) {
 			new DevolucaoGUI();
 		}

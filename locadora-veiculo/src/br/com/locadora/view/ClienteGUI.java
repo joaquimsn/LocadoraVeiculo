@@ -16,6 +16,7 @@ import javax.swing.border.TitledBorder;
 
 import br.com.locadora.controller.ClienteControl;
 import br.com.locadora.model.entity.Cliente;
+import br.com.locadora.model.enums.GeneroEnum;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
@@ -94,7 +95,7 @@ public class ClienteGUI extends JPanel {
 		lblGenero.setBounds(440, 40, 125, 20);
 		add(lblGenero);
 		
-		cbxGenero = new JComboBox();
+		cbxGenero = new JComboBox(GeneroEnum.getDisplayList().toArray(new String[0]));
 		cbxGenero.setBounds(435, 60, 190, 30);
 		add(cbxGenero);
 		

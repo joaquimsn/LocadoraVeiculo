@@ -3,6 +3,8 @@ package br.com.locadora.controller;
 import java.io.File;
 import java.io.Serializable;
 
+import javax.swing.JOptionPane;
+
 import br.com.locadora.utils.IOUtils;
 
 
@@ -42,6 +44,12 @@ public class Autenticacao implements Serializable{
 			
 			// Se o meio for igual o login retorna true
 			if (listaLoginsOrdernada[meio].equals(login)) {
+				// Verifica se existe funcionário associado ao usuário informado na base do sistema
+				if (!adicionarFuncionarioNaSessao(usuario)) {
+					JOptionPane.showMessageDialog(null, "Não exite funcionário associado ao usuário " + usuario + 
+							" contate o suporte do sistema");
+					return false;
+				}
 				return true;
 			}
 			
@@ -54,6 +62,17 @@ public class Autenticacao implements Serializable{
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Adiciona o funcionario na sessão do sistema
+	 * @author Joaquim Neto
+	 * @param usuario
+	 * @return <b>true</b> se o usuário for adicionado com sucesso
+	 */
+	private static boolean adicionarFuncionarioNaSessao(String usuario) {
+		FuncionarioControl funcionarioControl = new FuncionarioControl();
+		return funcionarioControl.adicionarFuncionarioNaSessao(usuario);
 	}
 	
 	/**
@@ -122,6 +141,7 @@ public class Autenticacao implements Serializable{
 			// Converte o texto byte[] no equivalente String
 			msgDecifradaString = (new String(cryptoAES.getTextoDecifrado(), "ISO-8859-1"));
 			
+			//Apenas para teste, mostrar o resultado da decifra
 //			iOUtils.gravarArquivo(new File("usuario-decifrado.txt"), msgDecifradaString);
 
 		} catch (Exception e) {

@@ -1,20 +1,29 @@
 package br.com.locadora.view;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import com.toedter.calendar.JDateChooser;
-
+import br.com.locadora.controller.FuncionarioControl;
+import br.com.locadora.model.entity.Funcionario;
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.FormularioEnderecoComponente;
+import br.com.locadora.view.componentes.InputSoNumeros;
+import br.com.locadora.view.componentes.InputSoTexto;
+import br.com.locadora.view.componentes.InputSoTextoNumeros;
+
+import com.toedter.calendar.JDateChooser;
 
 public class FuncionarioGUI extends JPanel implements Serializable {
 	private static final long serialVersionUID = -49360159640708649L;
@@ -28,6 +37,7 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 	private JLabel lblCodigoAgencia;
 	private JLabel lblNvel;
 	private JLabel lblResponsavel;
+	private JLabel lblNomeUsuario;
 	
 	// Inputs
 	private JTextField txtNome;
@@ -36,10 +46,14 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 	private JTextField txtRg;
 	private JDateChooser dataNascimentoChooser;
 	private JComboBox cbxNivel;
-	private JTextField txtCodigoAgencia;
+	private JComboBox cbxAgencia;
 	private JComboBox cbxSupervisor;
+	private JTextField txtNomeUsuario;
+	
+	private FormularioEnderecoComponente formularioEndereco;
 	
 	private String tituloTela;
+	private int idFuncionario;
 	
 	public FuncionarioGUI() {
 		inicializar();
@@ -59,6 +73,12 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 	 * @author Joaquim Neto
 	 */
 	private void inicializar() {
+		
+		// InputVerifier para validações genéricas dos campos
+		InputSoNumeros soNumeros = new InputSoNumeros();
+		InputSoTextoNumeros soTextoNumeros = new InputSoTextoNumeros();
+		InputSoTexto soTexto = new InputSoTexto();
+				
 		setLayout(null);
 		setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), tituloTela, TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		
@@ -68,6 +88,7 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 		
 		txtNome = new JTextField(10);
 		txtNome.setBounds(30, 60, 400, 30);
+		txtNome.setInputVerifier(soNumeros);
 		add(txtNome);
 		
 		lblGenero = new JLabel(LocaleUtils.getLocaleView().getString("lbl_genero"));
@@ -108,6 +129,7 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 		add(cbxNivel);
 		
 		txtRg = new JTextField(10);
+		txtRg.setInputVerifier(soTextoNumeros);
 		txtRg.setBounds(235, 110, 195, 30);
 		add(txtRg);
 		
@@ -115,21 +137,29 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 		lblCodigoAgencia.setBounds(35, 145, 125, 20);
 		add(lblCodigoAgencia);
 		
-		txtCodigoAgencia = new JTextField(10);
-		txtCodigoAgencia.setBounds(30, 165, 150, 30);
-		add(txtCodigoAgencia);
+		cbxAgencia = new JComboBox();
+		cbxAgencia.setBounds(30, 165, 235, 30);
+		add(cbxAgencia);
 		
 		lblResponsavel = new JLabel(LocaleUtils.getLocaleView().getString("lbl_supervisor"));
-		lblResponsavel.setBounds(195, 145, 125, 20);
+		lblResponsavel.setBounds(280, 145, 125, 20);
 		add(lblResponsavel);
 		
 		cbxSupervisor = new JComboBox();
-		cbxSupervisor.setBounds(185, 165, 500, 30);
+		cbxSupervisor.setBounds(270, 165, 350, 30);
 		add(cbxSupervisor);
 		
+		lblNomeUsuario = new JLabel(LocaleUtils.getLocaleView().getString("lbl_usuario")	);
+		lblNomeUsuario.setBounds(635, 145, 125, 20);
+		add(lblNomeUsuario);
+		
+		txtNomeUsuario = new JTextField(10);
+		txtNomeUsuario.setInputVerifier(soTexto);
+		txtNomeUsuario.setBounds(625, 165, 200, 30);
+		add(txtNomeUsuario);
 		
 		// Componete formulário para endereço
-		FormularioEnderecoComponente formularioEndereco = new FormularioEnderecoComponente();
+		formularioEndereco = new FormularioEnderecoComponente();
 		formularioEndereco.setBounds(30, 200, 800, 170);
 		add(formularioEndereco);
 		
@@ -140,5 +170,129 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 		
 		this.setBounds(15, 10, 859, 500);
 		this.setVisible(true);
+		
+		/*
+		 * EVENTOS DOS BOTÕES
+		 */
+		botoesCrudComponente.btnSalvar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Funcionario funcionario = new Funcionario();
+				
+				// Preenche o objeto Funcionário com as informações infromada pelo usuário
+				funcionario.setId(idFuncionario);
+				funcionario.setNome(txtNome.getText());
+				funcionario.setCpf(txtCpf.getText());
+				funcionario.setRg(txtRg.getText());
+				funcionario.setDataNascimento(dataNascimentoChooser.getDate());
+//				funcionario.setCodigoAgencia();
+//				funcionario.setFuncionarioSupervisor();
+//				funcionario.setNivel();
+				funcionario.setUsuario(txtNomeUsuario.getText());
+				//TODO funcionario.setGenero(cbxGenero.getSelectedItem());
+				funcionario.setLogradouro(formularioEndereco.getEndereco().getLogradouro());
+				funcionario.setNumero(formularioEndereco.getEndereco().getNumero());
+				funcionario.setBairro(formularioEndereco.getEndereco().getBairro());
+				funcionario.setCep(formularioEndereco.getEndereco().getCep());
+				funcionario.setUf(formularioEndereco.getEndereco().getUf());
+				funcionario.setCidade(formularioEndereco.getEndereco().getCidade());
+				funcionario.setTelefone(formularioEndereco.getEndereco().getTelefone());
+				funcionario.setEmail(formularioEndereco.getEndereco().getEmail());
+				funcionario.setAtivo(true);
+				
+				// Valida os dados preenchido pelo usuário
+				if (!validar(funcionario)) {
+					return;
+				}
+				
+				// Persiste o objeto Funcionário
+				FuncionarioControl funcionarioControl = new FuncionarioControl();
+				
+				// Verifica se foi cadastrado com sucesso
+				if (funcionarioControl.salvarOuAlterar(funcionario)) {
+					// Limpa os campos preenchidos
+					limparCampos();
+					formularioEndereco.limparCampos();
+				} else {
+					JOptionPane.showMessageDialog(lblNome, LocaleUtils.getLocaleMessages().getString("falha_errofatal"));
+				}
+			}
+		});
+		
+		botoesCrudComponente.btnCancelar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int escolha = JOptionPane.showConfirmDialog(cbxSupervisor, "Todos os dados serão perdidos", "Atenção",JOptionPane.YES_NO_OPTION, 1);
+				
+				if (escolha == JOptionPane.YES_OPTION) {
+					limparCampos();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Valida os campos preenchido pelo usuário
+	 * @author Joaquim Neto
+	 * @param funcionario Objeto Funcionario
+	 * @return <b>true</b> Se for valido
+	 */
+	private boolean validar(Funcionario funcionario) {
+		
+		// Verifica se os campos obrigatorios referente a funcionario foram preenchido
+		if (!SystemUtils.isCamposObrigatoriosPreenchidos(funcionario)) {
+			return false;
+		}
+		
+		// Verifica se os campos obrigatorios referente ao endereço foram preenchido
+		if (!SystemUtils.isCamposObrigatoriosPreenchidos(formularioEndereco.getEndereco())) {
+			return false;
+		}
+		
+		// Valida o cnpj
+		if (!SystemUtils.isCpfValido(funcionario.getCpf())) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Limpa todos os campos preenchidos pelo usuário
+	 * @author Joaquim Neto
+	 */
+	private void limparCampos() {
+		// Limpa os valores fields funcionari
+		txtNome.setText("");
+		txtNomeUsuario.setText("");
+		txtCpf.setText("");
+		txtRg.setText("");
+		
+		formularioEndereco.limparCampos();
+	}
+	
+	/**
+	 * Preenche os campos da tela Funcionário com os valores obtidos do 
+	 * objeto Agência passado por parâmentro
+	 * @author Joaquim Neto
+	 * @param funcionario Objeto Funcionário
+	 */
+	public void preencherCampos(Funcionario funcionario) {
+		if (!SystemUtils.isNuloOuVazio(funcionario)) {
+			idFuncionario = funcionario.getId();
+			txtNome.setText(funcionario.getNome());
+			txtCpf.setText(funcionario.getCpf());
+			txtRg.setText(funcionario.getRg());
+			txtNomeUsuario.setText(funcionario.getUsuario());
+			cbxAgencia.setSelectedItem(funcionario.getAgencia().getRazaoSocial());
+			cbxSupervisor.setSelectedItem(funcionario.getSupervisor().getNome());
+//			cbxGenero.setSelectedItem();
+//			cbxNivel.setSelectedItem();
+			
+			// Preenche o endereço
+			formularioEndereco.preencherEndereco(funcionario.getEndereco());
+		}
 	}
 }

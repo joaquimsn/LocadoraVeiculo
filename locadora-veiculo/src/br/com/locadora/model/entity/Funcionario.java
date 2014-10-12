@@ -2,6 +2,11 @@ package br.com.locadora.model.entity;
 
 import java.util.Date;
 
+import br.com.locadora.controller.AgenciaControl;
+import br.com.locadora.controller.FuncionarioControl;
+import br.com.locadora.model.enums.GeneroEnum;
+import br.com.locadora.model.enums.NivelUsuarioEnum;
+import br.com.locadora.model.vo.Endereco;
 import br.com.locadora.utils.annotation.Required;
 
 public class Funcionario {
@@ -100,6 +105,15 @@ public class Funcionario {
 	public char getGenero() {
 		return genero;
 	}
+	
+	/**
+	 * Retorna o genério formatado para visualização
+	 * @author Joaquim Neto
+	 * @return String 
+	 */
+	public String getGeneroDisplay() {
+		return GeneroEnum.getDisplayByValue(getGenero());
+	}
 
 	public void setGenero(char genero) {
 		this.genero = genero;
@@ -172,6 +186,15 @@ public class Funcionario {
 	public int getNivel() {
 		return nivel;
 	}
+	
+	/**
+	 * Nível de permissão do usuário formatado para visualização
+	 * @author Joaquim Neto
+	 * @return String 
+	 */
+	public String getNivelDisplay() {
+		return NivelUsuarioEnum.getDisplayByValue(getNivel());
+	}
 
 	public void setNivel(int nivel) {
 		this.nivel = nivel;
@@ -179,6 +202,11 @@ public class Funcionario {
 
 	public int getFuncionarioSupervisor() {
 		return funcionarioSupervisor;
+	}
+	
+	public Funcionario getSupervisor() {
+		FuncionarioControl funcionarioControl = new FuncionarioControl();
+		return funcionarioControl.buscarPorId(getFuncionarioSupervisor());
 	}
 
 	public void setFuncionarioSupervisor(int funcionarioSupervisor) {
@@ -230,5 +258,30 @@ public class Funcionario {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-
+	
+	public Agencia getAgencia() {
+		AgenciaControl control = new AgenciaControl();
+		return control.buscarPorId(getCodigoAgencia());
+	}
+	
+	/**
+	 * Retorna um objeto endereço com os dados presente
+	 * na instacia atual do objeto
+	 * @author Joaquim Neto
+	 * @return Objeto Endereço
+	 */
+	public Endereco getEndereco() {
+		Endereco endereco = new Endereco();
+		endereco.setLogradouro(getLogradouro());
+		endereco.setBairro(getBairro());
+		endereco.setNumero(getNumero());
+		endereco.setCep(getCep());
+		endereco.setUf(getUf());
+		endereco.setCidade(getCidade());
+		endereco.setTelefone(getTelefone());
+		endereco.setEmail(getEmail());
+		endereco.setSite("");
+		
+		return endereco;
+	}
 }

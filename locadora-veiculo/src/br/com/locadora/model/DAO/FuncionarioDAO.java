@@ -1,11 +1,11 @@
 package br.com.locadora.model.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 
 import br.com.locadora.model.connection.MysqlConnect;
-import br.com.locadora.model.entity.*;
+import br.com.locadora.model.entity.Funcionario;
 
 public class FuncionarioDAO extends MysqlConnect{
 
@@ -55,8 +55,11 @@ public class FuncionarioDAO extends MysqlConnect{
 			sqlSt.setInt(19, funcionario.getCodigoAgencia());		
 			sqlSt.executeQuery();
 			return true;
-		}catch(Exception updateError){
+		} catch (Exception updateError) {
+			updateError.printStackTrace();
 			return false;
+		} finally {
+			closeConnection();
 		}
 	}
 
@@ -68,6 +71,7 @@ public class FuncionarioDAO extends MysqlConnect{
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setInt(1, id);
 			resultSet = sqlSt.executeQuery();
+			
 			Funcionario resultado = new Funcionario();
 			resultado.setId(id);
 			resultado.setNome(resultSet.getString(1));
@@ -84,9 +88,7 @@ public class FuncionarioDAO extends MysqlConnect{
 			resultado.setTelefone(resultSet.getString(12));
 			resultado.setEmail(resultSet.getString(13));
 			resultado.setNivel(resultSet.getInt(14));
-			Usuario usuario = new Usuario();
-			usuario.setUsuario(resultSet.getString(15));
-			resultado.setUsuario(usuario.getUsuario());
+			resultado.setUsuario(resultSet.getString(15));
 			resultado.setDataCadastro(resultSet.getDate(16));
 			resultado.setDataManutencao(resultSet.getDate(17));
 			resultado.setFuncionarioSupervisor(resultSet.getInt(18));
@@ -94,6 +96,54 @@ public class FuncionarioDAO extends MysqlConnect{
 			return resultado;
 		}catch(Exception selectError){
 			return null;
+		}
+	}
+	
+	public Funcionario selectByUser(String nomeUsuario) {
+		PreparedStatement sqlSt;
+		ResultSet resultSet;
+		Funcionario funcionario = null;
+		
+		try{
+			String sql = "SELECT * FROM funcionario WHERE usuario = ?";
+			sqlSt = conn.prepareStatement(sql);
+			sqlSt.setString(1, nomeUsuario);
+			resultSet = sqlSt.executeQuery();
+			
+			while(resultSet.next()){
+				funcionario = new Funcionario();
+				
+				funcionario.setId(resultSet.getInt(1));
+				funcionario.setNome(resultSet.getString(2));
+				funcionario.setDataNascimento(resultSet.getDate(3));
+				funcionario.setCpf(resultSet.getString(4));
+				funcionario.setRg(resultSet.getString(5));
+				funcionario.setGenero(resultSet.getString(6).charAt(0));
+				funcionario.setLogradouro(resultSet.getString(7));
+				funcionario.setNumero(resultSet.getInt(8));
+				funcionario.setBairro(resultSet.getString(9));
+				funcionario.setCep(resultSet.getString(10));
+				funcionario.setCidade(resultSet.getString(11));
+				funcionario.setUf(resultSet.getString(12));
+				funcionario.setTelefone(resultSet.getString(13));
+				funcionario.setEmail(resultSet.getString(14));
+				funcionario.setNivel(resultSet.getInt(15));
+				funcionario.setUsuario(resultSet.getString(16));
+				funcionario.setFuncionarioSupervisor(resultSet.getInt(17));
+				funcionario.setCodigoAgencia(resultSet.getInt(18));
+				funcionario.setDataCadastro(resultSet.getDate(19));
+				funcionario.setDataManutencao(resultSet.getDate(20));
+				funcionario.setAtivo(resultSet.getBoolean(21));
+				
+			}
+			
+			return funcionario;
+	
+		} catch (Exception selectError) {
+			selectError.printStackTrace();
+			return null;
+		} finally {
+			closeConnection();
 		}
 	}
 
@@ -146,8 +196,11 @@ public class FuncionarioDAO extends MysqlConnect{
 			sqlSt.setInt(19, funcionario.getCodigoAgencia());
 			sqlSt.setInt(20, funcionario.getId());
 			return true;
-		}catch(Exception selectError){
+		} catch (Exception selectError) {
+			selectError.printStackTrace();
 			return false;
+		} finally {
+			closeConnection();
 		}
 	}
 
@@ -162,6 +215,62 @@ public class FuncionarioDAO extends MysqlConnect{
 		}catch(Exception deleteError){
 			return false;
 		}
+	}
+	
+	/**
+	 * Busca todas as funcionarios cadastradas na base, com base na conditional 
+	 * passada por parâmetro, a query usada para pesquisa é <b>SELECt * FROM funcionario</b>
+	 * @author Joaquim Neto
+	 * @param conditional condição para a consulta sql
+	 * @return Lista com os funcionarios encontrados
+	 */
+	public List<Funcionario> pesquisaPorCondicao(String conditional){
+		List<Funcionario> lista = new ArrayList<Funcionario>();
+		ResultSet resultSet;
+		Funcionario funcionario;
+		
+		try{
+			String sql = "SELECT * FROM funcionario " + conditional;
+			
+			PreparedStatement st = conn.prepareStatement(sql);
+			resultSet = st.executeQuery();
+			
+			while(resultSet.next()){
+				funcionario = new Funcionario();
+				
+				funcionario.setId(resultSet.getInt(1));
+				funcionario.setNome(resultSet.getString(2));
+				funcionario.setDataNascimento(resultSet.getDate(3));
+				funcionario.setCpf(resultSet.getString(4));
+				funcionario.setRg(resultSet.getString(5));
+				funcionario.setGenero(resultSet.getString(6).charAt(0));
+				funcionario.setLogradouro(resultSet.getString(7));
+				funcionario.setNumero(resultSet.getInt(8));
+				funcionario.setBairro(resultSet.getString(9));
+				funcionario.setCep(resultSet.getString(10));
+				funcionario.setCidade(resultSet.getString(11));
+				funcionario.setUf(resultSet.getString(12));
+				funcionario.setTelefone(resultSet.getString(13));
+				funcionario.setEmail(resultSet.getString(14));
+				funcionario.setNivel(resultSet.getInt(15));
+				funcionario.setUsuario(resultSet.getString(16));
+				funcionario.setFuncionarioSupervisor(resultSet.getInt(17));
+				funcionario.setCodigoAgencia(resultSet.getInt(18));
+				funcionario.setDataCadastro(resultSet.getDate(19));
+				funcionario.setDataManutencao(resultSet.getDate(20));
+				funcionario.setAtivo(resultSet.getBoolean(21));
+				
+				lista.add(funcionario);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			closeConnection();
+		}
+		
+		return lista;
 	}
 
 }

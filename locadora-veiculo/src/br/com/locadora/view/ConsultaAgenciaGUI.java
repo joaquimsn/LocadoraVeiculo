@@ -142,7 +142,7 @@ public class ConsultaAgenciaGUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AgenciaGUI agenciaGUI = new AgenciaGUI();
+				AgenciaGUI agenciaGUI = new AgenciaGUI(LocaleUtils.getLocaleView().getString("titulo_alterar_agencia"));
 				
 				if (!isAgenciaSelecionada()) {
 					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_pesquisabranco"));

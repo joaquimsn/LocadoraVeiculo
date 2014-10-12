@@ -42,6 +42,10 @@ public class ClienteControl implements Serializable{
 		// Cria uma nova conexão com o banco de dados
 		clienteDAO = new ClienteDAO();
 		
+		// Associa a agência e o funcionario ao cliente cadastrado
+		cliente.setIdAgencia(SystemUtils.getFuncionarioLogado().getCodigoAgencia());
+		cliente.setIdFncionario(SystemUtils.getFuncionarioLogado().getId());
+		
 		cliente.setAtivo(true);
 		cliente.setDataCadastro(new Date());
 		return clienteDAO.insert(cliente);

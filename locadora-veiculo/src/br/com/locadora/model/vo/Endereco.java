@@ -1,5 +1,6 @@
 package br.com.locadora.model.vo;
 
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.annotation.Required;
 
 public class Endereco {
@@ -23,6 +24,9 @@ public class Endereco {
 	private String telefone;
 	private String email;
 	private String site;
+	
+	private int idCidade;
+	private int idBairro;
 
 	/**
 	 * @return the logradouro
@@ -70,6 +74,9 @@ public class Endereco {
 	 * @return the cep
 	 */
 	public String getCep() {
+		if (!SystemUtils.isNuloOuVazio(cep) && cep.length() == 8) {
+			cep = cep.substring(0, 5) + "-" + cep.substring(5, 8);
+		}
 		return cep;
 	}
 
@@ -148,6 +155,34 @@ public class Endereco {
 	 */
 	public void setSite(String site) {
 		this.site = site;
+	}
+
+	/**
+	 * @return the idCidade
+	 */
+	public int getIdCidade() {
+		return idCidade;
+	}
+
+	/**
+	 * @param idCidade the idCidade to set
+	 */
+	public void setIdCidade(int idCidade) {
+		this.idCidade = idCidade;
+	}
+
+	/**
+	 * @return the idBairro
+	 */
+	public int getIdBairro() {
+		return idBairro;
+	}
+
+	/**
+	 * @param idBairro the idBairro to set
+	 */
+	public void setIdBairro(int idBairro) {
+		this.idBairro = idBairro;
 	}
 
 }

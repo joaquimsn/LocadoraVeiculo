@@ -18,6 +18,7 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.MenuAcoesLateral;
 
@@ -111,11 +112,11 @@ public class TelaPrincipalGUI extends JFrame implements Serializable, ActionList
 		panelFooter = new JPanel(new FlowLayout(FlowLayout.LEFT, 30, 10));
 		panelFooter.setBorder(border);
 		
-		panelFooter.add(new JLabel("<html><b>Empresa:</b><html> BJ Locadora de veiculos LTDA", JLabel.LEFT));
-		panelFooter.add(new JLabel("<html><b>Agência:</b><html> 08873 ", JLabel.LEFT));
-		panelFooter.add(new JLabel("<html><b>Cidade:</b><html> São Paulo - SP ", JLabel.LEFT));
-		panelFooter.add(new JLabel("<html><b>Usuário:</b><html> Joaquim Neto ", JLabel.LEFT));
-		panelFooter.add(new JLabel("<html><b>Acesso:</b><html> 90 ", JLabel.RIGHT));
+		panelFooter.add(new JLabel("<html><b>Empresa:</b><html> " + SystemUtils.getAgenciaSelecionado().getRazaoSocial(), JLabel.LEFT));
+		panelFooter.add(new JLabel("<html><b>Agência:</b><html> " + SystemUtils.getAgenciaSelecionado().getIdAgencia(), JLabel.LEFT));
+		panelFooter.add(new JLabel("<html><b>Cidade:</b><html> " + SystemUtils.getAgenciaSelecionado().getCidade(), JLabel.LEFT));
+		panelFooter.add(new JLabel("<html><b>Funcionário:</b><html> " + SystemUtils.getFuncionarioLogado().getNome(), JLabel.LEFT));
+		panelFooter.add(new JLabel("<html><b>Usuário:</b><html> " + SystemUtils.getFuncionarioLogado().getUsuario(), JLabel.RIGHT));
 		
 		// Configurações do container das telas utilizadas no sistema
 		panelContainerTela = new JPanel(null);

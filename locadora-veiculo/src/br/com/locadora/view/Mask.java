@@ -72,4 +72,21 @@ public class Mask {
 		
 		return maskFormatter;
 	}
+	
+	/**
+	 * Máscara para placa de veículo
+	 * @author Joaquim Neto
+	 * @return MaskFormatter
+	 */
+	public static final MaskFormatter maskPlaca() {
+		MaskFormatter maskFormatter = null;
+		
+		try {
+			maskFormatter = new MaskFormatter("UUU-####");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return maskFormatter;
+	}
 }

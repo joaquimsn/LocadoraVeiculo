@@ -22,14 +22,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import br.com.locadora.controller.ClienteControl;
-import br.com.locadora.model.entity.Cliente;
-import br.com.locadora.model.enums.ParametroPesquisaClienteEnum;
+import br.com.locadora.controller.FuncionarioControl;
+import br.com.locadora.model.entity.Funcionario;
+import br.com.locadora.model.enums.ParametroPesquisaFuncionarioEnum;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.InputSoTextoNumeros;
 
-public class ConsultaClienteGUI extends JPanel {
+public class ConsultaFuncionarioGUI extends JPanel {
 	private static final long serialVersionUID = 65619500338126805L;
 	
 	// Lables
@@ -51,22 +51,22 @@ public class ConsultaClienteGUI extends JPanel {
 	private JTable table;
 	
 	// Atributos da regra de negócio
-	private List<Cliente> listaCliente;
-	private ClienteControl clienteControl;
+	private List<Funcionario> listaFuncionario;
+	private FuncionarioControl funcionarioControl;
 
-	public ConsultaClienteGUI() {
-		clienteControl = new ClienteControl();
-		listaCliente = new ArrayList<Cliente>();
+	public ConsultaFuncionarioGUI() {
+		funcionarioControl = new FuncionarioControl();
+		listaFuncionario = new ArrayList<Funcionario>();
 		
 		inicializar();
 	}
 	
-	/**Inicializa todos os componetes da tela consulta de cliente
+	/**Inicializa todos os componetes da tela consulta de funcionario
 	 * @author Joaquim Neto
 	 */
 	private void inicializar() {
 		setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), 
-				LocaleUtils.getLocaleView().getString("lbl_pesquisar_cliente"), TitledBorder.LEADING, 
+				LocaleUtils.getLocaleView().getString("lbl_pesquisar_funcionario"), TitledBorder.LEADING, 
 				TitledBorder.TOP, null, Color.BLUE));
 		setLayout(null);
 		
@@ -79,7 +79,7 @@ public class ConsultaClienteGUI extends JPanel {
 		lblParametroPesquisa.setBounds(10, 5, 200, 20);
 		panelParametroPesquisa.add(lblParametroPesquisa);
 		
-		cbxParametroPesquisa = new JComboBox(ParametroPesquisaClienteEnum.getDisplayList().toArray());
+		cbxParametroPesquisa = new JComboBox(ParametroPesquisaFuncionarioEnum.getDisplayList().toArray());
 		cbxParametroPesquisa.setBounds(5, 25, 180, 30);
 		panelParametroPesquisa.add(cbxParametroPesquisa);
 		
@@ -114,8 +114,8 @@ public class ConsultaClienteGUI extends JPanel {
 		
 		
 		// Desabilita os botões de alterar e excluir caso não exista nenhuma agência selecionada
-//		btnAlterar.setEnabled(isClienteSelecionada());
-//		btnExcluir.setEnabled(isClienteSelecionada());
+//		btnAlterar.setEnabled(isFuncionarioSelecionada());
+//		btnExcluir.setEnabled(isFuncionarioSelecionada());
 		
 		this.setBounds(15, 10, 860, 600);
 		setVisible(true);
@@ -127,9 +127,9 @@ public class ConsultaClienteGUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int parametroSelecionado = ParametroPesquisaClienteEnum.getValueByDisplay((String) cbxParametroPesquisa.getSelectedItem());
+				int parametroSelecionado = ParametroPesquisaFuncionarioEnum.getValueByDisplay((String) cbxParametroPesquisa.getSelectedItem());
 				
-				if (!(SystemUtils.isNuloOuVazio(txtPesquisa.getText()) && parametroSelecionado != ParametroPesquisaClienteEnum.SELECIONA_TODOS.getValue())) {
+				if (!(SystemUtils.isNuloOuVazio(txtPesquisa.getText()) && parametroSelecionado != ParametroPesquisaFuncionarioEnum.SELECIONA_TODOS.getValue())) {
 					pesquisar();
 				} else {
 					JOptionPane.showMessageDialog(txtPesquisa, LocaleUtils.getLocaleMessages().getString("falha_pesquisabranco"));
@@ -142,16 +142,16 @@ public class ConsultaClienteGUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClienteGUI clienteGUI = new ClienteGUI(LocaleUtils.getLocaleView().getString("titulo_alterar_cliente"));
+				FuncionarioGUI funcionarioGUI = new FuncionarioGUI(LocaleUtils.getLocaleView().getString("titulo_alterar_funcionario"));
 				
-				if (!isClienteSelecionada()) {
+				if (!isFuncionarioSelecionada()) {
 					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_agenciabranco"));
 					return;
 				}
 				
-				clienteGUI.preencherCampos(getClienteSelecionado());
+				funcionarioGUI.preencherCampos(getFuncionarioSelecionado());
 				
-				ModalAlterarcaoGUI modalAlterarcaoGUI = new ModalAlterarcaoGUI(clienteGUI, LocaleUtils.getLocaleView().getString("titulo_alterar_agencia"));
+				ModalAlterarcaoGUI modalAlterarcaoGUI = new ModalAlterarcaoGUI(funcionarioGUI, LocaleUtils.getLocaleView().getString("titulo_alterar_agencia"));
 				modalAlterarcaoGUI.setLocationRelativeTo(table);
 				modalAlterarcaoGUI.setModal(true);
 				limparTabela();
@@ -164,14 +164,14 @@ public class ConsultaClienteGUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!isClienteSelecionada()) {
+				if (!isFuncionarioSelecionada()) {
 					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_agenciabranco"));
 					return;
 				}
-				Cliente cliente = getClienteSelecionado();
-				cliente.setAtivo(false);
+				Funcionario funcionario = getFuncionarioSelecionado();
+				funcionario.setAtivo(false);
 				
-				if (clienteControl.salvarOuAlterar(cliente)) {
+				if (funcionarioControl.salvarOuAlterar(funcionario)) {
 					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("sucesso_agencia_desativada"));
 					limparTabela();
 				} else {
@@ -211,11 +211,15 @@ public class ConsultaClienteGUI extends JPanel {
 		col.setCellRenderer(centerRenderer);
 
 		col = table.getColumnModel().getColumn(2);
-		col.setPreferredWidth(350);
+		col.setPreferredWidth(300);
+		col.setCellRenderer(centerRenderer);
+		
+		col = table.getColumnModel().getColumn(3);
+		col.setPreferredWidth(100);
 		col.setCellRenderer(centerRenderer);
 
-		col = table.getColumnModel().getColumn(3);
-		col.setPreferredWidth(250);
+		col = table.getColumnModel().getColumn(4);
+		col.setPreferredWidth(200);
 		col.setCellRenderer(centerRenderer);
 
 		return table;
@@ -247,9 +251,10 @@ public class ConsultaClienteGUI extends JPanel {
 		};
 		
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("col_codigo"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cnh"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cpf"));
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_nome"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_email"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_nivel"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_agencia"));
 
 		return defaultTableModel;
 	}
@@ -262,17 +267,17 @@ public class ConsultaClienteGUI extends JPanel {
 	public void pesquisar() {
 		limparTabela();
 		
-		int parametro = ParametroPesquisaClienteEnum.getValueByDisplay((String) cbxParametroPesquisa.getSelectedItem());
+		int parametro = ParametroPesquisaFuncionarioEnum.getValueByDisplay((String) cbxParametroPesquisa.getSelectedItem());
 		
-		listaCliente = clienteControl.buscarPorCondicao(parametro, txtPesquisa.getText());
+		listaFuncionario = funcionarioControl.buscarPorCondicao(parametro, txtPesquisa.getText());
 		
 		// Preenche as linhas da tabela
-		for (Cliente cliente : listaCliente) {
-			defaultTableModel.addRow(new Object[] {cliente.getId(), cliente.getCnh(), cliente.getNome(),
-					cliente.getEmail()});
+		for (Funcionario funcionario : listaFuncionario) {
+			defaultTableModel.addRow(new Object[] {funcionario.getId(), funcionario.getCpf(), funcionario.getNome(),
+					funcionario.getAgencia().getNomeFantasia(), funcionario.getNivel()});
 		}
 		
-		if (!SystemUtils.isNuloOuVazio(listaCliente)) {
+		if (!SystemUtils.isNuloOuVazio(listaFuncionario)) {
 			btnAlterar.repaint();
 			btnExcluir.repaint();
 			repaint();
@@ -281,9 +286,9 @@ public class ConsultaClienteGUI extends JPanel {
 	
 	private void limparTabela() {
 		// Verifica se já foi realizada uma pesquisa
-		if (!SystemUtils.isNuloOuVazio(listaCliente)) {
+		if (!SystemUtils.isNuloOuVazio(listaFuncionario)) {
 			// Remove as linhas da pesquisa anterior
-			for (int i = 0; i < listaCliente.size(); i++) {
+			for (int i = 0; i < listaFuncionario.size(); i++) {
 				defaultTableModel.removeRow(0);
 			}
 		}
@@ -293,12 +298,12 @@ public class ConsultaClienteGUI extends JPanel {
 	/**
 	 * Retorna a agência selecionado
 	 * @author Joaquim Neto
-	 * @return Objeto Cliente
+	 * @return Objeto Funcionario
 	 */
-	private Cliente getClienteSelecionado() {
-		Cliente cliente = listaCliente.get(table.getSelectedRow());
+	private Funcionario getFuncionarioSelecionado() {
+		Funcionario funcionario = listaFuncionario.get(table.getSelectedRow());
 		
-		return cliente;
+		return funcionario;
 	}
 	
 	/**
@@ -306,7 +311,7 @@ public class ConsultaClienteGUI extends JPanel {
 	 * @author Joaquim Neto
 	 * @return <b>true</b> Se existir agência selecionada
 	 */
-	private boolean isClienteSelecionada() {
+	private boolean isFuncionarioSelecionada() {
 		if (table.getSelectedRow() == -1) {
 			return false;
 		}

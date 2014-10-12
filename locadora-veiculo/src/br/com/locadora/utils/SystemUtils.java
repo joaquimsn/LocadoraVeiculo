@@ -17,10 +17,15 @@ import java.util.UUID;
 
 import javax.swing.JOptionPane;
 
+import br.com.locadora.model.entity.Agencia;
+import br.com.locadora.model.entity.Funcionario;
 import br.com.locadora.utils.annotation.Required;
 import br.com.locadora.utils.locale.LocaleUtils;
 
 public class SystemUtils {
+	
+	private static Funcionario funcionarioLogado;
+	
 	/**
 	 * Valida o preenchimento de um campo obrigatório por reflection
 	 * @author Renan Baggio | Joaquim Neto
@@ -584,5 +589,29 @@ public class SystemUtils {
 	public static java.sql.Date dataConverter(java.util.Date data) {
 		java.sql.Date dateSql = new java.sql.Date(data.getTime());
 		return dateSql;
+	}
+
+	/**
+	 * Retorna à agência que está na sessão do usuário
+	 * @return the agenciaSelecionado
+	 */
+	public static Agencia getAgenciaSelecionado() {
+		return funcionarioLogado.getAgencia();
+	}
+
+	/**
+	 * Retorna o funcionário logado no sistema
+	 * @return the funcionarioSelecionado
+	 */
+	public static Funcionario getFuncionarioLogado() {
+		return funcionarioLogado;
+	}
+
+	/**
+	 * Adicionado o funcionário que logou na sessão
+	 * @param funcionarioSelecionado the funcionarioSelecionado to set
+	 */
+	public static void setFuncionarioLogado(Funcionario funcionarioSelecionado) {
+		SystemUtils.funcionarioLogado = funcionarioSelecionado;
 	}
 }
