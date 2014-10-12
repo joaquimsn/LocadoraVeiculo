@@ -100,6 +100,7 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		cbxCidade = new JComboBox(cidades);
 		cbxCidade.setBounds(585, 25, 210, 30);
 		add(cbxCidade);
+		preencherComboCidadePorUf((String) cbxUf.getSelectedItem()); // Preenche o combo de cidades
 		
 		lblLogradouro = new JLabel(LocaleUtils.getLocaleView().getString("lbl_logradouro"));
 		lblLogradouro.setBounds(5, 60, 141, 20);
@@ -252,7 +253,11 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 	}
 	
 	private void preencherComboCidadePorUf(String uf) {
+		cbxCidade.removeAllItems();
 		EnderecoControl enderecoControl = new EnderecoControl();
-		cbxCidade.addItem(enderecoControl.buscarCidadePorUf(uf).toArray(new String[0]));
+		cidades = enderecoControl.buscarCidadePorUf(uf).toArray(new String[0]);
+		for (String cidade : cidades) {
+			cbxCidade.addItem(cidade);
+		}
 	}
 }
