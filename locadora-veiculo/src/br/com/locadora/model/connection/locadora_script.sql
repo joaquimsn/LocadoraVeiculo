@@ -137,3 +137,46 @@ CREATE TABLE locacao (
  FOREIGN KEY (id_veiculo) REFERENCES veiculo (id_veiculo),
  FOREIGN KEY (id_pagamento) REFERENCES pagamento (id_pagamento)
 );
+
+CREATE TABLE uf (
+ uf VARCHAR(2) NOT NULL,
+ estado VARCHAR(20) NOT NULL,
+ codigo_ibge INT(10) NOT NULL
+);
+
+ALTER TABLE uf ADD CONSTRAINT PK_uf PRIMARY KEY (uf);
+
+CREATE TABLE cidade (
+ id_cidade INT(10) NOT NULL,
+ cidade VARCHAR(100) NOT NULL,
+ codigo_ibge INT(10) NOT NULL,
+ uf VARCHAR(2)
+);
+
+ALTER TABLE cidade ADD CONSTRAINT PK_cidade PRIMARY KEY (id_cidade);
+
+
+CREATE TABLE bairro (
+ id_bairro INT(10) NOT NULL,
+ bairro VARCHAR(50) NOT NULL,
+ id_cidade INT(10) NOT NULL
+);
+
+ALTER TABLE bairro ADD CONSTRAINT PK_bairro PRIMARY KEY (id_bairro);
+
+
+CREATE TABLE endereco (
+ cep VARCHAR(10) NOT NULL,
+ endereco VARCHAR(200) NOT NULL,
+ id_cidade INT(10) NOT NULL,
+ id_bairro INT(10) NOT NULL
+);
+
+ALTER TABLE endereco ADD CONSTRAINT PK_endereco PRIMARY KEY (cep);
+
+ALTER TABLE cidade ADD CONSTRAINT FK_tend_cidade_1 FOREIGN KEY (uf) REFERENCES uf (uf);
+
+ALTER TABLE bairro ADD CONSTRAINT FK_bairro_0 FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade);
+
+ALTER TABLE endereco ADD CONSTRAINT FK_endereco_0 FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade);
+ALTER TABLE endereco ADD CONSTRAINT FK_endereco_1 FOREIGN KEY (id_bairro) REFERENCES bairro (id_bairro);
