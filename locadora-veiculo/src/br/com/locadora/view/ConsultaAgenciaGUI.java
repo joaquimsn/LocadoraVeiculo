@@ -132,7 +132,7 @@ public class ConsultaAgenciaGUI extends JPanel {
 				if (!(SystemUtils.isNuloOuVazio(txtPesquisa.getText()) && parametroSelecionado != ParametroPesquisaAgenciaEnum.SELECIONA_TODOS.getValue())) {
 					pesquisar();
 				} else {
-					JOptionPane.showMessageDialog(txtPesquisa, "Digite o conteúdo para pesquisa");
+					JOptionPane.showMessageDialog(txtPesquisa, LocaleUtils.getLocaleMessages().getString("falha_pesquisabranco"));
 				}
 			}
 		});
@@ -145,13 +145,13 @@ public class ConsultaAgenciaGUI extends JPanel {
 				AgenciaGUI agenciaGUI = new AgenciaGUI();
 				
 				if (!isAgenciaSelecionada()) {
-					JOptionPane.showMessageDialog(table, "Selecione uma agência");
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_pesquisabranco"));
 					return;
 				}
 				
 				agenciaGUI.preencherCampos(getAgenciaSelecionado());
 				
-				ModalAlterarcaoGUI modalAlterarcaoGUI = new ModalAlterarcaoGUI(agenciaGUI, "Alteração da agência");
+				ModalAlterarcaoGUI modalAlterarcaoGUI = new ModalAlterarcaoGUI(agenciaGUI, LocaleUtils.getLocaleView().getString("titulo_alterar_agencia"));
 				modalAlterarcaoGUI.setLocationRelativeTo(table);
 				modalAlterarcaoGUI.setModal(true);
 				limparTabela();
@@ -165,7 +165,7 @@ public class ConsultaAgenciaGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!isAgenciaSelecionada()) {
-					JOptionPane.showMessageDialog(table, "Selecione uma agência");
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_pesquisabranco"));
 					return;
 				}
 				Agencia agencia = getAgenciaSelecionado();

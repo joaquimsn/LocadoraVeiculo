@@ -132,7 +132,7 @@ public class ConsultaClienteGUI extends JPanel {
 				if (!(SystemUtils.isNuloOuVazio(txtPesquisa.getText()) && parametroSelecionado != ParametroPesquisaClienteEnum.SELECIONA_TODOS.getValue())) {
 					pesquisar();
 				} else {
-					JOptionPane.showMessageDialog(txtPesquisa, "Digite o conteúdo para pesquisa");
+					JOptionPane.showMessageDialog(txtPesquisa, LocaleUtils.getLocaleMessages().getString("falha_pesquisabranco"));
 				}
 			}
 		});
@@ -145,13 +145,13 @@ public class ConsultaClienteGUI extends JPanel {
 				ClienteGUI clienteGUI = new ClienteGUI();
 				
 				if (!isClienteSelecionada()) {
-					JOptionPane.showMessageDialog(table, "Selecione uma agência");
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_agenciabranco"));
 					return;
 				}
 				
 				clienteGUI.preencherCampos(getClienteSelecionado());
 				
-				ModalAlterarcaoGUI modalAlterarcaoGUI = new ModalAlterarcaoGUI(clienteGUI, "Alteração da agência");
+				ModalAlterarcaoGUI modalAlterarcaoGUI = new ModalAlterarcaoGUI(clienteGUI, LocaleUtils.getLocaleView().getString("titulo_alterar_agencia"));
 				modalAlterarcaoGUI.setLocationRelativeTo(table);
 				modalAlterarcaoGUI.setModal(true);
 				limparTabela();
@@ -165,17 +165,17 @@ public class ConsultaClienteGUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!isClienteSelecionada()) {
-					JOptionPane.showMessageDialog(table, "Selecione uma agência");
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_agenciabranco"));
 					return;
 				}
 				Cliente cliente = getClienteSelecionado();
 				cliente.setAtivo(false);
 				
 				if (clienteControl.salvarOuAlterar(cliente)) {
-					JOptionPane.showMessageDialog(table, "Agência desativada com sucesso");
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("sucesso_agencia_desativada"));
 					limparTabela();
 				} else {
-					JOptionPane.showMessageDialog(table, "Erro ao desativar a agência");
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_agencia_desativada"));
 				}
 				
 			}
