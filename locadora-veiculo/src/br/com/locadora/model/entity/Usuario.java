@@ -1,8 +1,11 @@
 package br.com.locadora.model.entity;
 
-public class Usuario{
+import br.com.locadora.utils.annotation.Required;
 
+public class Usuario{
+	@Required(label = "Usuário", minimo = 4)
 	private String usuario;
+	@Required(label = "Senha", minimo = 4)
 	private String senha;
 	private Funcionario funcionario;
 	public Usuario(){

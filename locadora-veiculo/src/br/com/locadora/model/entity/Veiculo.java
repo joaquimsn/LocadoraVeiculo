@@ -2,17 +2,26 @@ package br.com.locadora.model.entity;
 
 import java.util.Date;
 
+import br.com.locadora.utils.annotation.Required;
+
 public class Veiculo {
 	private int id;
+	@Required(label = "Modelo", minimo = 4)
 	private String modelo;
+	@Required(label = "Fabricante", minimo = 3)
 	private String fabricante;
 	private String imagem;
+	@Required(label = "Ano", minimo = 4)
 	private int ano;
 	private int grupo;
 	private int acessorio;
+	@Required(label = "Chassi", minimo = 17)
 	private String chassi;
+	@Required(label = "Placa", minimo = 7)
 	private String placa;
+	@Required(label = "Cidade", minimo = 4)
 	private String cidade;
+	@Required(label = "UF", minimo = 2)
 	private String uf;
 	private double kmRodado;
 	private double precoKmLivre;

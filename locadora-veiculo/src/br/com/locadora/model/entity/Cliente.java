@@ -2,13 +2,19 @@ package br.com.locadora.model.entity;
 import java.util.Date;
 
 import br.com.locadora.model.vo.Endereco;
+import br.com.locadora.utils.annotation.Required;
 public class Cliente {
 	private int id;
+	@Required(label = "Nome", minimo = 5)
 	private String nome;
 	private Date dataNascimento;
+	@Required(label = "CPF", minimo = 14)
 	private String cpf;
+	@Required(label = "RG", minimo = 9)
 	private String rg;
+	@Required(label = "CNH", minimo = 10)
 	private String cnh;
+	@Required(label = "Estado", minimo = 2)
 	private String estadoEmissor;
 	private Date validadeCnh;
 	private int genero;
@@ -18,7 +24,9 @@ public class Cliente {
 	private String cidade;
 	private String uf;
 	private int numero;
+	@Required(label = "Telefone", minimo = 10)
 	private String telefone;
+	@Required(label = "Email", minimo = 6)
 	private String email;
 	private int idAgencia;
 	private int idFncionario;

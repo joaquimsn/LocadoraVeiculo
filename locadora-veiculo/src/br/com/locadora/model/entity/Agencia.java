@@ -200,6 +200,9 @@ public class Agencia {
 	 * @return the dataManutenção
 	 */
 	public Date getDataManutencao() {
+		if (dataManutencao == null){
+			return new Date();
+		}
 		return dataManutencao;
 	}
 

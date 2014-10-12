@@ -2,22 +2,32 @@ package br.com.locadora.model.entity;
 
 import java.util.Date;
 
+import br.com.locadora.utils.annotation.Required;
+
 public class Funcionario {
 	private int idFuncionario;
+	@Required(label = "Nome", minimo = 5)
 	private String nome;
 	private Date dataNascimento;
+	@Required(label = "CPF", minimo = 11)
 	private String cpf;
+	@Required(label = "RG", minimo = 9)
 	private String rg;
 	private char genero;
+	@Required(label = "Endereço", minimo = 10)
 	private String logradouro;
 	private int numero;
+	@Required(label = "Bairro", minimo = 4)
 	private String bairro;
 	private String cep;
+	@Required(label = "Cidade", minimo = 4)
 	private String cidade;
+	@Required(label = "Estado", minimo = 2)
 	private String uf;
 	private String telefone;
 	private String email;
 	private int nivel;
+	@Required(label = "Usuário", minimo = 4)
 	private String nomeUsuario;
 	private int funcionarioSupervisor;
 	private int codigoAgencia;
