@@ -6,6 +6,8 @@ import java.util.List;
 
 import br.com.locadora.model.connection.MysqlConnect;
 import br.com.locadora.model.entity.Funcionario;
+import br.com.locadora.model.enums.NivelUsuarioEnum;
+import br.com.locadora.utils.SystemUtils;
 
 public class FuncionarioDAO extends MysqlConnect{
 
@@ -28,15 +30,15 @@ public class FuncionarioDAO extends MysqlConnect{
 				"email," +
 				"nivel," +
 				"usuario," +
-				"data_cadastro," +
-				"data_manutencao," +
 				"funcionario_supervisor," +
-				"id_agencia)" +
+				"id_agencia," +
+				"data_cadastro," +
+				"ativo) " +
 			"VALUES" +
-				"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, curdate(), curdate(), ?, ?)";
+				"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, funcionario.getNome());
-			sqlSt.setDate(2, new java.sql.Date(funcionario.getDataNascimento().getTime()));
+			sqlSt.setDate(2, SystemUtils.dataConverter(funcionario.getDataNascimento()));
 			sqlSt.setString(3, funcionario.getCpf());
 			sqlSt.setString(4, funcionario.getRg());
 			sqlSt.setString(5, String.valueOf(funcionario.getGenero()));
@@ -50,10 +52,11 @@ public class FuncionarioDAO extends MysqlConnect{
 			sqlSt.setString(13, funcionario.getEmail());
 			sqlSt.setInt(14, funcionario.getNivel());
 			sqlSt.setString(15, funcionario.getUsuario());
-			//as datas de cadastro e manutenção serão dadas pelo servidor, portanto número 16 e 17 pulados
-			sqlSt.setInt(18,  funcionario.getFuncionarioSupervisor());
-			sqlSt.setInt(19, funcionario.getCodigoAgencia());		
-			sqlSt.executeQuery();
+			sqlSt.setInt(16,  funcionario.getFuncionarioSupervisor());
+			sqlSt.setInt(17, funcionario.getCodigoAgencia());	
+			sqlSt.setDate(18, SystemUtils.dataConverter(funcionario.getDataCadastro()));
+			sqlSt.setBoolean(19, funcionario.isAtivo());
+			sqlSt.execute();
 			return true;
 		} catch (Exception updateError) {
 			updateError.printStackTrace();
@@ -66,35 +69,44 @@ public class FuncionarioDAO extends MysqlConnect{
 	public Funcionario select(int id) {
 		PreparedStatement sqlSt;
 		ResultSet resultSet;
+		Funcionario funcionario = null;
+		
 		try{
-			String sql = "SELECT * FROM funcionario where id_funcionario=?";
+			String sql = "SELECT * FROM funcionario WHERE id_funcionario = ? AND ativo = 1";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setInt(1, id);
 			resultSet = sqlSt.executeQuery();
 			
-			Funcionario resultado = new Funcionario();
-			resultado.setId(id);
-			resultado.setNome(resultSet.getString(1));
-			resultado.setDataNascimento(resultSet.getDate(2));
-			resultado.setCpf(resultSet.getString(3));
-			resultado.setRg(resultSet.getString(4));
-			resultado.setGenero(resultSet.getString(5).charAt(0));
-			resultado.setLogradouro(resultSet.getString(6));
-			resultado.setNumero(resultSet.getInt(7));
-			resultado.setBairro(resultSet.getString(8));
-			resultado.setCep(resultSet.getString(9));
-			resultado.setCidade(resultSet.getString(10));
-			resultado.setUf(resultSet.getString(11));
-			resultado.setTelefone(resultSet.getString(12));
-			resultado.setEmail(resultSet.getString(13));
-			resultado.setNivel(resultSet.getInt(14));
-			resultado.setUsuario(resultSet.getString(15));
-			resultado.setDataCadastro(resultSet.getDate(16));
-			resultado.setDataManutencao(resultSet.getDate(17));
-			resultado.setFuncionarioSupervisor(resultSet.getInt(18));
-			resultado.setCodigoAgencia(resultSet.getInt(19));
-			return resultado;
+			while(resultSet.next()){
+				funcionario = new Funcionario();
+				
+				funcionario.setId(resultSet.getInt(1));
+				funcionario.setNome(resultSet.getString(2));
+				funcionario.setDataNascimento(resultSet.getDate(3));
+				funcionario.setCpf(resultSet.getString(4));
+				funcionario.setRg(resultSet.getString(5));
+				funcionario.setGenero(resultSet.getString(6).charAt(0));
+				funcionario.setLogradouro(resultSet.getString(7));
+				funcionario.setNumero(resultSet.getInt(8));
+				funcionario.setBairro(resultSet.getString(9));
+				funcionario.setCep(resultSet.getString(10));
+				funcionario.setCidade(resultSet.getString(11));
+				funcionario.setUf(resultSet.getString(12));
+				funcionario.setTelefone(resultSet.getString(13));
+				funcionario.setEmail(resultSet.getString(14));
+				funcionario.setNivel(resultSet.getInt(15));
+				funcionario.setUsuario(resultSet.getString(16));
+				funcionario.setFuncionarioSupervisor(resultSet.getInt(17));
+				funcionario.setCodigoAgencia(resultSet.getInt(18));
+				funcionario.setDataCadastro(resultSet.getDate(19));
+				funcionario.setDataManutencao(resultSet.getDate(20));
+				funcionario.setAtivo(resultSet.getBoolean(21));
+				
+			}
+
+			return funcionario;
 		}catch(Exception selectError){
+			selectError.printStackTrace();
 			return null;
 		}
 	}
@@ -105,7 +117,7 @@ public class FuncionarioDAO extends MysqlConnect{
 		Funcionario funcionario = null;
 		
 		try{
-			String sql = "SELECT * FROM funcionario WHERE usuario = ?";
+			String sql = "SELECT * FROM funcionario WHERE usuario = ? AND ativo = 1";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, nomeUsuario);
 			resultSet = sqlSt.executeQuery();
@@ -218,13 +230,71 @@ public class FuncionarioDAO extends MysqlConnect{
 	}
 	
 	/**
+	 * Busca todos os funcionários com nível supervisor
+	 * @author Joaquim Neto
+	 * @param nomeUsuario
+	 * @return List 
+	 */
+	public List<Funcionario> selectAllSupervisor() {
+		PreparedStatement sqlSt;
+		ResultSet resultSet;
+		List<Funcionario> lista = new ArrayList<>();
+		
+		int nivel = NivelUsuarioEnum.SUPERVISOR.getValue();
+		
+		try{
+			String sql = "SELECT * FROM funcionario WHERE nivel = ? AND ativo = 1";
+			sqlSt = conn.prepareStatement(sql);
+			sqlSt.setInt(1, nivel);
+			resultSet = sqlSt.executeQuery();
+			
+			while(resultSet.next()){
+				Funcionario funcionario = new Funcionario();
+				
+				funcionario.setId(resultSet.getInt(1));
+				funcionario.setNome(resultSet.getString(2));
+				funcionario.setDataNascimento(resultSet.getDate(3));
+				funcionario.setCpf(resultSet.getString(4));
+				funcionario.setRg(resultSet.getString(5));
+				funcionario.setGenero(resultSet.getString(6).charAt(0));
+				funcionario.setLogradouro(resultSet.getString(7));
+				funcionario.setNumero(resultSet.getInt(8));
+				funcionario.setBairro(resultSet.getString(9));
+				funcionario.setCep(resultSet.getString(10));
+				funcionario.setCidade(resultSet.getString(11));
+				funcionario.setUf(resultSet.getString(12));
+				funcionario.setTelefone(resultSet.getString(13));
+				funcionario.setEmail(resultSet.getString(14));
+				funcionario.setNivel(resultSet.getInt(15));
+				funcionario.setUsuario(resultSet.getString(16));
+				funcionario.setFuncionarioSupervisor(resultSet.getInt(17));
+				funcionario.setCodigoAgencia(resultSet.getInt(18));
+				funcionario.setDataCadastro(resultSet.getDate(19));
+				funcionario.setDataManutencao(resultSet.getDate(20));
+				funcionario.setAtivo(resultSet.getBoolean(21));
+				
+				lista.add(funcionario);
+			}
+			
+			return lista;
+	
+		} catch (Exception selectError) {
+			selectError.printStackTrace();
+			return null;
+		} finally {
+			closeConnection();
+		}
+	}
+
+	
+	/**
 	 * Busca todas as funcionarios cadastradas na base, com base na conditional 
 	 * passada por parâmetro, a query usada para pesquisa é <b>SELECt * FROM funcionario</b>
 	 * @author Joaquim Neto
 	 * @param conditional condição para a consulta sql
 	 * @return Lista com os funcionarios encontrados
 	 */
-	public List<Funcionario> pesquisaPorCondicao(String conditional){
+	public List<Funcionario> pesquisarPorCondicao(String conditional){
 		List<Funcionario> lista = new ArrayList<Funcionario>();
 		ResultSet resultSet;
 		Funcionario funcionario;

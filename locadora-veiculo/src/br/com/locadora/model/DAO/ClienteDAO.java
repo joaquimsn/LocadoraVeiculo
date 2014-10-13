@@ -161,7 +161,7 @@ public class ClienteDAO extends MysqlConnect{
 	 * @param conditional condição para a consulta sql
 	 * @return Lista com os clientes encontrados
 	 */
-	public List<Cliente> pesquisaPorCondicao(String conditional){
+	public List<Cliente> pesquisarPorCondicao(String conditional){
 		List<Cliente> lista = new ArrayList<Cliente>();
 		ResultSet resultSet;
 		Cliente cliente;

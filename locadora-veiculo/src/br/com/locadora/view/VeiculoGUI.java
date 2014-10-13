@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.ImageFilter;
@@ -223,6 +224,10 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		BotoesCrudComponente botoesCrudComponente = new BotoesCrudComponente();
 		botoesCrudComponente.setBounds(610, 421, 198, 45);
 		add(botoesCrudComponente);
+		
+		// Bloqueia os botões de salvar e alterar para funcionários com nível Atendente
+		botoesCrudComponente.btnSalvar.setEnabled(SystemUtils.isSupervisor());
+		botoesCrudComponente.btnCancelar.setEnabled(SystemUtils.isSupervisor());
 		
 		this.setBounds(15, 10, 860, 500);
 		this.setVisible(true);

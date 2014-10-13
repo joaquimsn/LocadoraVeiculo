@@ -235,6 +235,8 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 			// Preenche o combo de cidade
 			preencherComboCidadePorUf(endereco.getUf());
 			cbxCidade.setSelectedItem(endereco.getCidade());
+			txtEmail.setText(endereco.getEmail());
+			txtSite.setText(endereco.getSite());
 		}
 	}
 	

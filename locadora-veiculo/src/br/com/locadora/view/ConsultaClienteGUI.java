@@ -281,7 +281,7 @@ public class ConsultaClienteGUI extends JPanel {
 	
 	private void limparTabela() {
 		// Verifica se já foi realizada uma pesquisa
-		if (!SystemUtils.isNuloOuVazio(listaCliente)) {
+		if (!SystemUtils.isNuloOuVazio(listaCliente) && defaultTableModel.getRowCount() > 0) {
 			// Remove as linhas da pesquisa anterior
 			for (int i = 0; i < listaCliente.size(); i++) {
 				defaultTableModel.removeRow(0);

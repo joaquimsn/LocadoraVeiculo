@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 
 import br.com.locadora.model.entity.Agencia;
 import br.com.locadora.model.entity.Funcionario;
+import br.com.locadora.model.enums.NivelUsuarioEnum;
 import br.com.locadora.utils.annotation.Required;
 import br.com.locadora.utils.locale.LocaleUtils;
 
@@ -613,5 +614,18 @@ public class SystemUtils {
 	 */
 	public static void setFuncionarioLogado(Funcionario funcionarioSelecionado) {
 		SystemUtils.funcionarioLogado = funcionarioSelecionado;
+	}
+	
+	/**
+	 * Verifica se o fincionario logado é administador
+	 * @author Joaquim Neto
+	 * @return <b>true</b> Se o funcionário logado for administrador
+	 */
+	public static boolean isSupervisor() {
+		if (getFuncionarioLogado().getNivel() == NivelUsuarioEnum.SUPERVISOR.getValue()) {
+			return true;
+		}
+		
+		return false;
 	}
 }

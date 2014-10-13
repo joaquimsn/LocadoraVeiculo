@@ -174,7 +174,7 @@ public class AgenciaDAO extends MysqlConnect {
 	 * @param conditional condição para a consulta sql
 	 * @return Lista com as agências encontradas
 	 */
-	public List<Agencia> pesquisaPorCondicao(String conditional){
+	public List<Agencia> pesquisarPorCondicao(String conditional){
 		List<Agencia> lista = new ArrayList<Agencia>();
 		ResultSet resultSet;
 		Agencia agencia;

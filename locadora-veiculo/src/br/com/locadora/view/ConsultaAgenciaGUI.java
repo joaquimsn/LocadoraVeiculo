@@ -281,7 +281,7 @@ public class ConsultaAgenciaGUI extends JPanel {
 	
 	private void limparTabela() {
 		// Verifica se já foi realizada uma pesquisa
-		if (!SystemUtils.isNuloOuVazio(listaAgencia)) {
+		if (!SystemUtils.isNuloOuVazio(listaAgencia) && defaultTableModel.getRowCount() > 0) {
 			// Remove as linhas da pesquisa anterior
 			for (int i = 0; i < listaAgencia.size(); i++) {
 				defaultTableModel.removeRow(0);

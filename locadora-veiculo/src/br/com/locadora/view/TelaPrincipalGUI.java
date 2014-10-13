@@ -81,6 +81,11 @@ public class TelaPrincipalGUI extends JFrame implements Serializable, ActionList
 		mItemGerenciaVeiculo = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_gen_veiculo"));
 		menuGerencia.add(mItemGerenciaVeiculo);
 		
+		// Bloqueia os menus para nivel ATENDENTE
+		mItemGerenciaAgencia.setEnabled(SystemUtils.isSupervisor());
+		mItemGerenciaFuncionario.setEnabled(SystemUtils.isSupervisor());
+		menuRelatorio.setEnabled(SystemUtils.isSupervisor());
+		
 		mItemLocacao = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_locacao"));
 		menuLocacao.add(mItemLocacao);
 		mItemDevolucao = new JMenuItem(LocaleUtils.getLocaleView().getString("menu_item_devolucao"));

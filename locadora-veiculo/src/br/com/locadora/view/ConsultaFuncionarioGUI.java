@@ -253,7 +253,7 @@ public class ConsultaFuncionarioGUI extends JPanel {
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("col_codigo"));
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cpf"));
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_nome"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_nivel"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_nivel_acesso"));
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_agencia"));
 
 		return defaultTableModel;
@@ -286,7 +286,7 @@ public class ConsultaFuncionarioGUI extends JPanel {
 	
 	private void limparTabela() {
 		// Verifica se já foi realizada uma pesquisa
-		if (!SystemUtils.isNuloOuVazio(listaFuncionario)) {
+		if (!SystemUtils.isNuloOuVazio(listaFuncionario) && defaultTableModel.getRowCount() > 0) {
 			// Remove as linhas da pesquisa anterior
 			for (int i = 0; i < listaFuncionario.size(); i++) {
 				defaultTableModel.removeRow(0);

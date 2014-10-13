@@ -69,7 +69,7 @@ public class FuncionarioControl implements Serializable{
 	public List<Funcionario> buscarTodos() {
 		// Cria uma nova conexão com o banco de dados
 		funcionarioDAO = new FuncionarioDAO();		
-		return funcionarioDAO.pesquisaPorCondicao("");
+		return funcionarioDAO.pesquisarPorCondicao("");
 	}
 	
 	/**
@@ -87,6 +87,11 @@ public class FuncionarioControl implements Serializable{
 	public Funcionario buscarPorUsuario(String usuario) {
 		funcionarioDAO = new FuncionarioDAO();
 		return funcionarioDAO.selectByUser(usuario);
+	}
+	
+	public List<Funcionario> buscarTodosSupervisor() {
+		funcionarioDAO = new FuncionarioDAO();
+		return funcionarioDAO.selectAllSupervisor();
 	}
 	
 	/**
@@ -127,7 +132,7 @@ public class FuncionarioControl implements Serializable{
 			break;
 		}	
 		
-		return funcionarioDAO.pesquisaPorCondicao(condicao);
+		return funcionarioDAO.pesquisarPorCondicao(condicao);
 	}
 	
 	/**

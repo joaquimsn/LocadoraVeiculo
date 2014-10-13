@@ -1,1 +1,1 @@
-admin-1-admin;bruno-1-12345;joaquim-2-admin;user-2-user
+admin-1-admin;bruno-1-12345;joaquim-2-admin;user-2-user;joaquim-1-12345

@@ -6,7 +6,7 @@ import java.util.List;
 public enum NivelUsuarioEnum {
 	SELECIONE("Selecione", 0),
 	ATENDENTE("Atendente", 1),
-	SUPERVISOR("SUPERVISOR", 2);
+	SUPERVISOR("Supervisor", 2);
 	
 	private String display;
 	private int value;

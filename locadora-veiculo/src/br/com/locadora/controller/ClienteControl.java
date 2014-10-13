@@ -73,7 +73,7 @@ public class ClienteControl implements Serializable{
 	public List<Cliente> buscarTodos() {
 		// Cria uma nova conexão com o banco de dados
 		clienteDAO = new ClienteDAO();		
-		return clienteDAO.pesquisaPorCondicao("");
+		return clienteDAO.pesquisarPorCondicao("");
 	}
 	
 	/**
@@ -126,6 +126,6 @@ public class ClienteControl implements Serializable{
 			break;
 		}	
 		
-		return clienteDAO.pesquisaPorCondicao(condicao);
+		return clienteDAO.pesquisarPorCondicao(condicao);
 	}
 }

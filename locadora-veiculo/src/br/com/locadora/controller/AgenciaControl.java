@@ -69,7 +69,7 @@ public class AgenciaControl implements Serializable{
 	public List<Agencia> buscarTodos() {
 		// Cria uma nova conexão com o banco de dados
 		agenciaDAO = new AgenciaDAO();		
-		return agenciaDAO.pesquisaPorCondicao("");
+		return agenciaDAO.pesquisarPorCondicao("");
 	}
 	
 	/**
@@ -118,6 +118,6 @@ public class AgenciaControl implements Serializable{
 			break;
 		}	
 		
-		return agenciaDAO.pesquisaPorCondicao(condicao);
+		return agenciaDAO.pesquisarPorCondicao(condicao);
 	}
 }

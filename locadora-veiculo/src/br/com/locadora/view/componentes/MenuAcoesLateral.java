@@ -19,7 +19,9 @@ import br.com.locadora.view.AgenciaGUI;
 import br.com.locadora.view.ClienteGUI;
 import br.com.locadora.view.ConsultaAgenciaGUI;
 import br.com.locadora.view.ConsultaClienteGUI;
+import br.com.locadora.view.ConsultaFuncionarioGUI;
 import br.com.locadora.view.DevolucaoGUI;
+import br.com.locadora.view.FuncionarioGUI;
 import br.com.locadora.view.LocacaoGUI;
 import br.com.locadora.view.TelaPrincipalGUI;
 
@@ -114,7 +116,11 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 			// Tela pesquisa agência	
 			} else if (telaParaControle.getClass() == AgenciaGUI.class) {
 				telaPrincipalGUI.mudarTelaContainer(new ConsultaAgenciaGUI());
-			}
+			
+			// Tela pesquisa funcionário
+			} else if (telaParaControle.getClass() == FuncionarioGUI.class) {
+				telaPrincipalGUI.mudarTelaContainer(new ConsultaFuncionarioGUI());
+			} 
 			
 		} else if (e.getSource() == btnCadastrar) {
 			// Tela cadastro cliente
@@ -124,6 +130,10 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 			// Tela cadastro agência	
 			} else if (telaParaControle.getClass() == ConsultaAgenciaGUI.class) {
 				telaPrincipalGUI.mudarTelaContainer(new AgenciaGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_agencia")));
+			
+			// Tela cadastro agência	
+			} else if (telaParaControle.getClass() == ConsultaFuncionarioGUI.class) {
+				telaPrincipalGUI.mudarTelaContainer(new FuncionarioGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_funcionario")));
 			}
 		} else if (e.getSource() == btnDevolucao) {
 			new DevolucaoGUI();
