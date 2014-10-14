@@ -184,7 +184,7 @@ public class ClienteGUI extends JPanel {
 				cliente.setCnh(txtCnh.getText());
 				cliente.setValidadeCnh(dataVencimentoCnh.getDate());
 				cliente.setEstadoEmissor(txtEstadoEmissor.getText());
-				//TODO cliente.setGenero(cbxGenero.getSelectedItem());
+				cliente.setGenero(GeneroEnum.getValueByDisplay((String) cbxGenero.getSelectedItem()));
 				cliente.setLogradouro(formularioEndereco.getEndereco().getLogradouro());
 				cliente.setNumero(formularioEndereco.getEndereco().getNumero());
 				cliente.setBairro(formularioEndereco.getEndereco().getBairro());

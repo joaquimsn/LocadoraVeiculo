@@ -29,7 +29,7 @@ public class Cliente {
 	@Required(label = "Email", minimo = 6)
 	private String email;
 	private int idAgencia;
-	private int idFncionario;
+	private int idFuncionario;
 	private Date dataCadastro;
 	private Date dataManutencao;
 	private boolean ativo;
@@ -173,17 +173,17 @@ public class Cliente {
 	}
 
 	/**
-	 * @return the idFncionario
+	 * @return the idFuncionario
 	 */
-	public int getIdFncionario() {
-		return idFncionario;
+	public int getIdFuncionario() {
+		return idFuncionario;
 	}
 
 	/**
 	 * @param idFncionario the idFncionario to set
 	 */
-	public void setIdFncionario(int idFncionario) {
-		this.idFncionario = idFncionario;
+	public void setIdFuncionario(int idFncionario) {
+		this.idFuncionario = idFncionario;
 	}
 
 	/**

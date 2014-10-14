@@ -1,13 +1,13 @@
 package br.com.locadora.model.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import br.com.locadora.model.connection.MysqlConnect;
-import br.com.locadora.model.entity.Agencia;
-import br.com.locadora.model.entity.Cliente;
 import br.com.locadora.model.entity.Veiculo;
+import br.com.locadora.utils.SystemUtils;
 
 public class VeiculoDAO extends MysqlConnect{
 
@@ -15,11 +15,13 @@ public class VeiculoDAO extends MysqlConnect{
 		PreparedStatement sqlSt;
 		ResultSet resultSet;
 		try{
-			String sql = "SELECT * FROM veiculo where id_veiculo=?";
+			String sql = "SELECT * FROM veiculo WHERE id_veiculo = ?";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setInt(1, id);
 			resultSet = sqlSt.executeQuery();
+			
 			Veiculo veiculo = new Veiculo();
+
 			veiculo.setId(resultSet.getInt(1));
 			veiculo.setModelo(resultSet.getString(2));
 			veiculo.setFabricante(resultSet.getString(3));
@@ -36,6 +38,7 @@ public class VeiculoDAO extends MysqlConnect{
 			veiculo.setPrecoKmControlado(resultSet.getDouble(14));
 			veiculo.setStatus(resultSet.getInt(15));
 			veiculo.setIdAgencia(resultSet.getInt(16));
+			
 			return veiculo;
 		}catch(Exception selectError){
 			return null;
@@ -47,23 +50,27 @@ public class VeiculoDAO extends MysqlConnect{
 		try{
 			String sql = "UPDATE veiculo" +
 							"SET" +
-								"modelo = ?," +
-								"fabricante = ?," +
-								"imagem = ?," +
-								"ano = ?," +
-								"grupo = ?," +
-								"acessorio = ?," +
-								"chassi = ?," +
-								"placa = ?," +
-								"cidade = ?," +
-								"uf = ?," +
-								"kmrodado = ?," +
-								"precokmlivre = ?," +
-								"precokmcontrolado = ?," +
-								"status_veiculo = ?," +
-								"id_agencia = ?" +
+							"(modelo," +
+							"fabricante," +
+							"imagem," +
+							"ano," +
+							"grupo," +
+							"acessorio," +
+							"chassi," +
+							"placa," +
+							"cidade," +
+							"uf," +
+							"kmrodado," +
+							"precokmlivre," +
+							"precokmcontrolado," +
+							"status," +
+							"id_agencia," +
+							"id_funcionario," +
+							"data_cadastro," + 
+							"ativo)" +
 							"WHERE " +
 								"id_veiculo = ?";
+			
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, veiculo.getModelo());
 			sqlSt.setString(2, veiculo.getFabricante());
@@ -80,8 +87,11 @@ public class VeiculoDAO extends MysqlConnect{
 			sqlSt.setDouble(13, veiculo.getPrecoKmControlado());
 			sqlSt.setInt(14, veiculo.getStatus());
 			sqlSt.setInt(15, veiculo.getIdAgencia());
-			sqlSt.setInt(16, veiculo.getId());
-			sqlSt.executeQuery();
+			sqlSt.setInt(16, veiculo.getIdFuncionario());
+			sqlSt.setDate(17, SystemUtils.dataConverter(veiculo.getDataCadastro()));
+			sqlSt.setBoolean(18, veiculo.isAtivo());
+			sqlSt.execute();
+			
 			return true;
 		}catch(Exception updateError){
 			return false;
@@ -105,10 +115,14 @@ public class VeiculoDAO extends MysqlConnect{
 							"kmrodado," +
 							"precokmlivre," +
 							"precokmcontrolado," +
-							"status_veiculo," +
-							"id_agencia)" +
+							"status," +
+							"id_agencia," +
+							"id_funcionario," +
+							"data_cadastro," + 
+							"ativo)" +
 						"VALUES" +
-							"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+							"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, veiculo.getModelo());
 			sqlSt.setString(2, veiculo.getFabricante());
@@ -125,9 +139,15 @@ public class VeiculoDAO extends MysqlConnect{
 			sqlSt.setDouble(13, veiculo.getPrecoKmControlado());
 			sqlSt.setInt(14, veiculo.getStatus());
 			sqlSt.setInt(15, veiculo.getIdAgencia());
-			sqlSt.executeQuery();
+			sqlSt.setInt(16, veiculo.getIdFuncionario());
+			sqlSt.setDate(17, SystemUtils.dataConverter(veiculo.getDataCadastro()));
+			sqlSt.setBoolean(18, veiculo.isAtivo());
+			
+			sqlSt.execute();
+			
 			return true;
-		}catch(Exception updateError){
+		}catch(Exception insertError){
+			insertError.printStackTrace();
 			return false;
 		}
 	}
@@ -145,10 +165,6 @@ public class VeiculoDAO extends MysqlConnect{
 		}
 	}
 
-	public List<Veiculo> buscarTodos() {
-		return null;
-	}
-
 	public List<Veiculo> selectByDate(int status, Date dataMinima, Date dataMaxima) {
 		return null;
 	}
@@ -157,4 +173,44 @@ public class VeiculoDAO extends MysqlConnect{
 		return null;
 	}
 
+	/**
+	 * Busca todas as veiculos cadastradas na base, com base na conditional 
+	 * passada por parâmetro, a query usada para pesquisa é <b>SELECt * FROM veiculo</b>
+	 * @author Joaquim Neto
+	 * @param conditional condição para a consulta sql
+	 * @return Lista com os veiculos encontrados
+	 */
+	public List<Veiculo> pesquisarPorCondicao(String conditional){
+		List<Veiculo> lista = new ArrayList<Veiculo>();
+		ResultSet resultSet;
+		Veiculo veiculo;
+		
+		try{
+			String sql = "SELECT * FROM veiculo " + conditional;
+			
+			PreparedStatement st = conn.prepareStatement(sql);
+			resultSet = st.executeQuery();
+			
+			while(resultSet.next()){
+				veiculo = new Veiculo();
+				
+				veiculo.setId(resultSet.getInt(1));
+				veiculo.setCidade(resultSet.getString(11));
+				veiculo.setUf(resultSet.getString(12));
+				veiculo.setDataCadastro(resultSet.getDate(19));
+				veiculo.setDataManutencao(resultSet.getDate(20));
+				veiculo.setAtivo(resultSet.getBoolean(21));
+				
+				lista.add(veiculo);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			closeConnection();
+		}
+		
+		return lista;
+	}
 }

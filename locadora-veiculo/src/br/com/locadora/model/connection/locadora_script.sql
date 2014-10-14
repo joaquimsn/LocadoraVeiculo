@@ -98,7 +98,7 @@ CREATE TABLE veiculo (
  grupo INT(11),
  acessorio int(11),
  chassi VARCHAR(17),
- placa VARCHAR(7),
+ placa VARCHAR(8),
  cidade VARCHAR(150),
  uf VARCHAR(2),
  kmrodado DOUBLE,

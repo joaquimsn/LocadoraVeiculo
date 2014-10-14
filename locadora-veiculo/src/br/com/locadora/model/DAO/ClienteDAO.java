@@ -128,7 +128,7 @@ public class ClienteDAO extends MysqlConnect{
 			sqlSt.setString(15, cliente.getTelefone());
 			sqlSt.setString(16, cliente.getEmail());
 			sqlSt.setInt(17, cliente.getIdAgencia());
-			sqlSt.setInt(18, cliente.getIdFncionario());
+			sqlSt.setInt(18, cliente.getIdFuncionario());
 			sqlSt.setDate(19, SystemUtils.dataConverter(cliente.getDataCadastro()));
 			sqlSt.setBoolean(20, cliente.isAtivo());
 			sqlSt.execute();

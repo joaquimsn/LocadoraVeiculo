@@ -9,17 +9,28 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import br.com.locadora.controller.EnderecoControl;
+import br.com.locadora.controller.VeiculoControl;
+import br.com.locadora.model.entity.Veiculo;
+import br.com.locadora.model.enums.AcessorioVeiculoEnum;
+import br.com.locadora.model.enums.GrupoVeiculoEnum;
+import br.com.locadora.utils.Constants;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.BotoesCrudComponente;
 import br.com.locadora.view.componentes.ImageFilter;
+import br.com.locadora.view.componentes.InputSoNumeros;
+import br.com.locadora.view.componentes.InputSoTexto;
+import br.com.locadora.view.componentes.InputSoTextoNumeros;
 
 import com.toedter.calendar.JYearChooser;
 
@@ -49,13 +60,13 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 	private JComboBox cbxUf;
 	private JComboBox cbxCidade;
 	private JComboBox cbxGrupo;
-	private JTextField txtPlaca;
+	private JComboBox cbxAcessorios;
+	private JFormattedTextField txtPlaca;
 	private JTextField txtModelo;
 	private JYearChooser anoFabricacao;
 	private JTextField txtChassi;
 	private JTextField txtKmRodado;
 	private JTextField txtFabricante;
-	private JTextField txtAcessorios;
 	private JTextField txtTarifaKmLivre;
 	private JTextField txtDiretorioImagem;
 	private JTextField txtTarifaKmControlado;
@@ -64,6 +75,8 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 	private JButton btnEscolhaImagem;
 	
 	private String tituloPanel;
+	
+	private String[] cidades;
 
 	public VeiculoGUI() {
 		// cria a tela de login
@@ -85,9 +98,16 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 	 * @author Joaquim Neto
 	 */
 	private void inicializar() {
+		// Instacia o array de cidades
+		cidades = new String[10];
 		
 		// Configura o FileChooser para escolha da imagem do veiculo
 		fileChooserConfig();
+		
+		// InputVerifier para validações genéricas dos campos
+		InputSoNumeros soNumeros = new InputSoNumeros();
+		InputSoTextoNumeros soTextoNumeros = new InputSoTextoNumeros();
+		InputSoTexto soTexto = new InputSoTexto();
 		
 		setLayout(null);
 		setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), tituloPanel, TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
@@ -98,6 +118,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		add(lblModelo);
 		
 		txtModelo = new JTextField(10);
+		txtModelo.setInputVerifier(soTextoNumeros);
 		txtModelo.setBounds(346, 59, 306, 30);
 		add(txtModelo);
 		
@@ -112,6 +133,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		add(lblFabricante);
 		
 		txtFabricante = new JTextField(10);
+		txtFabricante.setInputVerifier(soTexto);
 		txtFabricante.setBounds(664, 59, 179, 30);
 		add(txtFabricante);
 		
@@ -120,26 +142,26 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		lblGrupo.setBounds(352, 88, 125, 20);
 		add(lblGrupo);
 		
-		cbxGrupo = new JComboBox();
-		cbxGrupo.setBounds(346, 109, 154, 30);
+		cbxGrupo = new JComboBox(GrupoVeiculoEnum.getDisplayList().toArray(new String[0]));
+		cbxGrupo.setBounds(346, 109, 204, 30);
 		add(cbxGrupo);
 		
 		lblAcessrios = new JLabel(LocaleUtils.getLocaleView().getString("lbl_acessorios"));
 		lblAcessrios.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblAcessrios.setBounds(515, 88, 125, 20);
+		lblAcessrios.setBounds(565, 88, 125, 20);
 		add(lblAcessrios);
 		
-		txtAcessorios = new JTextField(10);
-		txtAcessorios.setBounds(512, 111, 140, 30);
-		add(txtAcessorios);
+		cbxAcessorios = new JComboBox(AcessorioVeiculoEnum.getDisplayList().toArray(new String[0]));
+		cbxAcessorios.setBounds(562, 111, 140, 30);
+		add(cbxAcessorios);
 		
 		lblDataFab = new JLabel(LocaleUtils.getLocaleView().getString("lbl_data_fab"));
 		lblDataFab.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblDataFab.setBounds(664, 88, 125, 20);
+		lblDataFab.setBounds(714, 88, 125, 20);
 		add(lblDataFab);
 		
 		anoFabricacao = new JYearChooser();
-		anoFabricacao.setBounds(664, 109, 179, 30);
+		anoFabricacao.setBounds(714, 109, 129, 30);
 		add(anoFabricacao);
 		
 		lblImagemVeiculo = new JLabel(LocaleUtils.getLocaleView().getString("lbl_imagem_veiculo"));
@@ -163,7 +185,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		add(lblChassi);
 		
 		txtChassi = new JTextField(10);
-		txtChassi.setEditable(false);
+		txtChassi.setInputVerifier(soTextoNumeros);
 		txtChassi.setBounds(27, 288, 306, 30);
 		add(txtChassi);
 		
@@ -172,7 +194,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		lblPlca.setBounds(352, 267, 125, 20);
 		add(lblPlca);
 		
-		txtPlaca = new JTextField(10);
+		txtPlaca = new JFormattedTextField(Mask.maskPlaca());
 		txtPlaca.setBounds(346, 288, 140, 30);
 		add(txtPlaca);
 		
@@ -181,7 +203,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		lblUf.setBounds(502, 267, 88, 20);
 		add(lblUf);
 		
-		cbxUf = new JComboBox();
+		cbxUf = new JComboBox(Constants.UF.toArray(new String[0]));
 		cbxUf.setBounds(498, 288, 92, 30);
 		add(cbxUf);
 		
@@ -190,7 +212,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		lblCidade.setBounds(610, 267, 125, 20);
 		add(lblCidade);
 		
-		cbxCidade = new JComboBox();
+		cbxCidade = new JComboBox(cidades);
 		cbxCidade.setBounds(602, 287, 231, 30);
 		add(cbxCidade);
 		
@@ -200,6 +222,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		add(lblKmRodado);
 		
 		txtKmRodado = new JTextField(10);
+		txtKmRodado.setInputVerifier(soNumeros);
 		txtKmRodado.setBounds(27, 342, 140, 30);
 		add(txtKmRodado);
 		
@@ -209,6 +232,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		add(lblTarefaKmLivre);
 		
 		txtTarifaKmLivre = new JTextField(10);
+		txtTarifaKmLivre.setInputVerifier(soNumeros);
 		txtTarifaKmLivre.setBounds(179, 342, 140, 30);
 		add(txtTarifaKmLivre);
 		
@@ -218,6 +242,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		add(lblTarefaKmControlado);
 		
 		txtTarifaKmControlado = new JTextField(10);
+		txtTarifaKmControlado.setInputVerifier(soNumeros);
 		txtTarifaKmControlado.setBounds(331, 343, 146, 30);
 		add(txtTarifaKmControlado);
 		
@@ -231,6 +256,58 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		
 		this.setBounds(15, 10, 860, 500);
 		this.setVisible(true);
+		
+		/*
+		 * EVENTOS DOS BOTÕES
+		 */
+		botoesCrudComponente.btnSalvar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Veiculo veiculo = new Veiculo();
+				
+				// Preenche o objeto agência com as informações infromada pelo usuário
+				veiculo.setAcessorio(AcessorioVeiculoEnum.getValueByDisplay((String) cbxAcessorios.getSelectedItem()));
+				veiculo.setAno(anoFabricacao.getYear());
+				veiculo.setChassi(txtChassi.getText());
+				veiculo.setPlaca(txtPlaca.getText());
+				veiculo.setModelo(txtModelo.getText());
+				veiculo.setUf((String) cbxUf.getSelectedItem());
+				veiculo.setCidade((String) cbxCidade.getSelectedItem());
+				veiculo.setGrupo(GrupoVeiculoEnum.getValueByDisplay((String) cbxGrupo.getSelectedItem()));
+				veiculo.setImagem(txtDiretorioImagem.getText());
+				veiculo.setFabricante(txtFabricante.getText());
+				veiculo.setKmRodado(Integer.parseInt(txtKmRodado.getText()));
+				veiculo.setPrecoKmControlado(Double.parseDouble(txtTarifaKmControlado.getText()));
+				veiculo.setPrecoKmLivre(Double.parseDouble(txtTarifaKmLivre.getText()));
+				veiculo.setAtivo(true);
+				
+				// Valida os dados preenchido pelo usuário
+				if (!validar(veiculo)) {
+					return;
+				}
+				
+				// Persiste o objeto agência
+				VeiculoControl veiculoControl = new VeiculoControl();
+				
+				// Verifica se foi cadastrado com sucesso
+				if (veiculoControl.salvarOuAlterar(veiculo)) {
+					// Limpa os campos preenchidos
+					limparCampos();
+				} else {
+					JOptionPane.showMessageDialog(lblGrupo, LocaleUtils.getLocaleMessages().getString("falha_errofatal"));
+				}
+			}
+		});
+		
+		// Preenche o combo de cidade ao selecionar uma UF
+		cbxUf.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				preencherComboCidadePorUf((String) cbxUf.getSelectedItem());
+			}
+		});
 	}
 	
 	private void fileChooserConfig(){
@@ -265,5 +342,71 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 			}
 		}
 		
+	}
+	
+	private void preencherComboCidadePorUf(String uf) {
+		cbxCidade.removeAllItems();
+		EnderecoControl enderecoControl = new EnderecoControl();
+		cidades = enderecoControl.buscarCidadePorUf(uf).toArray(new String[0]);
+		for (String cidade : cidades) {
+			cbxCidade.addItem(cidade);
+		}
+	}
+	
+	/**
+	 * Valida os campos preenchido pelo usuário
+	 * @author Joaquim Neto
+	 * @param veiculo Objeto Veiculo
+	 * @return <b>true</b> Se for valido
+	 */
+	private boolean validar(Veiculo veiculo) {
+		
+		// Verifica se os campos obrigatorios referente a veiculo foram preenchido
+		if (!SystemUtils.isCamposObrigatoriosPreenchidos(veiculo)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Limpa todos os campos preenchidos pelo usuário
+	 * @author Joaquim Neto
+	 */
+	private void limparCampos() {
+		// Limpa os valores fields veiculo
+		txtChassi.setText("");
+		txtDiretorioImagem.setText("");
+		txtFabricante.setText("");
+		txtKmRodado.setText("");
+		txtModelo.setText("");
+		txtPlaca.setText("");
+		txtTarifaKmControlado.setText("");
+		txtTarifaKmLivre.setText("");
+	}
+	
+	/**
+	 * Preenche os campos da tela agência com os valores obtidos do 
+	 * objeto Agência passado por parâmentro
+	 * @author Joaquim Neto
+	 * @param veiculo Objeto agência
+	 */
+	public void preencherCampos(Veiculo veiculo) {
+		if (!SystemUtils.isNuloOuVazio(veiculo)) {
+			cbxAcessorios.setSelectedItem(AcessorioVeiculoEnum.getDisplayByValue(veiculo.getAcessorio()));
+			anoFabricacao.setYear(veiculo.getAno());
+			txtChassi.setText(veiculo.getChassi());
+			txtModelo.setText(veiculo.getModelo());
+			cbxUf.setSelectedItem(veiculo.getUf());
+			preencherComboCidadePorUf(veiculo.getUf()); // Preenche o combo cidade
+			cbxCidade.setSelectedItem(veiculo.getCidade());
+			cbxGrupo.setSelectedItem(GrupoVeiculoEnum.getDisplayByValue(veiculo.getGrupo()));
+			txtDiretorioImagem.setText(veiculo.getImagem());
+			txtFabricante.setText(veiculo.getFabricante());
+			txtKmRodado.setText(String.valueOf(veiculo.getKmRodado()));
+			txtPlaca.setText(veiculo.getPlaca());
+			txtTarifaKmControlado.setText(String.valueOf(veiculo.getPrecoKmControlado()));
+			txtTarifaKmLivre.setText(String.valueOf(veiculo.getPrecoKmLivre()));
+		}
 	}
 }

@@ -44,7 +44,7 @@ public class ClienteControl implements Serializable{
 		
 		// Associa a agência e o funcionario ao cliente cadastrado
 		cliente.setIdAgencia(SystemUtils.getFuncionarioLogado().getCodigoAgencia());
-		cliente.setIdFncionario(SystemUtils.getFuncionarioLogado().getId());
+		cliente.setIdFuncionario(SystemUtils.getFuncionarioLogado().getId());
 		
 		cliente.setAtivo(true);
 		cliente.setDataCadastro(new Date());

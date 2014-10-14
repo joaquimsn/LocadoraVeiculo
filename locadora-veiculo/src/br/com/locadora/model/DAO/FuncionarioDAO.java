@@ -342,5 +342,4 @@ public class FuncionarioDAO extends MysqlConnect{
 		
 		return lista;
 	}
-
 }
