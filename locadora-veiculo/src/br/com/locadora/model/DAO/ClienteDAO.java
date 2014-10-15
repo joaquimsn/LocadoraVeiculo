@@ -72,7 +72,9 @@ public class ClienteDAO extends MysqlConnect{
 					+ "uf=?,"
 					+ "telefone=?,"
 					+ "email=?,"
-					+ "id_agencia=?"
+					+ "id_agencia=?,"
+					+ "data_manutencao = ?,"
+					+ "ativo = ? "
 					+ " where id_cliente=?";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1,  cliente.getNome());
@@ -91,8 +93,9 @@ public class ClienteDAO extends MysqlConnect{
 			sqlSt.setString(14, cliente.getUf());
 			sqlSt.setString(15, cliente.getTelefone());
 			sqlSt.setString(16, cliente.getEmail());
-			sqlSt.setInt(17, cliente.getIdAgencia());
-			sqlSt.setInt(18, cliente.getId());
+			sqlSt.setDate(17, SystemUtils.dataConverter(cliente.getDataManutencao()));
+			sqlSt.setBoolean(18, cliente.isAtivo());
+			sqlSt.setInt(19, cliente.getId());
 			sqlSt.execute();
 			return true;
 		}catch(Exception selectError){

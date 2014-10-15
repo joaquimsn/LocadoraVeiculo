@@ -20,10 +20,12 @@ import br.com.locadora.view.ClienteGUI;
 import br.com.locadora.view.ConsultaAgenciaGUI;
 import br.com.locadora.view.ConsultaClienteGUI;
 import br.com.locadora.view.ConsultaFuncionarioGUI;
+import br.com.locadora.view.ConsultaVeículoGUI;
 import br.com.locadora.view.DevolucaoGUI;
 import br.com.locadora.view.FuncionarioGUI;
 import br.com.locadora.view.LocacaoGUI;
 import br.com.locadora.view.TelaPrincipalGUI;
+import br.com.locadora.view.VeiculoGUI;
 
 public class MenuAcoesLateral extends JPanel implements Serializable, ActionListener{
 	private static final long serialVersionUID = -3381377661549796928L;
@@ -120,6 +122,10 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 			// Tela pesquisa funcionário
 			} else if (telaParaControle.getClass() == FuncionarioGUI.class) {
 				telaPrincipalGUI.mudarTelaContainer(new ConsultaFuncionarioGUI());
+			
+				// Tela pesquisa veículo
+			} else if (telaParaControle.getClass() == VeiculoGUI.class) {
+				telaPrincipalGUI.mudarTelaContainer(new ConsultaVeículoGUI());
 			} 
 			
 		} else if (e.getSource() == btnCadastrar) {
@@ -131,9 +137,13 @@ public class MenuAcoesLateral extends JPanel implements Serializable, ActionList
 			} else if (telaParaControle.getClass() == ConsultaAgenciaGUI.class) {
 				telaPrincipalGUI.mudarTelaContainer(new AgenciaGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_agencia")));
 			
-			// Tela cadastro agência	
+			// Tela cadastro Funcionario
 			} else if (telaParaControle.getClass() == ConsultaFuncionarioGUI.class) {
 				telaPrincipalGUI.mudarTelaContainer(new FuncionarioGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_funcionario")));
+			
+				// Tela cadastro Veículo
+			} else if (telaParaControle.getClass() == ConsultaVeículoGUI.class) {
+				telaPrincipalGUI.mudarTelaContainer(new VeiculoGUI(LocaleUtils.getLocaleView().getString("titulo_cadastro_funcionario")));
 			}
 		} else if (e.getSource() == btnDevolucao) {
 			new DevolucaoGUI();

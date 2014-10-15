@@ -116,7 +116,7 @@ public class FuncionarioControl implements Serializable{
 			break;
 		
 		case 3:
-			condicao = " WHERE " + "cnh  LIKE '" + valor  + "%' AND ativo = 1";
+			condicao = " WHERE " + "cpf  LIKE '" + valor  + "%' AND ativo = 1";
 			break;
 		
 		case 4:
@@ -124,7 +124,7 @@ public class FuncionarioControl implements Serializable{
 			break;
 		
 		case 5:
-			condicao = " WHERE " + "email LIKE '" + valor + "%' AND ativo = 1";
+			condicao = " WHERE " + "usuario LIKE '" + valor + "%' AND ativo = 1";
 			break;
 			
 		default:

@@ -7,7 +7,8 @@ public enum ParametroPesquisaFuncionarioEnum {
 	SELECIONA_TODOS("Buscar todos", 1),
 	CODIGO("Código", 2),
 	CPF("CPF", 3),
-	NOME("Nome", 4);
+	NOME("Nome", 4),
+	USUARIO("Usuário", 5);
 	
 	private String display;
 	private int value;

@@ -281,7 +281,10 @@ public class ClienteGUI extends JPanel {
 			txtCpf.setText(cliente.getCpf());
 			txtEstadoEmissor.setText(cliente.getEstadoEmissor());
 			txtNome.setText(cliente.getNome());
-			txtRg.setText(cliente.getRg());			
+			txtRg.setText(cliente.getRg());
+			dataNascimentoChooser.setDate(cliente.getDataNascimento());
+			dataVencimentoCnh.setDate(cliente.getValidadeCnh());
+			
 			// Preenche o endereço
 			formularioEndereco.preencherEndereco(cliente.getEndereco());
 		}

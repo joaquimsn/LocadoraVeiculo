@@ -74,7 +74,6 @@ public class AgenciaDAO extends MysqlConnect {
 			sqlSt.setDate(15, SystemUtils.dataConverter(agencia.getDataManutencao()));
 			sqlSt.setBoolean(16, agencia.isAtivo());
 			sqlSt.setInt(17, agencia.getIdAgencia());
-			sqlSt.toString();
 			sqlSt.executeUpdate();
 			return true;
 		} catch (Exception selectError) {

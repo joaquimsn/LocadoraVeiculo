@@ -22,15 +22,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import br.com.locadora.controller.FuncionarioControl;
-import br.com.locadora.model.entity.Funcionario;
-import br.com.locadora.model.enums.NivelUsuarioEnum;
-import br.com.locadora.model.enums.ParametroPesquisaFuncionarioEnum;
+import br.com.locadora.controller.VeiculoControl;
+import br.com.locadora.model.entity.Veiculo;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.InputSoTextoNumeros;
 
-public class ConsultaFuncionarioGUI extends JPanel {
+public class ConsultaVeículoGUI extends JPanel {
 	private static final long serialVersionUID = 65619500338126805L;
 	
 	// Lables
@@ -52,22 +50,22 @@ public class ConsultaFuncionarioGUI extends JPanel {
 	private JTable table;
 	
 	// Atributos da regra de negócio
-	private List<Funcionario> listaFuncionario;
-	private FuncionarioControl funcionarioControl;
+	private List<Veiculo> listaVeiculo;
+	private VeiculoControl veiculoControl;
 
-	public ConsultaFuncionarioGUI() {
-		funcionarioControl = new FuncionarioControl();
-		listaFuncionario = new ArrayList<Funcionario>();
+	public ConsultaVeículoGUI() {
+		veiculoControl = new VeiculoControl();
+		listaVeiculo = new ArrayList<Veiculo>();
 		
 		inicializar();
 	}
 	
-	/**Inicializa todos os componetes da tela consulta de funcionario
+	/**Inicializa todos os componetes da tela consulta de veiculo
 	 * @author Joaquim Neto
 	 */
 	private void inicializar() {
 		setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), 
-				LocaleUtils.getLocaleView().getString("lbl_pesquisar_funcionario"), TitledBorder.LEADING, 
+				LocaleUtils.getLocaleView().getString("lbl_pesquisar_veiculo"), TitledBorder.LEADING, 
 				TitledBorder.TOP, null, Color.BLUE));
 		setLayout(null);
 		
@@ -80,7 +78,7 @@ public class ConsultaFuncionarioGUI extends JPanel {
 		lblParametroPesquisa.setBounds(10, 5, 200, 20);
 		panelParametroPesquisa.add(lblParametroPesquisa);
 		
-		cbxParametroPesquisa = new JComboBox(ParametroPesquisaFuncionarioEnum.getDisplayList().toArray());
+		cbxParametroPesquisa = new JComboBox(ParametroPesquisaVeiculoEnum.getDisplayList().toArray());
 		cbxParametroPesquisa.setBounds(5, 25, 180, 30);
 		panelParametroPesquisa.add(cbxParametroPesquisa);
 		
@@ -115,8 +113,8 @@ public class ConsultaFuncionarioGUI extends JPanel {
 		
 		
 		// Desabilita os botões de alterar e excluir caso não exista nenhuma agência selecionada
-//		btnAlterar.setEnabled(isFuncionarioSelecionada());
-//		btnExcluir.setEnabled(isFuncionarioSelecionada());
+//		btnAlterar.setEnabled(isVeiculoSelecionada());
+//		btnExcluir.setEnabled(isVeiculoSelecionada());
 		
 		this.setBounds(15, 10, 860, 600);
 		setVisible(true);
@@ -128,9 +126,9 @@ public class ConsultaFuncionarioGUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int parametroSelecionado = ParametroPesquisaFuncionarioEnum.getValueByDisplay((String) cbxParametroPesquisa.getSelectedItem());
+				int parametroSelecionado = ParametroPesquisaVeiculoEnum.getValueByDisplay((String) cbxParametroPesquisa.getSelectedItem());
 				
-				if (!(SystemUtils.isNuloOuVazio(txtPesquisa.getText()) && parametroSelecionado != ParametroPesquisaFuncionarioEnum.SELECIONA_TODOS.getValue())) {
+				if (!(SystemUtils.isNuloOuVazio(txtPesquisa.getText()) && parametroSelecionado != ParametroPesquisaVeiculoEnum.SELECIONA_TODOS.getValue())) {
 					pesquisar();
 				} else {
 					JOptionPane.showMessageDialog(txtPesquisa, LocaleUtils.getLocaleMessages().getString("falha_pesquisabranco"));
@@ -143,16 +141,16 @@ public class ConsultaFuncionarioGUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FuncionarioGUI funcionarioGUI = new FuncionarioGUI(LocaleUtils.getLocaleView().getString("titulo_alterar_funcionario"));
+				VeiculoGUI veiculoGUI = new VeiculoGUI(LocaleUtils.getLocaleView().getString("titulo_alterar_veiculo"));
 				
-				if (!isFuncionarioSelecionada()) {
+				if (!isVeiculoSelecionada()) {
 					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_agenciabranco"));
 					return;
 				}
 				
-				funcionarioGUI.preencherCampos(getFuncionarioSelecionado());
+				veiculoGUI.preencherCampos(getVeiculoSelecionado());
 				
-				ModalAlterarcaoGUI modalAlterarcaoGUI = new ModalAlterarcaoGUI(funcionarioGUI, LocaleUtils.getLocaleView().getString("titulo_alterar_agencia"));
+				ModalAlterarcaoGUI modalAlterarcaoGUI = new ModalAlterarcaoGUI(veiculoGUI, LocaleUtils.getLocaleView().getString("titulo_alterar_agencia"));
 				modalAlterarcaoGUI.setLocationRelativeTo(table);
 				modalAlterarcaoGUI.setModal(true);
 				limparTabela();
@@ -165,14 +163,14 @@ public class ConsultaFuncionarioGUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!isFuncionarioSelecionada()) {
+				if (!isVeiculoSelecionada()) {
 					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_agenciabranco"));
 					return;
 				}
-				Funcionario funcionario = getFuncionarioSelecionado();
-				funcionario.setAtivo(false);
+				Veiculo veiculo = getVeiculoSelecionado();
+				veiculo.setAtivo(false);
 				
-				if (funcionarioControl.salvarOuAlterar(funcionario)) {
+				if (veiculoControl.salvarOuAlterar(veiculo)) {
 					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("sucesso_agencia_desativada"));
 					limparTabela();
 				} else {
@@ -216,11 +214,11 @@ public class ConsultaFuncionarioGUI extends JPanel {
 		col.setCellRenderer(centerRenderer);
 		
 		col = table.getColumnModel().getColumn(3);
-		col.setPreferredWidth(200);
+		col.setPreferredWidth(100);
 		col.setCellRenderer(centerRenderer);
 
 		col = table.getColumnModel().getColumn(4);
-		col.setPreferredWidth(100);
+		col.setPreferredWidth(200);
 		col.setCellRenderer(centerRenderer);
 
 		return table;
@@ -254,8 +252,8 @@ public class ConsultaFuncionarioGUI extends JPanel {
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("col_codigo"));
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cpf"));
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_nome"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_agencia"));
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_nivel_acesso"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_agencia"));
 
 		return defaultTableModel;
 	}
@@ -268,17 +266,17 @@ public class ConsultaFuncionarioGUI extends JPanel {
 	public void pesquisar() {
 		limparTabela();
 		
-		int parametro = ParametroPesquisaFuncionarioEnum.getValueByDisplay((String) cbxParametroPesquisa.getSelectedItem());
+		int parametro = ParametroPesquisaVeiculoEnum.getValueByDisplay((String) cbxParametroPesquisa.getSelectedItem());
 		
-		listaFuncionario = funcionarioControl.buscarPorCondicao(parametro, txtPesquisa.getText());
+		listaVeiculo = veiculoControl.buscarPorCondicao(parametro, txtPesquisa.getText());
 		
 		// Preenche as linhas da tabela
-		for (Funcionario funcionario : listaFuncionario) {
-			defaultTableModel.addRow(new Object[] {funcionario.getId(), funcionario.getCpf(), funcionario.getNome(),
-					funcionario.getAgencia().getNomeFantasia(), NivelUsuarioEnum.getDisplayByValue(funcionario.getNivel())});
+		for (Veiculo veiculo : listaVeiculo) {
+			defaultTableModel.addRow(new Object[] {veiculo.getId(), veiculo.getCpf(), veiculo.getNome(),
+					veiculo.getAgencia().getNomeFantasia(), veiculo.getNivel()});
 		}
 		
-		if (!SystemUtils.isNuloOuVazio(listaFuncionario)) {
+		if (!SystemUtils.isNuloOuVazio(listaVeiculo)) {
 			btnAlterar.repaint();
 			btnExcluir.repaint();
 			repaint();
@@ -287,9 +285,9 @@ public class ConsultaFuncionarioGUI extends JPanel {
 	
 	private void limparTabela() {
 		// Verifica se já foi realizada uma pesquisa
-		if (!SystemUtils.isNuloOuVazio(listaFuncionario) && defaultTableModel.getRowCount() > 0) {
+		if (!SystemUtils.isNuloOuVazio(listaVeiculo) && defaultTableModel.getRowCount() > 0) {
 			// Remove as linhas da pesquisa anterior
-			for (int i = 0; i < listaFuncionario.size(); i++) {
+			for (int i = 0; i < listaVeiculo.size(); i++) {
 				defaultTableModel.removeRow(0);
 			}
 		}
@@ -299,12 +297,12 @@ public class ConsultaFuncionarioGUI extends JPanel {
 	/**
 	 * Retorna a agência selecionado
 	 * @author Joaquim Neto
-	 * @return Objeto Funcionario
+	 * @return Objeto Veiculo
 	 */
-	private Funcionario getFuncionarioSelecionado() {
-		Funcionario funcionario = listaFuncionario.get(table.getSelectedRow());
+	private Veiculo getVeiculoSelecionado() {
+		Veiculo veiculo = listaVeiculo.get(table.getSelectedRow());
 		
-		return funcionario;
+		return veiculo;
 	}
 	
 	/**
@@ -312,7 +310,7 @@ public class ConsultaFuncionarioGUI extends JPanel {
 	 * @author Joaquim Neto
 	 * @return <b>true</b> Se existir agência selecionada
 	 */
-	private boolean isFuncionarioSelecionada() {
+	private boolean isVeiculoSelecionada() {
 		if (table.getSelectedRow() == -1) {
 			return false;
 		}
