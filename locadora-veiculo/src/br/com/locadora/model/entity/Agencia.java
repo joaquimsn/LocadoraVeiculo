@@ -10,7 +10,7 @@ public class Agencia {
 	@Required(label = "Razão social", minimo = 10)
 	private String razaoSocial;
 
-	@Required(label = "Nome fantasia", minimo = 5)
+	@Required(label = "Nome fantasia", minimo = 4)
 	private String nomeFantasia;
 
 	@Required(label = "CNPJ", minimo = 14)

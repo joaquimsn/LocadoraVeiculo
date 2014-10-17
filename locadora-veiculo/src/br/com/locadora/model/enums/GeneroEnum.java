@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum GeneroEnum {
-	SELECIONE("Selecione", '0'),
-	MASCULINO("Masculino", 'M'),
-	FEMININO("Feminino", 'F');
+	SELECIONE("Selecione", ' '),
+	MASCULINO("Masculino", 'm'),
+	FEMININO("Feminino", 'f');
 	
 	private String display;
 	private char value;

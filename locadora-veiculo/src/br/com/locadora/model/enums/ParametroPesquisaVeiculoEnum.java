@@ -3,23 +3,22 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum AcessorioVeiculoEnum {
-	NAO_POSSUI("Não possui", 0),
-	GPS("Navegador GPS", 1),
-	CADEIRA_BEBE("Cadeira de bebê", 2),
-	Motorista("Motorista", 3);
+public enum ParametroPesquisaVeiculoEnum {
+	SELECIONA_TODOS("Buscar todos", 1),
+	PLACA("Placa", 2),
+	MODELO("Modelo", 3);
 	
 	private String display;
 	private int value;
 	
-	private AcessorioVeiculoEnum(String display, int value) {
+	private ParametroPesquisaVeiculoEnum(String display, int value) {
 		this.display = display;
 		this.value = value;
 	}
 	
 	public static List<Integer> getValueList() {
 		List<Integer> lista = new ArrayList<Integer>();
-		for(AcessorioVeiculoEnum objeto : values()) {
+		for(ParametroPesquisaVeiculoEnum objeto : values()) {
 			lista.add(objeto.value);
 		}
 		return lista;
@@ -27,14 +26,14 @@ public enum AcessorioVeiculoEnum {
 	
 	public static List<String> getDisplayList() {
 		List<String> lista = new ArrayList<String>();
-		for(AcessorioVeiculoEnum objeto : values()) {
+		for(ParametroPesquisaVeiculoEnum objeto : values()) {
 			lista.add(objeto.display);
 		}
 		return lista;
 	}
 	
 	public static int getValueByDisplay(String display) {
-		for(AcessorioVeiculoEnum objeto : values()) {
+		for(ParametroPesquisaVeiculoEnum objeto : values()) {
 			if(objeto.display.equals(display)) {
 				return objeto.value;
 			}
@@ -43,7 +42,7 @@ public enum AcessorioVeiculoEnum {
 	}
 	
 	public static String getDisplayByValue(Integer value) {
-		for(AcessorioVeiculoEnum objeto : values()) {
+		for(ParametroPesquisaVeiculoEnum objeto : values()) {
 			if(objeto.value == value.intValue()) {
 				return objeto.display;
 			}
@@ -51,8 +50,8 @@ public enum AcessorioVeiculoEnum {
 		return null;
 	}
 	
-	public static AcessorioVeiculoEnum getEnumByValue(Integer value) {
-		for(AcessorioVeiculoEnum objeto : values()) {
+	public static ParametroPesquisaVeiculoEnum getEnumByValue(Integer value) {
+		for(ParametroPesquisaVeiculoEnum objeto : values()) {
 			if(objeto.value == value.intValue()) {
 				return objeto;
 			}
@@ -74,4 +73,3 @@ public enum AcessorioVeiculoEnum {
 		return value;
 	}
 }
-

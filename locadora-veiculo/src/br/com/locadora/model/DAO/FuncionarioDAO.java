@@ -180,7 +180,6 @@ public class FuncionarioDAO extends MysqlConnect{
 								"email = ?," +
 								"nivel = ?," +
 								"usuario = ?," +
-								"data_cadastro = ?," +
 								"data_manutencao = ?," +
 								"funcionario_supervisor = ?," +
 								"id_agencia = ?" +
@@ -202,11 +201,10 @@ public class FuncionarioDAO extends MysqlConnect{
 			sqlSt.setString(13, funcionario.getEmail());
 			sqlSt.setInt(14, funcionario.getNivel());
 			sqlSt.setString(15, funcionario.getUsuario());
-			sqlSt.setDate(16, new java.sql.Date(funcionario.getDataCadastro().getTime()));
-			sqlSt.setDate(17, new java.sql.Date(funcionario.getDataManutencao().getTime()));
-			sqlSt.setInt(18, funcionario.getFuncionarioSupervisor());
-			sqlSt.setInt(19, funcionario.getCodigoAgencia());
-			sqlSt.setInt(20, funcionario.getId());
+			sqlSt.setDate(16, new java.sql.Date(funcionario.getDataManutencao().getTime()));
+			sqlSt.setInt(17, funcionario.getFuncionarioSupervisor());
+			sqlSt.setInt(18, funcionario.getCodigoAgencia());
+			sqlSt.setInt(19, funcionario.getId());
 			return true;
 		} catch (Exception selectError) {
 			selectError.printStackTrace();

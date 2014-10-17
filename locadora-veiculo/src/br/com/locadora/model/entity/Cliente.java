@@ -17,7 +17,7 @@ public class Cliente {
 	@Required(label = "Estado", minimo = 2)
 	private String estadoEmissor;
 	private Date validadeCnh;
-	private int genero;
+	private char genero;
 	private String logradouro;
 	private String bairro;
 	private String cep;
@@ -41,7 +41,6 @@ public class Cliente {
 		setCnh("");
 		setEstadoEmissor("");
 		setValidadeCnh(null);
-		setGenero(0);
 		setLogradouro("");
 		setBairro("");
 		setCep("");
@@ -110,10 +109,10 @@ public class Cliente {
 	public void setValidadeCnh(Date validadeCnh) {
 		this.validadeCnh = validadeCnh;
 	}
-	public int getGenero() {
+	public char getGenero() {
 		return genero;
 	}
-	public void setGenero(int genero) {
+	public void setGenero(char genero) {
 		this.genero = genero;
 	}
 	public String getLogradouro() {

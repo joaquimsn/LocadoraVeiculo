@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -18,6 +19,13 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import br.com.locadora.controller.AgenciaControl;
+import br.com.locadora.controller.ClienteControl;
+import br.com.locadora.controller.VeiculoControl;
+import br.com.locadora.model.entity.Agencia;
+import br.com.locadora.model.entity.Cliente;
+import br.com.locadora.model.entity.Veiculo;
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.CartaoCreditoComponente;
 import br.com.locadora.view.componentes.CartaoDebitoComponente;
@@ -45,7 +53,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	// Inputs
 	private JComboBox cbxSelecaoVeiculo;
 	private JTextField txtParametroPesquisaVeiculo;
-	private JComboBox cbcSelecaoCliente;
+	private JComboBox cbxSelecaoCliente;
 	private JTextField txtParametroPesquisaCliente;
 	private JDateChooser dataLocacao;
 	private JDateChooser dataDevolucao;
@@ -65,7 +73,11 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	// Componentes
 	private CartaoDebitoComponente cartaoDebitoComponente;
 	private CartaoCreditoComponente cartaoCreditoComponente;
-
+	
+	private List<Cliente> listaCliente;
+	private List<Veiculo> listaVeiculo;
+	private List<Agencia> listaAgencia;
+	
 	public LocacaoGUI() {
 		setTitle(LocaleUtils.getLocaleView().getString("titulo_tela_locacao"));
 		inicializar();
@@ -75,6 +87,9 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	 * @author Joaquim Neto
 	 */
 	private void inicializar() {
+		
+		preencherCampos();
+		
 		getContentPane().setLayout(null);
 		Container container = getContentPane();
 		
@@ -88,11 +103,11 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		lblSelecioneVeiculo.setBounds(15, 75, 150, 20);
 		panelLocacao.add(lblSelecioneVeiculo);
 		
-		cbxSelecaoVeiculo = new JComboBox();
+		cbxSelecaoVeiculo = new JComboBox(getVeiculos());
 		cbxSelecaoVeiculo.setBounds(10, 95, 455, 30);
 		panelLocacao.add(cbxSelecaoVeiculo);
 		
-		txtParametroPesquisaVeiculo = new JTextField(10);;
+		txtParametroPesquisaVeiculo = new JTextField(10);
 		txtParametroPesquisaVeiculo.setBounds(10, 40, 345, 30);
 		panelLocacao.add(txtParametroPesquisaVeiculo);
 		
@@ -104,11 +119,11 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		lblSelecioneOCliente.setBounds(15, 175, 150, 20);
 		panelLocacao.add(lblSelecioneOCliente);
 		
-		cbcSelecaoCliente = new JComboBox();
-		cbcSelecaoCliente.setBounds(10, 195, 455, 30);
-		panelLocacao.add(cbcSelecaoCliente);
+		cbxSelecaoCliente = new JComboBox(getClientes());
+		cbxSelecaoCliente.setBounds(10, 195, 455, 30);
+		panelLocacao.add(cbxSelecaoCliente);
 		
-		txtParametroPesquisaCliente = new JTextField(10);;
+		txtParametroPesquisaCliente = new JTextField(10);
 		txtParametroPesquisaCliente.setBounds(10, 145, 240, 30);
 		panelLocacao.add(txtParametroPesquisaCliente);
 		
@@ -178,7 +193,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		lblAgnciaDeRetirada.setBounds(15, 130, 150, 20);
 		panelDetalheLocao.add(lblAgnciaDeRetirada);
 		
-		cbxAgenciaRetirada = new JComboBox();
+		cbxAgenciaRetirada = new JComboBox(new String[]{SystemUtils.getAgenciaSelecionado().getRazaoSocial()});
 		cbxAgenciaRetirada.setBounds(10, 148, 250, 30);
 		panelDetalheLocao.add(cbxAgenciaRetirada);
 		
@@ -186,7 +201,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		lblAgnciaDeDevoluo.setBounds(15, 185, 150, 20);
 		panelDetalheLocao.add(lblAgnciaDeDevoluo);
 		
-		cbxAgenciaDevolucao = new JComboBox();
+		cbxAgenciaDevolucao = new JComboBox(getAgencias());
 		cbxAgenciaDevolucao.setBounds(10, 205, 250, 30);
 		panelDetalheLocao.add(cbxAgenciaDevolucao);
 		
@@ -217,5 +232,45 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private void preencherCampos() {
+		AgenciaControl agenciaControl = new AgenciaControl();
+		ClienteControl clienteControl = new ClienteControl();
+		VeiculoControl veiculoControl = new VeiculoControl();
+		
+		listaAgencia = agenciaControl.buscarTodos();
+		listaCliente = clienteControl.buscarTodos();
+		listaVeiculo = veiculoControl.buscarTodos();
+	}
+	
+	/**
+	 * Array contendo os nomes dos funcionários supervisores
+	 * @author Joaquim Neto
+	 * @return Array de nomes
+	 */
+	private String[] getVeiculos() {
+		String[] veiculos = new String[listaVeiculo.size()];
+		for (int i = 0; i < listaVeiculo.size(); i++) {
+			veiculos[i] = listaVeiculo.get(i).getPlaca() + " - " + listaVeiculo.get(i).getModelo();
+		}
+		
+		return veiculos;
+	}
+	private String[] getAgencias() {
+		String[] agencias = new String[listaAgencia.size()];
+		for (int i = 0; i < listaAgencia.size(); i++) {
+			agencias[i] = listaAgencia.get(i).getRazaoSocial();
+		}
+		
+		return agencias;
+	}
+	private String[] getClientes() {
+		String[] clientes = new String[listaCliente.size()];
+		for (int i = 0; i < listaCliente.size(); i++) {
+			clientes[i] = listaCliente.get(i).getCnh() + " - " + listaCliente.get(i).getNome();
+		}
+		
+		return clientes;
 	}
 }

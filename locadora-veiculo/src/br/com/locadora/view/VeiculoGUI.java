@@ -23,6 +23,7 @@ import br.com.locadora.controller.VeiculoControl;
 import br.com.locadora.model.entity.Veiculo;
 import br.com.locadora.model.enums.AcessorioVeiculoEnum;
 import br.com.locadora.model.enums.GrupoVeiculoEnum;
+import br.com.locadora.model.enums.StatusVeiculoEnum;
 import br.com.locadora.utils.Constants;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
@@ -280,6 +281,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 				veiculo.setKmRodado(Integer.parseInt(txtKmRodado.getText()));
 				veiculo.setPrecoKmControlado(Double.parseDouble(txtTarifaKmControlado.getText()));
 				veiculo.setPrecoKmLivre(Double.parseDouble(txtTarifaKmLivre.getText()));
+				veiculo.setStatus(StatusVeiculoEnum.DISPONIVEL.getValue());	
 				veiculo.setAtivo(true);
 				
 				// Valida os dados preenchido pelo usuário

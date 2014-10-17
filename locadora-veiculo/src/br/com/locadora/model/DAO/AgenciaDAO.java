@@ -103,10 +103,9 @@ public class AgenciaDAO extends MysqlConnect {
 							"email," +
 							"site," +
 							"data_cadastro," +
-							"data_manutencao," +
 							"ativo)" +
 						"VALUES" +
-						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, agencia.getRazaoSocial());
@@ -124,8 +123,7 @@ public class AgenciaDAO extends MysqlConnect {
 			sqlSt.setString(13,  agencia.getEmail());
 			sqlSt.setString(14, agencia.getSite());
 			sqlSt.setDate(15, SystemUtils.dataConverter(agencia.getDataCadastro()));
-			sqlSt.setDate(16,SystemUtils.dataConverter(agencia.getDataManutencao()));
-			sqlSt.setBoolean(17, agencia.isAtivo());
+			sqlSt.setBoolean(16, agencia.isAtivo());
 			sqlSt.execute();
 			return true;
 		} catch (Exception e) {

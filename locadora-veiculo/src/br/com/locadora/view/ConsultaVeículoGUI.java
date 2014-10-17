@@ -24,6 +24,10 @@ import javax.swing.table.TableColumn;
 
 import br.com.locadora.controller.VeiculoControl;
 import br.com.locadora.model.entity.Veiculo;
+import br.com.locadora.model.enums.AcessorioVeiculoEnum;
+import br.com.locadora.model.enums.GrupoVeiculoEnum;
+import br.com.locadora.model.enums.ParametroPesquisaVeiculoEnum;
+import br.com.locadora.model.enums.StatusVeiculoEnum;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.InputSoTextoNumeros;
@@ -206,7 +210,7 @@ public class ConsultaVeículoGUI extends JPanel {
 		col.setCellRenderer(centerRenderer1);
 		
 		col = table.getColumnModel().getColumn(1);
-		col.setPreferredWidth(150);
+		col.setPreferredWidth(120);
 		col.setCellRenderer(centerRenderer);
 
 		col = table.getColumnModel().getColumn(2);
@@ -218,7 +222,11 @@ public class ConsultaVeículoGUI extends JPanel {
 		col.setCellRenderer(centerRenderer);
 
 		col = table.getColumnModel().getColumn(4);
-		col.setPreferredWidth(200);
+		col.setPreferredWidth(150);
+		col.setCellRenderer(centerRenderer);
+		
+		col = table.getColumnModel().getColumn(5);
+		col.setPreferredWidth(80);
 		col.setCellRenderer(centerRenderer);
 
 		return table;
@@ -250,10 +258,11 @@ public class ConsultaVeículoGUI extends JPanel {
 		};
 		
 		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("col_codigo"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_cpf"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_nome"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_nivel_acesso"));
-		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_agencia"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_placa"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_modelo"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_grupo"));
+		defaultTableModel.addColumn(LocaleUtils.getLocaleView().getString("lbl_acessorios"));
+		defaultTableModel.addColumn("Status");
 
 		return defaultTableModel;
 	}
@@ -272,8 +281,9 @@ public class ConsultaVeículoGUI extends JPanel {
 		
 		// Preenche as linhas da tabela
 		for (Veiculo veiculo : listaVeiculo) {
-			defaultTableModel.addRow(new Object[] {veiculo.getId(), veiculo.getCpf(), veiculo.getNome(),
-					veiculo.getAgencia().getNomeFantasia(), veiculo.getNivel()});
+			defaultTableModel.addRow(new Object[] {veiculo.getId(), veiculo.getPlaca(), veiculo.getModelo(),
+					GrupoVeiculoEnum.getDisplayByValue(veiculo.getGrupo()), AcessorioVeiculoEnum.getDisplayByValue(veiculo.getAcessorio()),
+					StatusVeiculoEnum.getDisplayByValue(veiculo.getStatus())});
 		}
 		
 		if (!SystemUtils.isNuloOuVazio(listaVeiculo)) {

@@ -195,11 +195,25 @@ public class VeiculoDAO extends MysqlConnect{
 				veiculo = new Veiculo();
 				
 				veiculo.setId(resultSet.getInt(1));
-				veiculo.setCidade(resultSet.getString(11));
-				veiculo.setUf(resultSet.getString(12));
-				veiculo.setDataCadastro(resultSet.getDate(19));
-				veiculo.setDataManutencao(resultSet.getDate(20));
-				veiculo.setAtivo(resultSet.getBoolean(21));
+				veiculo.setModelo(resultSet.getString(2));
+				veiculo.setFabricante(resultSet.getString(3));
+				veiculo.setImagem(resultSet.getString(4));
+				veiculo.setAno(resultSet.getInt(5));
+				veiculo.setGrupo(resultSet.getInt(6));
+				veiculo.setAcessorio(resultSet.getInt(7));
+				veiculo.setChassi(resultSet.getString(8));
+				veiculo.setPlaca(resultSet.getString(9));
+				veiculo.setCidade(resultSet.getString(10));
+				veiculo.setUf(resultSet.getString(11));
+				veiculo.setKmRodado(resultSet.getDouble(12));
+				veiculo.setPrecoKmLivre(resultSet.getDouble(13));
+				veiculo.setPrecoKmControlado(resultSet.getDouble(14));
+				veiculo.setStatus(resultSet.getInt(15));
+				veiculo.setIdAgencia(resultSet.getInt(16));
+				veiculo.setIdFuncionario(resultSet.getInt(17));
+				veiculo.setDataCadastro(resultSet.getDate(18));
+				veiculo.setDataManutencao(resultSet.getDate(19));
+				veiculo.setAtivo(resultSet.getBoolean(20));
 				
 				lista.add(veiculo);
 			}

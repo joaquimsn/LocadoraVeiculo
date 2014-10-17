@@ -82,25 +82,34 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		add(lblCep);
 		
 		txtCep = new JFormattedTextField(Mask.maskCep()); // Adiciona a mascara de CEP
-		txtCep.setBounds(0, 25, 450, 30);
+		txtCep.setBounds(0, 25, 200, 30);
 		add(txtCep);
 		
 		lblUf = new JLabel(LocaleUtils.getLocaleView().getString("lbl_uf"));
-		lblUf.setBounds(460, 5, 88, 20);
+		lblUf.setBounds(210, 5, 88, 20);
 		add(lblUf);
 		
 		cbxUf = new JComboBox(Constants.UF.toArray(new String[0]));
-		cbxUf.setBounds(455, 25, 125, 30);
+		cbxUf.setBounds(205, 25, 125, 30);
 		add(cbxUf);
 
 		lblCidade = new JLabel(LocaleUtils.getLocaleView().getString("lbl_cidade"));
-		lblCidade.setBounds(590, 5, 125, 20);
+		lblCidade.setBounds(335, 5, 125, 20);
 		add(lblCidade);
 		
 		cbxCidade = new JComboBox(cidades);
-		cbxCidade.setBounds(585, 25, 210, 30);
+		cbxCidade.setBounds(330, 25, 210, 30);
 		add(cbxCidade);
 		preencherComboCidadePorUf((String) cbxUf.getSelectedItem()); // Preenche o combo de cidades
+		
+		lblBairro = new JLabel(LocaleUtils.getLocaleView().getString("lbl_bairro"));
+		lblBairro.setBounds(550, 5, 150, 20);
+		add(lblBairro);
+		
+		txtBairro = new JTextField(10);
+		txtBairro.setInputVerifier(soTexto);// Adiciona a validação soTexto
+		txtBairro.setBounds(545, 25, 250, 30);
+		add(txtBairro);
 		
 		lblLogradouro = new JLabel(LocaleUtils.getLocaleView().getString("lbl_logradouro"));
 		lblLogradouro.setBounds(5, 60, 141, 20);
@@ -108,33 +117,24 @@ public class FormularioEnderecoComponente extends JPanel implements Serializable
 		
 		txtLogradouro = new JTextField(10);
 		txtLogradouro.setInputVerifier(soTextoNumeros); // Adiciona a validação soTextoNumeros
-		txtLogradouro.setBounds(0, 80, 200, 30);
+		txtLogradouro.setBounds(0, 80, 450, 30);
 		add(txtLogradouro);
 		
 		lblNumero = new JLabel(LocaleUtils.getLocaleView().getString("lbl_numero"));
-		lblNumero.setBounds(210, 60, 50, 20);
+		lblNumero.setBounds(460, 60, 50, 20);
 		add(lblNumero);
 		
 		txtNumero = new JTextField(10);
 		txtNumero.setInputVerifier(soNumeros);// Adiciona a validação soNumeros
-		txtNumero.setBounds(205, 80, 80, 30);
+		txtNumero.setBounds(455, 80, 80, 30);
 		add(txtNumero);
-		
-		lblBairro = new JLabel(LocaleUtils.getLocaleView().getString("lbl_bairro"));
-		lblBairro.setBounds(295, 60, 150, 20);
-		add(lblBairro);
-		
-		txtBairro = new JTextField(10);
-		txtBairro.setInputVerifier(soTexto);// Adiciona a validação soTexto
-		txtBairro.setBounds(290, 80, 250, 30);
-		add(txtBairro);
 		
 		lblTelefone = new JLabel(LocaleUtils.getLocaleView().getString("lbl_telefone"));
 		lblTelefone.setBounds(545, 60, 150, 20);
 		add(lblTelefone);
 		
 		txtTelefone = new JFormattedTextField(Mask.maskTelefone());
-		txtTelefone.setBounds(545, 80, 250, 30);
+		txtTelefone.setBounds(540, 80, 255, 30);
 		add(txtTelefone);
 		
 		lblEmail = new JLabel(LocaleUtils.getLocaleView().getString("lbl_email"));

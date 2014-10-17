@@ -261,6 +261,10 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 		return supervisores;
 	}
 	
+	/**
+	 * @author Joaquim Neto
+	 * @return Array de Razão social
+	 */
 	private String[] getAgencias() {
 		String[] agencias = new String[listaAgencia.size()];
 		for (int i = 0; i < listaAgencia.size(); i++) {
@@ -336,9 +340,11 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 			txtRg.setText(funcionario.getRg());
 			txtNomeUsuario.setText(funcionario.getUsuario());
 			cbxAgencia.setSelectedItem(funcionario.getAgencia().getRazaoSocial());
-//			cbxSupervisor.setSelectedItem(funcionario.getSupervisor().getNome());
+			cbxSupervisor.setSelectedItem(funcionario.getSupervisor().getNome());
 			cbxGenero.setSelectedItem(GeneroEnum.getDisplayByValue(funcionario.getGenero()));
 			cbxNivel.setSelectedItem(NivelUsuarioEnum.getDisplayByValue(funcionario.getNivel()));
+			
+			dataNascimentoChooser.setDate(funcionario.getDataNascimento());
 			
 			// Preenche o endereço
 			formularioEndereco.preencherEndereco(funcionario.getEndereco());
