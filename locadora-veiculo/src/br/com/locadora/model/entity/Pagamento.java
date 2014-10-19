@@ -1,10 +1,14 @@
 package br.com.locadora.model.entity;
 
+import br.com.locadora.utils.annotation.Required;
+
 public class Pagamento {
 	private int id;
 	private double valor;
 	private String tipoPagamento;
+	@Required(label = "CPF", minimo = 11)
 	private String cpf;
+	@Required(label = "Titular", minimo = 4)
 	private String titular;
 
 	public Pagamento() {

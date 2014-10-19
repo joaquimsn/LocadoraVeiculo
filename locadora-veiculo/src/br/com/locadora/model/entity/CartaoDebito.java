@@ -8,6 +8,7 @@ public class CartaoDebito extends Pagamento {
 	public CartaoDebito(){
 		super(0.0, "", "");
 		setBanco(banco);
+		setTipoPagamento("Cartão debito");
 		setAgencia(agencia);
 		setTipoConta(tipoConta);
 		setTelefone(telefone);

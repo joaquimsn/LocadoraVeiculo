@@ -1,10 +1,14 @@
 package br.com.locadora.view.componentes;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -12,7 +16,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import br.com.locadora.controller.PagamentoControl;
+import br.com.locadora.model.entity.CartaoCredito;
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
+import br.com.locadora.view.Mask;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -28,7 +36,7 @@ public class CartaoCreditoComponente extends JPanel {
 	
 	// Inputs
 	private JTextField txtNomeTitular;
-	private JTextField txtCpfTitular;
+	private JFormattedTextField txtCpfTitular;
 	private JTextField txtNumeroCartao;
 	private JTextField txtCodigoSeguranca;
 	private JDateChooser dataValidadeChooser;
@@ -38,6 +46,8 @@ public class CartaoCreditoComponente extends JPanel {
 	private JRadioButton rdbMastercard;
 	private JRadioButton rdbElo;
 	private JButton btnFazerPagamento;
+	
+	private boolean pagamentoAprovato;
 	
 	private JPanel panelPagamento;
 	
@@ -56,6 +66,11 @@ public class CartaoCreditoComponente extends JPanel {
 	private void inicializar() {
 		setLayout(null);
 		
+		// InputVerifier para validações genéricas dos campos
+		InputSoNumeros soNumeros = new InputSoNumeros();
+		InputSoTextoNumeros soTextoNumeros = new InputSoTextoNumeros();
+		InputSoTexto soTexto = new InputSoTexto();
+		
 		TitledBorder titledBorder = new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_pagamento_credito"), 
 					TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 128));
 		panelPagamento = new JPanel();
@@ -70,7 +85,8 @@ public class CartaoCreditoComponente extends JPanel {
 		lblNomeDoTitular.setBounds(10, 20, 150, 20);
 		panelPagamento.add(lblNomeDoTitular);
 		
-		txtNomeTitular = new JTextField(10);;
+		txtNomeTitular = new JTextField(10);
+		txtNomeTitular.setInputVerifier(soTexto);
 		txtNomeTitular.setBounds(165, 20, 440, 30);
 		panelPagamento.add(txtNomeTitular);
 		
@@ -79,7 +95,7 @@ public class CartaoCreditoComponente extends JPanel {
 		lblCpf.setBounds(10, 60, 150, 20);
 		panelPagamento.add(lblCpf);
 		
-		txtCpfTitular = new JTextField(10);;
+		txtCpfTitular = new JFormattedTextField(Mask.maskCpf());
 		txtCpfTitular.setBounds(165, 55, 200, 30);
 		panelPagamento.add(txtCpfTitular);
 		
@@ -89,7 +105,8 @@ public class CartaoCreditoComponente extends JPanel {
 		lblNumeroDoCarto.setBounds(10, 90, 150, 20);
 		panelPagamento.add(lblNumeroDoCarto);
 		
-		txtNumeroCartao = new JTextField(10);;
+		txtNumeroCartao = new JTextField(10);
+		txtNumeroCartao.setInputVerifier(soNumeros);
 		txtNumeroCartao.setBounds(165, 90, 346, 30);
 		panelPagamento.add(txtNumeroCartao);
 		
@@ -99,7 +116,8 @@ public class CartaoCreditoComponente extends JPanel {
 		lblCdgioSegurana.setBounds(10, 130, 150, 20);
 		panelPagamento.add(lblCdgioSegurana);
 		
-		txtCodigoSeguranca = new JTextField(10);;
+		txtCodigoSeguranca = new JTextField(10);
+		txtCodigoSeguranca.setInputVerifier(soNumeros);
 		txtCodigoSeguranca.setBounds(165, 125, 90, 30);
 		panelPagamento.add(txtCodigoSeguranca);
 		
@@ -135,6 +153,65 @@ public class CartaoCreditoComponente extends JPanel {
 		
 		setSize(617, 250);
 		setVisible(true);
+		
+		btnFazerPagamento.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if (!SystemUtils.isCamposObrigatoriosPreenchidos(getDadoDoCartao())) {
+					return;
+				}
+				
+				PagamentoControl pagamentoControl = new PagamentoControl();
+				
+				// Salva o status do pagamento
+				pagamentoAprovato = pagamentoControl.processarPagamento(getDadoDoCartao());
+				
+				if (pagamentoAprovato) {
+					JOptionPane.showMessageDialog(dataValidadeChooser, "Pagamento efetuado com sucesso");
+				} else {
+					JOptionPane.showMessageDialog(dataValidadeChooser, "Pagamento não autorizado");
+				}
+				
+			}
+		});
+	}
+	
+	/**
+	 * Retorna os dados do pagamento informado pelo usuário
+	 * @author Joaquim Neto
+	 * @return Objeto CartaoCredito
+	 */
+	public CartaoCredito getDadoDoCartao() {
+		CartaoCredito cartaoCredito = new CartaoCredito();
+		
+		int codigo = Integer.parseInt(txtCodigoSeguranca.getText());
+		cartaoCredito.setCodigoSeguranca(codigo);
+		cartaoCredito.setCpf(txtCpfTitular.getText());
+		cartaoCredito.setNumeroCartao(txtNumeroCartao.getText());
+		cartaoCredito.setTitular(txtNomeTitular.getText());
+		cartaoCredito.setValidade(dataValidadeChooser.getDate());
+		
+		return cartaoCredito;
+	}
+	
+	/**
+	 * Limpa os campos da tela
+	 * @author Joaquim Neto
+	 */
+	public void limparCampos() {
+		txtCodigoSeguranca.setText("");
+		txtCpfTitular.setText("");
+		txtNomeTitular.setText("");
+		txtNumeroCartao.setText("");
 	}
 
+	/**
+	 * @param pagamentoAprovato the pagamentoAprovato to set
+	 */
+	public void setPagamentoAprovato(boolean pagamentoAprovato) {
+		this.pagamentoAprovato = pagamentoAprovato;
+	}
+	
 }

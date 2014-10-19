@@ -25,10 +25,15 @@ import br.com.locadora.controller.VeiculoControl;
 import br.com.locadora.model.entity.Agencia;
 import br.com.locadora.model.entity.Cliente;
 import br.com.locadora.model.entity.Veiculo;
+import br.com.locadora.model.enums.ParametroPesquisaClienteEnum;
+import br.com.locadora.model.enums.ParametroPesquisaVeiculoEnum;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.CartaoCreditoComponente;
 import br.com.locadora.view.componentes.CartaoDebitoComponente;
+import br.com.locadora.view.componentes.InputSoNumeros;
+import br.com.locadora.view.componentes.InputSoTexto;
+import br.com.locadora.view.componentes.InputSoTextoNumeros;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -61,7 +66,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	
 	// Buttons
 	private JButton btnPesquisarCliente;
-	private JButton btnCadastrar;
+	private JButton btnCadastrarCliente;
 	private JButton btnPesquisarVeiculo;
 	private JButton btnConcluir;
 	private JButton btnCancelar;
@@ -88,6 +93,11 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	 */
 	private void inicializar() {
 		
+		// InputVerifier para validações genéricas dos campos
+		InputSoNumeros soNumeros = new InputSoNumeros();
+		InputSoTextoNumeros soTextoNumeros = new InputSoTextoNumeros();
+		InputSoTexto soTexto = new InputSoTexto();
+		
 		preencherCampos();
 		
 		getContentPane().setLayout(null);
@@ -108,6 +118,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		panelLocacao.add(cbxSelecaoVeiculo);
 		
 		txtParametroPesquisaVeiculo = new JTextField(10);
+		txtParametroPesquisaVeiculo.setInputVerifier(soTextoNumeros);
 		txtParametroPesquisaVeiculo.setBounds(10, 40, 345, 30);
 		panelLocacao.add(txtParametroPesquisaVeiculo);
 		
@@ -124,6 +135,8 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		panelLocacao.add(cbxSelecaoCliente);
 		
 		txtParametroPesquisaCliente = new JTextField(10);
+		txtParametroPesquisaCliente.setToolTipText("Pesquisa aceita apenas o numero da CNH");
+		txtParametroPesquisaCliente.setInputVerifier(soNumeros);
 		txtParametroPesquisaCliente.setBounds(10, 145, 240, 30);
 		panelLocacao.add(txtParametroPesquisaCliente);
 		
@@ -139,9 +152,9 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		lblPesquisarCliente.setBounds(15, 125, 150, 20);
 		panelLocacao.add(lblPesquisarCliente);
 		
-		btnCadastrar = new JButton(LocaleUtils.getLocaleView().getString("btn_cadastrar"));
-		btnCadastrar.setBounds(355, 145, 110, 30);
-		panelLocacao.add(btnCadastrar);
+		btnCadastrarCliente = new JButton(LocaleUtils.getLocaleView().getString("btn_cadastrar"));
+		btnCadastrarCliente.setBounds(355, 145, 110, 30);
+		panelLocacao.add(btnCadastrarCliente);
 		
 		lblFormaPagamento = new JLabel(LocaleUtils.getLocaleView().getString("lbl_forma_pagamento"));
 		lblFormaPagamento.setBounds(15, 235, 220, 20);
@@ -226,6 +239,65 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
+		
+		/*
+		 * EVENTOS
+		 */
+		
+		// Preenche o combobox de cliente com o resultado da pesquisa realizada
+		btnPesquisarCliente.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ClienteControl clienteControl = new ClienteControl();
+				if (txtParametroPesquisaCliente.getText().length() > 0) {
+					listaCliente = clienteControl.buscarPorCondicao(ParametroPesquisaClienteEnum.CNH.getValue(), 
+							txtParametroPesquisaCliente.getText());
+					
+					preencherComboCliente();
+				}
+			}
+		});
+		
+		// Preenche o combobox de veículo com o resultado da pesquisa realizada
+		btnPesquisarVeiculo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VeiculoControl veiculoControl = new VeiculoControl();
+				
+				if (txtParametroPesquisaVeiculo.getText().length() > 0) {
+					listaVeiculo = veiculoControl.buscarPorCondicao(ParametroPesquisaVeiculoEnum.PLACA.getValue(),
+							txtParametroPesquisaVeiculo.getText());
+					
+					preencherComboVeiculo();
+				}
+			}
+		});
+		
+		// Finaliza a locação
+		btnConcluir.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		// Fecha a tela de locação
+		btnCancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		
+		// Abre a tela para cadastrar um cliente
+		btnCadastrarCliente.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ModalAlterarcaoGUI(new ClienteGUI(), "Cadastro de Cliente");
+			}
+		});
+		
 	}
 
 	@Override
@@ -245,9 +317,9 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	}
 	
 	/**
-	 * Array contendo os nomes dos funcionários supervisores
+	 * Array os modelos dos veículos cadastrados
 	 * @author Joaquim Neto
-	 * @return Array de nomes
+	 * @return Array modelo veículo
 	 */
 	private String[] getVeiculos() {
 		String[] veiculos = new String[listaVeiculo.size()];
@@ -257,6 +329,11 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		
 		return veiculos;
 	}
+	
+	/**
+	 * @author Joaquim Neto
+	 * @return Array com a razão social das agências
+	 */
 	private String[] getAgencias() {
 		String[] agencias = new String[listaAgencia.size()];
 		for (int i = 0; i < listaAgencia.size(); i++) {
@@ -265,6 +342,11 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		
 		return agencias;
 	}
+	
+	/**
+	 * @author Joaquim Neto
+	 * @return Array com os nomes dos clientes
+	 */
 	private String[] getClientes() {
 		String[] clientes = new String[listaCliente.size()];
 		for (int i = 0; i < listaCliente.size(); i++) {
@@ -272,5 +354,29 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		}
 		
 		return clientes;
+	}
+	
+	/**
+	 * Preenche o combobox de cliente, com os valores da listaCliente
+	 * @author Joaquim Neto
+	 */
+	private void preencherComboCliente() {
+		cbxSelecaoCliente.removeAll();
+		
+		for (Cliente cliente : listaCliente) {
+			cbxSelecaoCliente.addItem(cliente.getCnh() + " - " + cliente.getNome());
+		}
+	}
+	
+	/**
+	 * Preenche o combobox de veículo, com os valores da listaVeiculo
+	 * @author Joaquim Neto
+	 */
+	private void preencherComboVeiculo() {
+		cbxSelecaoCliente.removeAll();
+		
+		for (Veiculo veiculo : listaVeiculo) {
+			cbxSelecaoCliente.addItem(veiculo.getPlaca() + " - " + veiculo.getModelo());
+		}
 	}
 }

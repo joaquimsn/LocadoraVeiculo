@@ -40,7 +40,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 	
 	// Labels
 	private JLabel lblUf;
-	private JLabel lblPlca;
+	private JLabel lblPlaca;
 	private JLabel lblGrupo;
 	private JLabel lblCidade;
 	private JLabel lblChassi;
@@ -190,10 +190,10 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 		txtChassi.setBounds(27, 288, 306, 30);
 		add(txtChassi);
 		
-		lblPlca = new JLabel(LocaleUtils.getLocaleView().getString("lbl_chassi"));
-		lblPlca.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblPlca.setBounds(352, 267, 125, 20);
-		add(lblPlca);
+		lblPlaca = new JLabel(LocaleUtils.getLocaleView().getString("lbl_placa"));
+		lblPlaca.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblPlaca.setBounds(352, 267, 125, 20);
+		add(lblPlaca);
 		
 		txtPlaca = new JFormattedTextField(Mask.maskPlaca());
 		txtPlaca.setBounds(346, 288, 140, 30);
