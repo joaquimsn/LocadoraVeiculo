@@ -5,6 +5,7 @@ import java.util.Date;
 public class Locacao {
 	public int id;
 	private Date dataHoraLocacao;
+	private Date dataHoraPrevistaDevolucao;
 	private Date dataHoraDevolucao;
 	private int agenciaDevolucao;
 	private int tipoTarifa;
@@ -46,6 +47,14 @@ public class Locacao {
 
 	public Date getDataHoraDevolucao() {
 		return dataHoraDevolucao;
+	}
+
+	public Date getDataHoraPrevistaDevolucao() {
+		return dataHoraPrevistaDevolucao;
+	}
+
+	public void setDataHoraPrevistaDevolucao(Date dataHoraPrevistaDevolucao) {
+		this.dataHoraPrevistaDevolucao = dataHoraPrevistaDevolucao;
 	}
 
 	public void setDataHoraDevolucao(Date dataHoraDevolucao) {
