@@ -1,5 +1,6 @@
 package br.com.locadora.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,7 @@ import br.com.locadora.model.entity.Cliente;
 import br.com.locadora.model.entity.Veiculo;
 import br.com.locadora.model.enums.ParametroPesquisaClienteEnum;
 import br.com.locadora.model.enums.ParametroPesquisaVeiculoEnum;
+import br.com.locadora.model.enums.TipoTarifaEnum;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.CartaoCreditoComponente;
@@ -43,6 +45,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	// Panels 
 	private JPanel panelLocacao;
 	private JPanel panelDetalheLocao;
+	private static JPanel panelContainerPagamento;
 	
 	// Labels
 	private JLabel lblSelecioneVeiculo;
@@ -54,12 +57,15 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	private JLabel lblAgnciaDeDevoluo;
 	private JLabel lblFormaPagamento;
 	private JLabel lblAgnciaDeRetirada;
+	private JLabel lblTipoTarifa;
+	private JLabel lblKm;
 
 	// Inputs
 	private JComboBox cbxSelecaoVeiculo;
 	private JTextField txtParametroPesquisaVeiculo;
 	private JComboBox cbxSelecaoCliente;
 	private JTextField txtParametroPesquisaCliente;
+	private JTextField txtQuantidadeKm;
 	private JDateChooser dataLocacao;
 	private JDateChooser dataDevolucao;
 	
@@ -74,6 +80,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	private JRadioButton rdbtnCartoDebito;
 	private JComboBox cbxAgenciaRetirada;
 	private JComboBox cbxAgenciaDevolucao;
+	private JComboBox cbxTipoTarifa;
 	
 	// Componentes
 	private CartaoDebitoComponente cartaoDebitoComponente;
@@ -82,8 +89,12 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	private List<Cliente> listaCliente;
 	private List<Veiculo> listaVeiculo;
 	private List<Agencia> listaAgencia;
+
+	private boolean liberaCampoKm;
 	
 	public LocacaoGUI() {
+		liberaCampoKm = true;
+		
 		setTitle(LocaleUtils.getLocaleView().getString("titulo_tela_locacao"));
 		inicializar();
 	}
@@ -164,14 +175,26 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		ButtonGroup grupRadio = new ButtonGroup();
 		
 		rdbtnCartoCredito = new JRadioButton(LocaleUtils.getLocaleView().getString("cartao_credito"));
+		rdbtnCartoCredito.setSelected(true);
+		rdbtnCartoCredito.addActionListener(this);
 		rdbtnCartoCredito.setBounds(15, 265, 150, 20);
 		grupRadio.add(rdbtnCartoCredito);
 		panelLocacao.add(rdbtnCartoCredito);
 		
 		rdbtnCartoDebito = new JRadioButton(LocaleUtils.getLocaleView().getString("cartao_debito"));
+		rdbtnCartoDebito.addActionListener(this);
 		rdbtnCartoDebito.setBounds(176, 265, 150, 18);
 		grupRadio.add(rdbtnCartoDebito);
 		panelLocacao.add(rdbtnCartoDebito);
+		
+		lblTipoTarifa = new JLabel(LocaleUtils.getLocaleView().getString("lbl_tipo_tarifa"));
+		lblTipoTarifa.setBounds(325, 235, 220, 20);
+		panelLocacao.add(lblTipoTarifa);
+		
+		cbxTipoTarifa = new JComboBox(TipoTarifaEnum.getDisplayList().toArray(new String[0]));
+		cbxTipoTarifa.addActionListener(this);
+		cbxTipoTarifa.setBounds(320, 255, 145, 30);
+		panelLocacao.add(cbxTipoTarifa);
 		
 		panelDetalheLocao = new JPanel();
 		panelDetalheLocao.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_detalhe_locacao"), 
@@ -218,6 +241,16 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		cbxAgenciaDevolucao.setBounds(10, 205, 250, 30);
 		panelDetalheLocao.add(cbxAgenciaDevolucao);
 		
+		lblKm = new JLabel(LocaleUtils.getLocaleView().getString("lbl_km"));
+		lblKm.setBounds(15, 245, 150, 20);
+		panelDetalheLocao.add(lblKm);
+		
+		txtQuantidadeKm = new JTextField(10);
+		txtQuantidadeKm.setEditable(liberarCampoPreencherKM());
+		txtQuantidadeKm.setBounds(10, 265, 150, 30);
+		txtQuantidadeKm.setInputVerifier(soNumeros);
+		panelDetalheLocao.add(txtQuantidadeKm);
+		
 		btnConcluir = new JButton(LocaleUtils.getLocaleView().getString("btn_concluir"));
 		btnConcluir.setBounds(660, 470, 100, 65);
 		getContentPane().add(btnConcluir);
@@ -230,9 +263,15 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 //		cartaoDebitoComponente.setBounds(10, 322, 620, 250);
 //		getContentPane().add(cartaoDebitoComponente);
 		
+		// Inicia o container do panel de pagamento
+		panelContainerPagamento = new JPanel(null);
+		panelContainerPagamento.setBounds(10, 322, 620, 250);
+		getContentPane().add(panelContainerPagamento);
+		
 		cartaoCreditoComponente = new CartaoCreditoComponente();
-		cartaoCreditoComponente.setBounds(10, 322, 620, 250);
-		getContentPane().add(cartaoCreditoComponente);
+		panelContainerPagamento.add(cartaoCreditoComponente);
+		
+		btnConcluir.setEnabled(cartaoCreditoComponente.isPagamentoAprovato());
 		
 		setBounds(10, 0, 790, 600);
 		setResizable(false);
@@ -294,7 +333,8 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		btnCadastrarCliente.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ModalAlterarcaoGUI(new ClienteGUI(), "Cadastro de Cliente");
+				ModalAlterarcaoGUI modalAlterarcaoGUI = new ModalAlterarcaoGUI(new ClienteGUI(), "Cadastro de Cliente");
+				modalAlterarcaoGUI.setLocationRelativeTo(txtParametroPesquisaCliente);
 			}
 		});
 		
@@ -302,8 +342,16 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == cbxTipoTarifa) {
+			if (TipoTarifaEnum.getValueByDisplay((String) cbxTipoTarifa.getSelectedItem()) == TipoTarifaEnum.KM_LIVRE.getValue()) {
+				liberaCampoKm = false;
+				txtQuantidadeKm.setEditable(liberarCampoPreencherKM());
+				txtQuantidadeKm.repaint();
+			}
+		}
 		
+		btnConcluir.setEnabled(cartaoCreditoComponente.isPagamentoAprovato());
+		btnConcluir.repaint();		
 	}
 	
 	private void preencherCampos() {
@@ -361,11 +409,13 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	 * @author Joaquim Neto
 	 */
 	private void preencherComboCliente() {
-		cbxSelecaoCliente.removeAll();
+		// Remove os dados da pesquisa anterior
+		cbxSelecaoCliente.removeAllItems();
 		
 		for (Cliente cliente : listaCliente) {
 			cbxSelecaoCliente.addItem(cliente.getCnh() + " - " + cliente.getNome());
 		}
+		cbxSelecaoCliente.repaint();
 	}
 	
 	/**
@@ -373,10 +423,33 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	 * @author Joaquim Neto
 	 */
 	private void preencherComboVeiculo() {
-		cbxSelecaoCliente.removeAll();
+		// Remove os dados da pesquisa anterior
+		cbxSelecaoVeiculo.removeAllItems();
 		
 		for (Veiculo veiculo : listaVeiculo) {
-			cbxSelecaoCliente.addItem(veiculo.getPlaca() + " - " + veiculo.getModelo());
+			cbxSelecaoVeiculo.addItem(veiculo.getPlaca() + " - " + veiculo.getModelo());
 		}
+		cbxSelecaoVeiculo.repaint();
+	}
+	
+	/**
+	 * Troca a tela do container de pagamento
+	 * @param tela do pagamento escolhido
+	 * @author Joaquim Neto
+	 */
+	public void mudarTelaContainer(JPanel tela) {
+		panelContainerPagamento.removeAll();
+		panelContainerPagamento.add(tela);
+		add(panelContainerPagamento, BorderLayout.CENTER);
+		panelContainerPagamento.repaint();
+	}
+	
+	/**
+	 * Retorna true se o combo tipo tarifa estiver selecionado Tarifa controlada
+	 * @author Joaquim Neto
+	 * @return <b>true</b> Se for para liberar o campo de KM
+	 */
+	private boolean liberarCampoPreencherKM() {
+		return liberaCampoKm;
 	}
 }

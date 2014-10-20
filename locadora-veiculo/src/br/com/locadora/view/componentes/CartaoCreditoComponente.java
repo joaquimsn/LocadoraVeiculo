@@ -185,9 +185,13 @@ public class CartaoCreditoComponente extends JPanel {
 	 */
 	public CartaoCredito getDadoDoCartao() {
 		CartaoCredito cartaoCredito = new CartaoCredito();
+
+		String codigo = txtCodigoSeguranca.getText();
 		
-		int codigo = Integer.parseInt(txtCodigoSeguranca.getText());
-		cartaoCredito.setCodigoSeguranca(codigo);
+		if (codigo.length() > 0) {
+			cartaoCredito.setCodigoSeguranca(Integer.parseInt(codigo));
+		}
+
 		cartaoCredito.setCpf(txtCpfTitular.getText());
 		cartaoCredito.setNumeroCartao(txtNumeroCartao.getText());
 		cartaoCredito.setTitular(txtNomeTitular.getText());
@@ -208,10 +212,10 @@ public class CartaoCreditoComponente extends JPanel {
 	}
 
 	/**
-	 * @param pagamentoAprovato the pagamentoAprovato to set
+	 *@return true se pagamento aprovado
 	 */
-	public void setPagamentoAprovato(boolean pagamentoAprovato) {
-		this.pagamentoAprovato = pagamentoAprovato;
+	public boolean isPagamentoAprovato() {
+		return pagamentoAprovato;
 	}
 	
 }

@@ -106,11 +106,11 @@ public class VeiculoControl implements Serializable{
 			condicao = " WHERE ativo = 1";
 			break;
 		case 2:
-			condicao = " WHERE " + "placa  = " + valor + " AND ativo = 1";
+			condicao = " WHERE " + "placa  LIKE '%" + valor + "%' AND ativo = 1";
 			break;
 		
 		case 3:
-			condicao = " WHERE " + "modelo  LIKE '" + valor  + "%' AND ativo = 1";
+			condicao = " WHERE " + "modelo  LIKE '%" + valor  + "%' AND ativo = 1";
 			break;
 			
 		default:
