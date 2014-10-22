@@ -49,7 +49,10 @@ public class LocacaoDAO extends MysqlConnect{
 			}
 			return resultado;
 		}catch(Exception selectError){
+			selectError.printStackTrace();
 			return null;
+		}finally{
+			closeConnection();
 		}
 	}
 
@@ -96,8 +99,11 @@ public class LocacaoDAO extends MysqlConnect{
 			sqlSt.executeQuery();
 			return true;
 		}catch(Exception updateError){
+			updateError.printStackTrace();
 			return false;
-		}	
+		}finally{
+			closeConnection();
+		}
 	}
 
 	public boolean insert(Locacao locacao) {
@@ -141,6 +147,8 @@ public class LocacaoDAO extends MysqlConnect{
 		}catch(Exception e){
 			e.printStackTrace();
 			return false;
+		}finally{
+			closeConnection();
 		}
 	}
 
