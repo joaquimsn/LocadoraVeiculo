@@ -1,8 +1,10 @@
 package br.com.locadora.model.DAO;
 import br.com.locadora.model.entity.*;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.locadora.model.connection.MysqlConnect;
@@ -100,11 +102,9 @@ public class LocacaoDAO extends MysqlConnect{
 
 	public boolean insert(Locacao locacao) {
 		PreparedStatement sqlSt;
-		try{
-			String sql = "INSERT INTO locacao" +
+		try{			String sql = "INSERT INTO locacao" +
 							"(data_hora_locacao," +
 							"data_hora_prevista_devolucao," +
-							"data_hora_devolucao," +
 							"agencia_devolucao," +
 							"tipo_tarifa," +
 							"km_locacao," +
@@ -119,27 +119,27 @@ public class LocacaoDAO extends MysqlConnect{
 							"id_funcionario," +
 							"id_agencia)" +
 						"VALUES" +
-							"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+							"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setDate(1, new  java.sql.Date(locacao.getDataHoraLocacao().getTime()));
 			sqlSt.setDate(2, new java.sql.Date(locacao.getDataHoraPrevistaDevolucao().getTime()));
-			sqlSt.setDate(3, new java.sql.Date(locacao.getDataHoraDevolucao().getTime()));
-			sqlSt.setInt(4, locacao.getAgenciaDevolucao());
-			sqlSt.setInt(5, locacao.getTipoTarifa());
-			sqlSt.setDouble(6, locacao.getKmLocacao());
-			sqlSt.setDouble(7, locacao.getKmDevolucao());
-			sqlSt.setDouble(8, locacao.getValor());
-			sqlSt.setString(9, locacao.getTipoPagamento());
-			sqlSt.setDouble(10, locacao.getValorAcrescimo());
-			sqlSt.setInt(11, locacao.getStatus());
-			sqlSt.setInt(12, locacao.getVeiculo().getId());
-			sqlSt.setInt(13, locacao.getCliente().getId());
-			sqlSt.setInt(14, locacao.getPagamento().getId());
-			sqlSt.setInt(15, locacao.getIdFuncionario());
-			sqlSt.setInt(16, locacao.getIdAgencia());
-			sqlSt.executeQuery();
+			sqlSt.setInt(3, locacao.getAgenciaDevolucao());
+			sqlSt.setInt(4, locacao.getTipoTarifa());
+			sqlSt.setDouble(5, locacao.getKmLocacao());
+			sqlSt.setDouble(6, locacao.getKmDevolucao());
+			sqlSt.setDouble(7, locacao.getValor());
+			sqlSt.setString(8, locacao.getTipoPagamento());
+			sqlSt.setDouble(9, locacao.getValorAcrescimo());
+			sqlSt.setInt(10, locacao.getStatus());
+			sqlSt.setInt(11, locacao.getVeiculo().getId());
+			sqlSt.setInt(12, locacao.getCliente().getId());
+			sqlSt.setInt(13, locacao.getPagamento().getId());
+			sqlSt.setInt(14, locacao.getIdFuncionario());
+			sqlSt.setInt(15, locacao.getIdAgencia());
+			sqlSt.execute();
 			return true;
-		}catch(Exception updateError){
+		}catch(Exception e){
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -150,6 +150,40 @@ public class LocacaoDAO extends MysqlConnect{
 
 	public List<Locacao> selectByDate(Date date) {
 		return null;
+	}
+
+	/**
+	 * Busca todas as locacçãos cadastradas na base, com base na conditional 
+	 * passada por parâmtro, a query usada para pesquisa é <b>SELECt * FROM locacao</b>
+	 * @author Joaquim Neto
+	 * @param conditional condição para a consulta sql
+	 * @return Lista com as locacçãos encontradas
+	 */
+	public List<Locacao> pesquisarPorCondicao(String conditional) {
+		List<Locacao> lista = new ArrayList<Locacao>();
+		ResultSet resultSet;
+		Locacao locacao;
+		
+		try{
+			String sql = "SELECT * FROM locacao " + conditional;
+			
+			PreparedStatement st = conn.prepareStatement(sql);
+			resultSet = st.executeQuery();
+			
+			while(resultSet.next()){
+				locacao = new Locacao();
+				locacao.setId(resultSet.getInt(1));
+				lista.add(locacao);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			closeConnection();
+		}
+		
+		return lista;
 	}
 
 }

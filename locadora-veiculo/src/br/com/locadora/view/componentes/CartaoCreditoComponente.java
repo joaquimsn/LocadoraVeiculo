@@ -47,7 +47,7 @@ public class CartaoCreditoComponente extends JPanel {
 	private JRadioButton rdbElo;
 	private JButton btnFazerPagamento;
 	
-	private boolean pagamentoAprovato;
+	private boolean pagamentoAprovado;
 	
 	private JPanel panelPagamento;
 	
@@ -68,7 +68,6 @@ public class CartaoCreditoComponente extends JPanel {
 		
 		// InputVerifier para validações genéricas dos campos
 		InputSoNumeros soNumeros = new InputSoNumeros();
-		InputSoTextoNumeros soTextoNumeros = new InputSoTextoNumeros();
 		InputSoTexto soTexto = new InputSoTexto();
 		
 		TitledBorder titledBorder = new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_pagamento_credito"), 
@@ -166,9 +165,9 @@ public class CartaoCreditoComponente extends JPanel {
 				PagamentoControl pagamentoControl = new PagamentoControl();
 				
 				// Salva o status do pagamento
-				pagamentoAprovato = pagamentoControl.processarPagamento(getDadoDoCartao());
+				pagamentoAprovado = pagamentoControl.processarPagamento(getDadoDoCartao());
 				
-				if (pagamentoAprovato) {
+				if (pagamentoAprovado) {
 					JOptionPane.showMessageDialog(dataValidadeChooser, "Pagamento efetuado com sucesso");
 				} else {
 					JOptionPane.showMessageDialog(dataValidadeChooser, "Pagamento não autorizado");
@@ -214,8 +213,7 @@ public class CartaoCreditoComponente extends JPanel {
 	/**
 	 *@return true se pagamento aprovado
 	 */
-	public boolean isPagamentoAprovato() {
-		return pagamentoAprovato;
+	public boolean isPagamentoAprovado() {
+		return pagamentoAprovado;
 	}
-	
 }

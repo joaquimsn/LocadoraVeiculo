@@ -48,33 +48,33 @@ public class VeiculoDAO extends MysqlConnect{
 	public boolean update(Veiculo veiculo) {
 		PreparedStatement sqlSt;
 		try{
-			String sql = "UPDATE veiculo" +
-							"SET" +
-							"(modelo," +
-							"fabricante," +
-							"imagem," +
-							"ano," +
-							"grupo," +
-							"acessorio," +
-							"chassi," +
-							"placa," +
-							"cidade," +
-							"uf," +
-							"kmrodado," +
-							"precokmlivre," +
-							"precokmcontrolado," +
-							"status," +
-							"id_agencia," +
-							"id_funcionario," +
-							"data_cadastro," + 
-							"ativo)" +
+			String sql = "UPDATE veiculo " +
+							"SET " +
+							" modelo = ?," +
+							" fabricante = ?," +
+							" imagem = ?," +
+							" ano = ?," +
+							" grupo = ?," +
+							" acessorio = ?," +
+							" chassi = ?," +
+							" placa = ?," +
+							" cidade = ?," +
+							" uf = ?," +
+							" kmrodado = ?," +
+							" precokmlivre = ?," +
+							" precokmcontrolado = ?," +
+							" status = ?," +
+							" id_agencia = ?," +
+							" id_funcionario = ?," +
+							" data_cadastro = ?," + 
+							" ativo = ? " +
 							"WHERE " +
 								"id_veiculo = ?";
 			
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, veiculo.getModelo());
 			sqlSt.setString(2, veiculo.getFabricante());
-			sqlSt.setString(3, veiculo.getImagem());
+			sqlSt.setString(3, "");
 			sqlSt.setInt(4, veiculo.getAno());
 			sqlSt.setInt(5, veiculo.getGrupo());
 			sqlSt.setInt(6, veiculo.getAcessorio());
@@ -90,10 +90,12 @@ public class VeiculoDAO extends MysqlConnect{
 			sqlSt.setInt(16, veiculo.getIdFuncionario());
 			sqlSt.setDate(17, SystemUtils.dataConverter(veiculo.getDataCadastro()));
 			sqlSt.setBoolean(18, veiculo.isAtivo());
+			sqlSt.setInt(19, veiculo.getId());
 			sqlSt.execute();
 			
 			return true;
-		}catch(Exception updateError){
+		}catch(Exception e){
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -102,7 +104,7 @@ public class VeiculoDAO extends MysqlConnect{
 		PreparedStatement sqlSt;
 		try{
 			String sql = "INSERT INTO veiculo" +
-							"(modelo," +
+							" modelo," +
 							"fabricante," +
 							"imagem," +
 							"ano," +

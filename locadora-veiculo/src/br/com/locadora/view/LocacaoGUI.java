@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -22,9 +23,11 @@ import javax.swing.border.TitledBorder;
 
 import br.com.locadora.controller.AgenciaControl;
 import br.com.locadora.controller.ClienteControl;
+import br.com.locadora.controller.LocacaoControl;
 import br.com.locadora.controller.VeiculoControl;
 import br.com.locadora.model.entity.Agencia;
 import br.com.locadora.model.entity.Cliente;
+import br.com.locadora.model.entity.Locacao;
 import br.com.locadora.model.entity.Veiculo;
 import br.com.locadora.model.enums.ParametroPesquisaClienteEnum;
 import br.com.locadora.model.enums.ParametroPesquisaVeiculoEnum;
@@ -246,13 +249,13 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		panelDetalheLocao.add(lblKm);
 		
 		txtQuantidadeKm = new JTextField(10);
-		txtQuantidadeKm.setEnabled(liberarCampoPreencherKM());
 		txtQuantidadeKm.setEditable(liberarCampoPreencherKM());
 		txtQuantidadeKm.setBounds(10, 265, 150, 30);
 		txtQuantidadeKm.setInputVerifier(soNumeros);
 		panelDetalheLocao.add(txtQuantidadeKm);
 		
 		btnConcluir = new JButton(LocaleUtils.getLocaleView().getString("btn_concluir"));
+		btnConcluir.addActionListener(this);
 		btnConcluir.setBounds(660, 470, 100, 65);
 		getContentPane().add(btnConcluir);
 		
@@ -271,8 +274,6 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		
 		cartaoCreditoComponente = new CartaoCreditoComponente();
 		panelContainerPagamento.add(cartaoCreditoComponente);
-		
-		btnConcluir.setEnabled(cartaoCreditoComponente.isPagamentoAprovato());
 		
 		setBounds(10, 0, 790, 600);
 		setResizable(false);
@@ -351,8 +352,18 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 			}
 		}
 		
-		btnConcluir.setEnabled(cartaoCreditoComponente.isPagamentoAprovato());
-		btnConcluir.repaint();		
+		if (e.getSource() == btnConcluir) {
+			if (!cartaoCreditoComponente.isPagamentoAprovado()) {
+				JOptionPane.showMessageDialog(cbxSelecaoVeiculo, "O pagamento não foi confirmado tente novamente para concluir");
+				return;
+			}
+			
+			LocacaoControl locacaoControl = new LocacaoControl();
+			locacaoControl.fazerLocacao(getDadosLocacao());
+			
+			JOptionPane.showMessageDialog(null, "Locação efetuada com sucesso");
+		}
+			
 	}
 	
 	private void preencherCampos() {
@@ -452,5 +463,24 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	 */
 	private boolean liberarCampoPreencherKM() {
 		return liberaCampoKm;
+	}
+	
+	private Locacao getDadosLocacao() {
+		Locacao locacao = new Locacao();
+		locacao.setAgenciaDevolucao(listaAgencia.get(cbxAgenciaDevolucao.getSelectedIndex()).getIdAgencia());
+		locacao.setCliente(listaCliente.get(cbxSelecaoCliente.getSelectedIndex()));
+		locacao.setDataHoraLocacao(dataLocacao.getDate());
+		locacao.setDataHoraPrevistaDevolucao(dataDevolucao.getDate());
+		locacao.setIdVeiculo(listaVeiculo.get(cbxSelecaoVeiculo.getSelectedIndex()));
+		locacao.setKmLocacao(Double.parseDouble(txtQuantidadeKm.getText()));
+		locacao.setTipoTarifa(TipoTarifaEnum.getValueByDisplay((String) cbxTipoTarifa.getSelectedItem()));
+		
+		if (rdbtnCartoCredito.isSelected()) {
+			locacao.setPagamento(cartaoCreditoComponente.getDadoDoCartao());
+		} else {
+			locacao.setPagamento(cartaoDebitoComponente.getDadoDoCartao());
+		}
+		
+		return locacao;
 	}
 }
