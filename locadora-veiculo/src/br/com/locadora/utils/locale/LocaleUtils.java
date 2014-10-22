@@ -59,7 +59,7 @@ public class LocaleUtils {
 
 		try {
 			// Carrega o properties
-			inputStream = new FileInputStream(ClassLoader.getSystemResource("br/com/locadora/utils/locale/defaultLocale.properties").getFile());
+			inputStream = new FileInputStream(Constants.ABSOLUTEPATH + "defaultLocale.properties");
 			property.load(inputStream);
 
 		} catch (Exception e) {
@@ -80,7 +80,7 @@ public class LocaleUtils {
 		OutputStream outputStream = null;
 
 		try {
-			outputStream = new FileOutputStream(ClassLoader.getSystemResource("br/com/locadora/utils/locale/defaultLocale.properties").getFile());
+			outputStream = new FileOutputStream(Constants.ABSOLUTEPATH + "defaultLocale.properties");
 			property.setProperty("locale_default", localeId);
 
 			property.store(outputStream, null);
@@ -121,7 +121,7 @@ public class LocaleUtils {
 	public static ResourceBundle getLocaleView() {
 		// Carrega a internacionalização default caso não exista nenhum definida
 		if (SystemUtils.isNuloOuVazio(localeView)) {
-			carregarInternacionalizacao(carregarPorpertyDefault().getProperty("locale_default"));
+			carregarInternacionalizacao(carregarPorpertyDefault().getProperty(Constants.ABSOLUTEPATH + "locale_default"));
 		}
 		return localeView;
 	}
@@ -133,7 +133,7 @@ public class LocaleUtils {
 	public static ResourceBundle getLocaleMessages() {
 		// Carrega a internacionalização default caso não exista nenhum definida
 		if (SystemUtils.isNuloOuVazio(localeMessages)) {
-			carregarInternacionalizacao(carregarPorpertyDefault().getProperty("locale_default"));
+			carregarInternacionalizacao(carregarPorpertyDefault().getProperty(Constants.ABSOLUTEPATH + "locale_default"));
 		}
 		return localeMessages;
 	}

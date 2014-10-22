@@ -1,5 +1,6 @@
 package br.com.locadora.utils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Constants {
@@ -13,12 +14,14 @@ public class Constants {
 	/**
 	 * Caminho que contém os properties de internacionalização das views do sistema
 	 */
-	public static final String PATH_VIEWS_INTERNACIONALIZADA = "br/com/locadora/utils/locale/views/views";
+	public static final String PATH_VIEWS_INTERNACIONALIZADA = "views";
 	
 	/**
 	 * Caminho que contém os properties de internacionalização das mensagem do sistema
 	 */
-	public static final String PATH_MESSAGES_INTERNACIONALIZADA = "br/com/locadora/utils/locale/messages/messages";
+	public static final String PATH_MESSAGES_INTERNACIONALIZADA = "messages";
+	
+	public static final String ABSOLUTEPATH = File.listRoots()[0].getAbsolutePath() + File.separator + "locadora" + File.separator;
 	
 	/**
 	 * Lista de Unidades de Federação

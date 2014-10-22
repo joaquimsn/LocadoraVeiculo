@@ -1,12 +1,13 @@
 package br.com.locadora.model.connection;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
 
 import br.com.locadora.model.vo.ParametrosConexao;
+import br.com.locadora.utils.Constants;
 
 public class ConfiguracaoDinamnicaBD {
 
@@ -23,8 +24,8 @@ public class ConfiguracaoDinamnicaBD {
 		Properties prop = new Properties();
 
 		try {
-			FileReader reader = new FileReader("./src/br/com/locadora/model/connection/config.properties");
-			prop.load(reader);
+			FileInputStream inputStream = new FileInputStream(Constants.ABSOLUTEPATH + "config.properties");
+			prop.load(inputStream);
 
 			parametros.setUsuario(prop.getProperty("usuario"));
 			parametros.setSenha(prop.getProperty("senha"));
@@ -48,7 +49,7 @@ public class ConfiguracaoDinamnicaBD {
 		OutputStream outputStream = null;
 
 		try {
-			outputStream = new FileOutputStream("./src/br/com/locadora/model/connection/config.properties");
+			outputStream = new FileOutputStream(Constants.ABSOLUTEPATH + "config.properties");
 			property.setProperty("usuario", parametros.getUsuario());
 			property.setProperty("senha", parametros.getSenha());
 			property.setProperty("porta", parametros.getPorta());

@@ -63,7 +63,7 @@ public class CustomComboBox extends JPanel {
 
     /** Returns an ImageIcon, or null if the path was invalid. */
     protected static ImageIcon createImageIcon(String path) {
-            return new ImageIcon(ClassLoader.getSystemResource(path));
+    	return new ImageIcon(ClassLoader.getSystemResource(path));
     }
     
     @SuppressWarnings("rawtypes")

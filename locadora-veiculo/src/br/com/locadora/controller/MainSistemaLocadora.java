@@ -1,9 +1,12 @@
 package br.com.locadora.controller;
 
 
+import java.io.File;
+
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import br.com.locadora.utils.Constants;
 import br.com.locadora.view.LoginGUI;
 
 public class MainSistemaLocadora {
@@ -26,6 +29,7 @@ public class MainSistemaLocadora {
 		Autenticacao.descriptografar();
 		Autenticacao.ordenarListaLogins();
 		
+		 System.out.println("File system root: " + Constants.ABSOLUTEPATH);
 		new LoginGUI();
 	}	
 }

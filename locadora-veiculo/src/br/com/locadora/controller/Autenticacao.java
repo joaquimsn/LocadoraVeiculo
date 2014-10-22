@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import javax.swing.JOptionPane;
 
+import br.com.locadora.utils.Constants;
 import br.com.locadora.utils.IOUtils;
 
 
@@ -85,7 +86,7 @@ public class Autenticacao implements Serializable{
 		iOUtils = new IOUtils();
 		
 		// Armazena as informações que serão criptografados
-		String msgClaraString = iOUtils.lerFile(new File("usuario.txt"));
+		String msgClaraString = iOUtils.lerFile(new File(Constants.ABSOLUTEPATH + "usuario.txt"));
 		String msgCifradaString;
 		
 		byte[] msgClaraArrayByte = msgClaraString.getBytes();
@@ -95,16 +96,16 @@ public class Autenticacao implements Serializable{
 		
 		try {
 			// Gera a Chave criptografica AES simetrica e o nome do arquivo onde será armazenada
-			cryptoAES.geraChave(new File("chave"));
+			cryptoAES.geraChave(new File(Constants.ABSOLUTEPATH + "chave"));
 			
 			// Gera a cifra AES da mensagem dada, com a chave simetrica dada
-			cryptoAES.geraCifra(msgClaraArrayByte, new File("chave"));
+			cryptoAES.geraCifra(msgClaraArrayByte, new File(Constants.ABSOLUTEPATH + "chave"));
 			
 			// Converte o texto byte[] no equivalente String
 			msgCifradaString = (new String(cryptoAES.getTextoCifrado(), "ISO-8859-1"));
 			
 			// Grava a mensagem cifrada no arquivo definido
-			iOUtils.gravarArquivo(new File("controle-usuario.txt"), msgCifradaString);
+			iOUtils.gravarArquivo(new File(Constants.ABSOLUTEPATH + "controle-usuario.txt"), msgCifradaString);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,15 +126,15 @@ public class Autenticacao implements Serializable{
 		String msgDecifradaString = null;
 		
 		// Armazena os dados criptografados do arquivo
-		byte[] msgCifradaArrayByte = iOUtils.obterBytesPorFile(new File("controle-usuario.txt"));
+		byte[] msgCifradaArrayByte = iOUtils.obterBytesPorFile(new File(Constants.ABSOLUTEPATH + "controle-usuario.txt"));
 		
 		// Instancia um objeto da classe CryptoAES
-		cryptoAES = new CryptoAES();
-		
+			cryptoAES = new CryptoAES();
+			
 		try { 
 			
 			// Chave simetrica para descriptografar o arquivo
-			File chave = new File("chave");
+			File chave = new File(Constants.ABSOLUTEPATH + "chave");
 			
 			// Gera a decifra AES da mensagem dada, segundo a chave simetrica gerada
 			cryptoAES.geraDecifra(msgCifradaArrayByte, chave);

@@ -246,6 +246,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		panelDetalheLocao.add(lblKm);
 		
 		txtQuantidadeKm = new JTextField(10);
+		txtQuantidadeKm.setEnabled(liberarCampoPreencherKM());
 		txtQuantidadeKm.setEditable(liberarCampoPreencherKM());
 		txtQuantidadeKm.setBounds(10, 265, 150, 30);
 		txtQuantidadeKm.setInputVerifier(soNumeros);
@@ -345,7 +346,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		if (e.getSource() == cbxTipoTarifa) {
 			if (TipoTarifaEnum.getValueByDisplay((String) cbxTipoTarifa.getSelectedItem()) == TipoTarifaEnum.KM_LIVRE.getValue()) {
 				liberaCampoKm = false;
-				txtQuantidadeKm.setEditable(liberarCampoPreencherKM());
+				txtQuantidadeKm.setEnabled(liberarCampoPreencherKM());
 				txtQuantidadeKm.repaint();
 			}
 		}
