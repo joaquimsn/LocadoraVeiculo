@@ -1,5 +1,6 @@
 package br.com.locadora.controller;
 
+import br.com.locadora.model.DAO.PagamentoDAO;
 import br.com.locadora.model.entity.Pagamento;
 
 public class PagamentoControl {
@@ -17,5 +18,15 @@ public class PagamentoControl {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Persiste o pagamento passado por parâmetro
+	 * @author Joaquim Neto
+	 * @param pagamento
+	 */
+	public void salvarPagamento(Pagamento pagamento) {
+		PagamentoDAO pagamentoDAO = new PagamentoDAO();
+		pagamentoDAO.insert(pagamento);
 	}
 }

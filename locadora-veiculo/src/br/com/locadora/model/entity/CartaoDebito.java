@@ -4,6 +4,7 @@ public class CartaoDebito extends Pagamento {
 	private int agencia;
 	private int tipoConta;
 	private String telefone;
+	private String numeroConta;
 	
 	public CartaoDebito(){
 		super(0.0, "", "");
@@ -53,6 +54,20 @@ public class CartaoDebito extends Pagamento {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	/**
+	 * @return the numeroConta
+	 */
+	public String getNumeroConta() {
+		return numeroConta;
+	}
+
+	/**
+	 * @param numeroConta the numeroConta to set
+	 */
+	public void setNumeroConta(String numeroConta) {
+		this.numeroConta = numeroConta;
+	}
+
 	public void validar() {
 	}
 	public boolean enviar() {

@@ -84,7 +84,7 @@ CREATE TABLE pagamento (
  id_pagamento INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
  tipo VARCHAR(50),
  nome_titular VARCHAR(100),
- cpf VARCHAR(11),
+ cpf VARCHAR(14),
  data_pagamento DATE
 );
 
