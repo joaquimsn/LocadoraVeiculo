@@ -21,7 +21,7 @@ public class Constants {
 	 */
 	public static final String PATH_MESSAGES_INTERNACIONALIZADA = "messages";
 	
-	public static final String ABSOLUTEPATH = File.listRoots()[0].getAbsolutePath() + File.separator + "locadora" + File.separator;
+	public static final String ABSOLUTEPATH = File.listRoots()[0].getAbsolutePath() + "locadora" + File.separator;
 	
 	/**
 	 * Lista de Unidades de Federação

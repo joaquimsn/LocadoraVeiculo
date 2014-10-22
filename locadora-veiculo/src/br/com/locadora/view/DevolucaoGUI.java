@@ -1,11 +1,15 @@
 package br.com.locadora.view;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
@@ -13,6 +17,12 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import br.com.locadora.controller.ClienteControl;
+import br.com.locadora.model.DAO.LocacaoDAO;
+import br.com.locadora.model.entity.Devolucao;
+import br.com.locadora.model.entity.Locacao;
+import br.com.locadora.model.enums.ParametroPesquisaClienteEnum;
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.CartaoCreditoComponente;
 import br.com.locadora.view.componentes.CartaoDebitoComponente;
@@ -117,10 +127,30 @@ public class DevolucaoGUI extends JDialog {
 		btnCancelar.setBounds(660, 505, 100, 65);
 		getContentPane().add(btnCancelar);
 		
+		/**Eventos
+		 * 
+		 * 
+		 */
+		
+		//Pesquisa a locação
+		btnConsultar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LocacaoDAO locacaoDAO = new LocacaoDAO();
+				Locacao locacao = locacaoDAO.select(Integer.parseInt(txtConsultaLocacao.getText()));
+				if (locacao.getId() != 0){
+				}else{
+					JOptionPane.showMessageDialog(txtConsultaLocacao, LocaleUtils.getLocaleMessages().getString("falha_locacao_naoencontrada"));
+				}
+			}
+		});
+		
 		setBounds(10, 0, 790, 630);
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
+		
+		
 	}
 }
