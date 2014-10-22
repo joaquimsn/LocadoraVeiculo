@@ -3,6 +3,7 @@ package br.com.locadora.model.DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.locadora.model.connection.MysqlConnect;
@@ -54,28 +55,27 @@ public class ClienteDAO extends MysqlConnect{
 	public boolean update(Cliente cliente) {
 		PreparedStatement sqlSt;
 		try{
-			String sql = "update cliente"
-					+ " set"
-					+ "nome=?,"
-					+ "data_nascimento=?,"
-					+ "cpf=?,"
-					+ "rg=?,"
-					+ "cnh=?,"
-					+ "validadecnh=?,"
-					+ "estado_emissor=?,"
-					+ "genero=?,"
-					+ "logradouro=?,"
-					+ "bairro=?,"
-					+ "numero=?,"
-					+ "cep=?,"
-					+ "cidade=?,"
-					+ "uf=?,"
-					+ "telefone = ?,"
-					+ "email = ?,"
-					+ "id_agencia = ?,"
-					+ "data_manutencao = ?,"
-					+ "ativo = ? "
-					+ " where id_cliente=?";
+			String sql = "UPDATE cliente " +
+							"SET " +
+								"nome = ?," +
+								"data_nascimento = ?," +
+								"cpf = ?," +
+								"rg = ?," +
+								"cnh = ?," +
+								"validade_cnh = ?," +
+								"estado_emissor = ?," +
+								"genero = ?," +
+								"logradouro = ?," +
+								"bairro = ?," +
+								"numero = ?," +
+								"cep = ?," +
+								"cidade = ?," +
+								"uf = ?," +
+								"telefone = ?," +
+								"email = ?," +
+								"data_manutencao = ?," +
+								"ativo = ?" +
+							" WHERE id_cliente = ?";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1,  cliente.getNome());
 			sqlSt.setDate(2, SystemUtils.dataConverter(cliente.getDataNascimento()));
@@ -93,10 +93,9 @@ public class ClienteDAO extends MysqlConnect{
 			sqlSt.setString(14, cliente.getUf());
 			sqlSt.setString(15, cliente.getTelefone());
 			sqlSt.setString(16, cliente.getEmail());
-			sqlSt.setInt(17, cliente.getIdAgencia());
-			sqlSt.setDate(18, SystemUtils.dataConverter(cliente.getDataManutencao()));
-			sqlSt.setBoolean(19, cliente.isAtivo());
-			sqlSt.setInt(20, cliente.getId());
+			sqlSt.setDate(17, SystemUtils.dataConverter(new Date(System.currentTimeMillis())));
+			sqlSt.setBoolean(18, cliente.isAtivo());
+			sqlSt.setInt(19, cliente.getId());
 			sqlSt.execute();
 			return true;
 		}catch(Exception selectError){
