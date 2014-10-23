@@ -31,6 +31,26 @@ public class PagamentoDAO extends MysqlConnect{
 			return null;
 		}
 	}
+	
+	public int buscarIdPagamento(Pagamento pagamento) {
+		PreparedStatement sqlSt;
+		ResultSet resultSet;
+		try{
+			String sql = "SELECT id_pagamento FROM pagamento WHERE cpf = ? AND data_pagamento = ?";
+			sqlSt = conn.prepareStatement(sql);
+			sqlSt.setString(1, pagamento.getCpf());
+			sqlSt.setDate(2, SystemUtils.dataConverter(pagamento.getDataPagamento()));;
+			resultSet = sqlSt.executeQuery();
+			
+			int id = 0;
+			if (resultSet.next()){				
+				id = resultSet.getInt(1);
+			}
+			return id;
+		}catch(Exception selectError){
+			return 0;
+		}
+	}
 
 	public boolean update(Pagamento pagamento) {
 		PreparedStatement sqlSt;
@@ -70,14 +90,18 @@ public class PagamentoDAO extends MysqlConnect{
 							"(tipo," +
 							"nome_titular," +
 							"cpf," +
-							"data_pagamento)" +
+							"data_pagamento," + 
+							"valor," +
+							"id_locacao) " +
 						"VALUES" +
-							"(?, ?, ?, ?)";
+							"(?, ?, ?, ?, ?, ?)";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, pagamento.getTipoPagamento());
 			sqlSt.setString(2, pagamento.getTitular());
 			sqlSt.setString(3, pagamento.getCpf());
-			sqlSt.setDate(4, SystemUtils.dataConverter(new java.util.Date()));
+			sqlSt.setDate(4, SystemUtils.dataConverter(pagamento.getDataPagamento()));
+			sqlSt.setDouble(5, pagamento.getValor());
+			sqlSt.setInt(6, pagamento.getIdLocacao());
 			sqlSt.execute();
 			return true;
 		}catch(Exception e){
@@ -85,7 +109,7 @@ public class PagamentoDAO extends MysqlConnect{
 			return false;
 		}
 	}
-
+	
 	public List<Pagamento> selectByCliente(Cliente cliente) {
 		return null;
 	}

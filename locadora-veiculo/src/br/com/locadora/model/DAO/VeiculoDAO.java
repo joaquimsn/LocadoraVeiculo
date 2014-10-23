@@ -21,26 +21,30 @@ public class VeiculoDAO extends MysqlConnect{
 			resultSet = sqlSt.executeQuery();
 			
 			Veiculo veiculo = new Veiculo();
-
-			veiculo.setId(resultSet.getInt(1));
-			veiculo.setModelo(resultSet.getString(2));
-			veiculo.setFabricante(resultSet.getString(3));
-			veiculo.setImagem(resultSet.getString(4));
-			veiculo.setAno(Integer.parseInt(resultSet.getDate(5).toString()));
-			veiculo.setGrupo(resultSet.getInt(6));
-			veiculo.setAcessorio(resultSet.getInt(7));
-			veiculo.setChassi(resultSet.getString(8));
-			veiculo.setPlaca(resultSet.getString(9));
-			veiculo.setCidade(resultSet.getString(10));
-			veiculo.setUf(resultSet.getString(11));
-			veiculo.setKmRodado(resultSet.getDouble(12));
-			veiculo.setPrecoKmLivre(resultSet.getDouble(13));
-			veiculo.setPrecoKmControlado(resultSet.getDouble(14));
-			veiculo.setStatus(resultSet.getInt(15));
-			veiculo.setIdAgencia(resultSet.getInt(16));
+			
+			if (resultSet.next()) {
+				
+				veiculo.setId(resultSet.getInt(1));
+				veiculo.setModelo(resultSet.getString(2));
+				veiculo.setFabricante(resultSet.getString(3));
+				veiculo.setImagem(resultSet.getString(4));
+				veiculo.setAno(resultSet.getInt(5));
+				veiculo.setGrupo(resultSet.getInt(6));
+				veiculo.setAcessorio(resultSet.getInt(7));
+				veiculo.setChassi(resultSet.getString(8));
+				veiculo.setPlaca(resultSet.getString(9));
+				veiculo.setCidade(resultSet.getString(10));
+				veiculo.setUf(resultSet.getString(11));
+				veiculo.setKmRodado(resultSet.getDouble(12));
+				veiculo.setPrecoKmLivre(resultSet.getDouble(13));
+				veiculo.setPrecoKmControlado(resultSet.getDouble(14));
+				veiculo.setStatus(resultSet.getInt(15));
+				veiculo.setIdAgencia(resultSet.getInt(16));
+			}
 			
 			return veiculo;
 		}catch(Exception selectError){
+			selectError.printStackTrace();
 			return null;
 		}
 	}
@@ -103,8 +107,8 @@ public class VeiculoDAO extends MysqlConnect{
 	public boolean insert(Veiculo veiculo) {
 		PreparedStatement sqlSt;
 		try{
-			String sql = "INSERT INTO veiculo" +
-							" modelo," +
+			String sql = "INSERT INTO veiculo " +
+							"(modelo," +
 							"fabricante," +
 							"imagem," +
 							"ano," +
@@ -121,7 +125,7 @@ public class VeiculoDAO extends MysqlConnect{
 							"id_agencia," +
 							"id_funcionario," +
 							"data_cadastro," + 
-							"ativo)" +
+							"ativo) " +
 						"VALUES" +
 							"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			

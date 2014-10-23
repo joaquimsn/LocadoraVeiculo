@@ -1,9 +1,14 @@
 package br.com.locadora.model.entity;
+
+import br.com.locadora.utils.annotation.Required;
+
 public class CartaoDebito extends Pagamento {
 	private int banco;
 	private int agencia;
 	private int tipoConta;
+	@Required(label = "Telefone", minimo = 8)
 	private String telefone;
+	@Required(label = "Número da Conta", minimo = 2)
 	private String numeroConta;
 	
 	public CartaoDebito(){

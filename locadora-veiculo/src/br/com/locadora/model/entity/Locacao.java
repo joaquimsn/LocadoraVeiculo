@@ -13,7 +13,6 @@ public class Locacao {
 	private double kmDevolucao;
 	private double valor;
 	private double valorAcrescimo;
-	private String tipoPagamento;
 	private int status;
 	private Veiculo veiculo;
 	private Pagamento pagamento;
@@ -107,14 +106,6 @@ public class Locacao {
 
 	public void setValorAcrescimo(double valorAcrescimo) {
 		this.valorAcrescimo = valorAcrescimo;
-	}
-
-	public String getTipoPagamento() {
-		return tipoPagamento;
-	}
-
-	public void setTipoPagamento(String tipoPagamento) {
-		this.tipoPagamento = tipoPagamento;
 	}
 
 	/**

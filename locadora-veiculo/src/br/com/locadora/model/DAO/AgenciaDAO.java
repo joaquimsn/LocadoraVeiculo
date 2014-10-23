@@ -87,7 +87,7 @@ public class AgenciaDAO extends MysqlConnect {
 	public boolean insert(Agencia agencia) {
 		PreparedStatement sqlSt;
 		try {
-			String sql = "INSERT INTO agencia" +
+			String sql = "INSERT INTO agencia " +
 							"(razao_social," +
 							"fantasia," +
 							"cnpj," +

@@ -3,7 +3,6 @@ package br.com.locadora.view;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -17,15 +16,15 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import br.com.locadora.controller.ClienteControl;
+import br.com.locadora.controller.DevolucaoControl;
 import br.com.locadora.model.DAO.LocacaoDAO;
-import br.com.locadora.model.entity.Devolucao;
+import br.com.locadora.model.entity.CartaoDebito;
 import br.com.locadora.model.entity.Locacao;
-import br.com.locadora.model.enums.ParametroPesquisaClienteEnum;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.CartaoCreditoComponente;
 import br.com.locadora.view.componentes.CartaoDebitoComponente;
+import br.com.locadora.view.componentes.InputSoNumeros;
 
 public class DevolucaoGUI extends JDialog {
 	private static final long serialVersionUID = 2391312642421242922L;
@@ -53,6 +52,8 @@ public class DevolucaoGUI extends JDialog {
 	private JButton btnCancelar;
 	private JTextArea txtDetalheLocacao;
 	
+	private Locacao locacao;
+	
 	public DevolucaoGUI() {
 		setTitle(LocaleUtils.getLocaleView().getString("titulo_tela_devolucao"));
 		inicializar();
@@ -62,6 +63,9 @@ public class DevolucaoGUI extends JDialog {
 	 * @author Joaquim Neto
 	 */
 	private void inicializar() {
+		InputSoNumeros soNumeros = new InputSoNumeros();
+		
+		
 		getContentPane().setLayout(null);
 		panelDetalheLocacao = new JPanel();
 		
@@ -82,6 +86,7 @@ public class DevolucaoGUI extends JDialog {
 		getContentPane().add(lblConsultarLocao);
 		
 		txtConsultaLocacao = new JTextField(10);
+		txtConsultaLocacao.setInputVerifier(soNumeros);
 		txtConsultaLocacao.setBounds(30, 40, 150, 30);
 		getContentPane().add(txtConsultaLocacao);
 		
@@ -111,6 +116,7 @@ public class DevolucaoGUI extends JDialog {
 		getContentPane().add(lblValorAPagar);
 		
 		txtValorPagar = new JTextField(10);
+		txtValorPagar.setBackground(Color.GREEN);
 		txtValorPagar.setEditable(false);
 		txtValorPagar.setBounds(30, 320, 150, 30);
 		getContentPane().add(txtValorPagar);
@@ -127,20 +133,34 @@ public class DevolucaoGUI extends JDialog {
 		btnCancelar.setBounds(660, 505, 100, 65);
 		getContentPane().add(btnCancelar);
 		
-		/**Eventos
-		 * 
-		 * 
+		/**
+		 * Eventos
+		 *
 		 */
 		
 		//Pesquisa a locação
 		btnConsultar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				LocacaoDAO locacaoDAO = new LocacaoDAO();
-				Locacao locacao = locacaoDAO.select(Integer.parseInt(txtConsultaLocacao.getText()));
-				if (locacao.getId() != 0){
+				String idLocacao = txtConsultaLocacao.getText();
+				if (idLocacao.length() > 0){
+					DevolucaoControl devolucaoControl = new DevolucaoControl();
+					locacao = devolucaoControl.buscaLocacaoPorCodigo(Integer.parseInt(idLocacao));
+					preencherCampos(locacao);
+				}
+			}
+		});
+		
+		btnConcluir.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if ((locacao != null) && (SystemUtils.isCamposObrigatoriosPreenchidos(cartaoDebitoComponente.getDadoDoCartao()))){
+					DevolucaoControl devolucaoControl = new DevolucaoControl();
+					locacao.setPagamento(cartaoDebitoComponente.getDadoDoCartao());
+					devolucaoControl.fazerDevolucao(locacao);
+					limparCampos();
 				}else{
-					JOptionPane.showMessageDialog(txtConsultaLocacao, LocaleUtils.getLocaleMessages().getString("falha_locacao_naoencontrada"));
+					JOptionPane.showMessageDialog(txtDetalheLocacao, "Pesquise uma locação antes de continuar");
 				}
 			}
 		});
@@ -153,4 +173,28 @@ public class DevolucaoGUI extends JDialog {
 		
 		
 	}
+	
+	private Locacao obterLocacao(int id){
+		DevolucaoControl devolucaoControl = new DevolucaoControl();
+		return devolucaoControl.buscaLocacaoPorCodigo(id);
+	}
+	
+	private void preencherCampos(Locacao locacao){
+		StringBuilder info = new StringBuilder();
+		if (locacao != null){
+			info.append("Nome do cliente: ").append(locacao.getCliente().getNome());
+			info.append("\nVeículo locado: ").append(locacao.getVeiculo().getPlaca());
+			info.append("\nData da locação: ").append(SystemUtils.formatarDataParaTela(locacao.getDataHoraLocacao().toString()));
+			info.append("\nData prevista de devolução: ").append(SystemUtils.formatarDataParaTela(locacao.getDataHoraPrevistaDevolucao().toString()));
+			txtDetalheLocacao.setText(info.toString());
+			txtValorPagar.setText(String.valueOf(locacao.getValorAcrescimo()));
+		}
+	}
+	
+	private void limparCampos(){
+		txtConsultaLocacao.setText("");
+		txtDetalheLocacao.setText("");
+		txtValorPagar.setText("");
+	}
+	
 }

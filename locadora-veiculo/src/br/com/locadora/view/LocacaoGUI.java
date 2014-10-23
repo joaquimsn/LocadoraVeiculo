@@ -2,7 +2,6 @@ package br.com.locadora.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
@@ -37,7 +36,6 @@ import br.com.locadora.utils.locale.LocaleUtils;
 import br.com.locadora.view.componentes.CartaoCreditoComponente;
 import br.com.locadora.view.componentes.CartaoDebitoComponente;
 import br.com.locadora.view.componentes.InputSoNumeros;
-import br.com.locadora.view.componentes.InputSoTexto;
 import br.com.locadora.view.componentes.InputSoTextoNumeros;
 
 import com.toedter.calendar.JDateChooser;
@@ -94,6 +92,7 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	private List<Agencia> listaAgencia;
 
 	private boolean liberaCampoKm;
+	private Locacao locacaoAtual;
 	
 	public LocacaoGUI() {
 		liberaCampoKm = true;
@@ -110,12 +109,10 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		// InputVerifier para validações genéricas dos campos
 		InputSoNumeros soNumeros = new InputSoNumeros();
 		InputSoTextoNumeros soTextoNumeros = new InputSoTextoNumeros();
-		InputSoTexto soTexto = new InputSoTexto();
 		
-		preencherCampos();
+		inicializarLista();
 		
 		getContentPane().setLayout(null);
-		Container container = getContentPane();
 		
 		panelLocacao = new JPanel();
 		panelLocacao.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1, true), LocaleUtils.getLocaleView().getString("titulo_dado_locacao"), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 128)));
@@ -352,21 +349,26 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 			}
 		}
 		
+		// Faz a locação
 		if (e.getSource() == btnConcluir) {
+			
 			if (!cartaoCreditoComponente.isPagamentoAprovado()) {
 				JOptionPane.showMessageDialog(cbxSelecaoVeiculo, "O pagamento não foi confirmado tente novamente para concluir");
 				return;
 			}
 			
 			LocacaoControl locacaoControl = new LocacaoControl();
-			locacaoControl.fazerLocacao(getDadosLocacao());
+			locacaoAtual = locacaoControl.fazerLocacao(getDadosLocacao());
 			
-			JOptionPane.showMessageDialog(null, "Locação efetuada com sucesso");
+			JOptionPane.showMessageDialog(null, "Locação efetuada com sucesso \n" + "Código da locação: " + locacaoAtual.getId());
+			
 		}
 			
 	}
 	
-	private void preencherCampos() {
+	private void inicializarLista() {
+		locacaoAtual = new Locacao();
+		
 		AgenciaControl agenciaControl = new AgenciaControl();
 		ClienteControl clienteControl = new ClienteControl();
 		VeiculoControl veiculoControl = new VeiculoControl();
@@ -466,21 +468,21 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 	}
 	
 	private Locacao getDadosLocacao() {
-		Locacao locacao = new Locacao();
-		locacao.setAgenciaDevolucao(listaAgencia.get(cbxAgenciaDevolucao.getSelectedIndex()).getIdAgencia());
-		locacao.setCliente(listaCliente.get(cbxSelecaoCliente.getSelectedIndex()));
-		locacao.setDataHoraLocacao(dataLocacao.getDate());
-		locacao.setDataHoraPrevistaDevolucao(dataDevolucao.getDate());
-		locacao.setIdVeiculo(listaVeiculo.get(cbxSelecaoVeiculo.getSelectedIndex()));
-		locacao.setKmLocacao(Double.parseDouble(txtQuantidadeKm.getText()));
-		locacao.setTipoTarifa(TipoTarifaEnum.getValueByDisplay((String) cbxTipoTarifa.getSelectedItem()));
+		locacaoAtual = new Locacao();
+		locacaoAtual.setAgenciaDevolucao(listaAgencia.get(cbxAgenciaDevolucao.getSelectedIndex()).getIdAgencia());
+		locacaoAtual.setCliente(listaCliente.get(cbxSelecaoCliente.getSelectedIndex()));
+		locacaoAtual.setDataHoraLocacao(dataLocacao.getDate());
+		locacaoAtual.setDataHoraPrevistaDevolucao(dataDevolucao.getDate());
+		locacaoAtual.setIdVeiculo(listaVeiculo.get(cbxSelecaoVeiculo.getSelectedIndex()));
+		locacaoAtual.setKmLocacao(Double.parseDouble(txtQuantidadeKm.getText()));
+		locacaoAtual.setTipoTarifa(TipoTarifaEnum.getValueByDisplay((String) cbxTipoTarifa.getSelectedItem()));
 		
 		if (rdbtnCartoCredito.isSelected()) {
-			locacao.setPagamento(cartaoCreditoComponente.getDadoDoCartao());
+			locacaoAtual.setPagamento(cartaoCreditoComponente.getDadoDoCartao());
 		} else {
-			locacao.setPagamento(cartaoDebitoComponente.getDadoDoCartao());
+			locacaoAtual.setPagamento(cartaoDebitoComponente.getDadoDoCartao());
 		}
 		
-		return locacao;
+		return locacaoAtual;
 	}
 }

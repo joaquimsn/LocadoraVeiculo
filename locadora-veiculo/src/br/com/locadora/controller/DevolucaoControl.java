@@ -2,6 +2,7 @@
 package br.com.locadora.controller;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import br.com.locadora.model.DAO.LocacaoDAO;
@@ -13,13 +14,37 @@ import br.com.locadora.model.enums.StatusVeiculoEnum;
 import br.com.locadora.model.enums.TipoTarifaEnum;
 import br.com.locadora.utils.SystemUtils;
 
-public class LocacaoControl implements Serializable{
+public class DevolucaoControl implements Serializable{
 	private static final long serialVersionUID = 4056318420856682823L;
 	
 	private LocacaoDAO locacaoDAO;
 	
-	public LocacaoControl() {
+	public DevolucaoControl() {
 		locacaoDAO = new LocacaoDAO();
+	}
+	
+	
+	public Locacao buscaLocacaoPorCodigo(int id){
+		ClienteControl clienteControl = new ClienteControl();
+		VeiculoControl veiculoControl = new VeiculoControl();
+		
+		locacaoDAO = new LocacaoDAO();
+		Locacao locacao = locacaoDAO.select(id);
+		double valorAcrescimo = 0.0;
+		if (locacao != null){
+			if (locacao.getAgenciaDevolucao() != SystemUtils.getAgenciaSelecionado().getIdAgencia()){
+				valorAcrescimo += 30;
+			}
+			if (locacao.getDataHoraPrevistaDevolucao().compareTo(new Date()) > 0){
+				valorAcrescimo += 100;
+			}
+			locacao.setValorAcrescimo(valorAcrescimo);
+			locacao.setIdVeiculo(veiculoControl.buscarPorId(locacao.getVeiculo().getId()));
+			locacao.setCliente(clienteControl.buscarPorId(locacao.getCliente().getId()));
+			
+		}
+		
+		return locacao;
 	}
 	
 	/**
@@ -28,30 +53,23 @@ public class LocacaoControl implements Serializable{
 	 * @param locacao
 	 * @return Objeto locação com os dados validados
 	 */
-	public Locacao fazerLocacao(Locacao locacao) {
-		double valorLocacao;
+	public Locacao fazerDevolucao(Locacao locacao) {
 		
-		if (locacao.getTipoTarifa() == TipoTarifaEnum.KM_CONTROLADO.getValue()) {
-			valorLocacao = locacao.getVeiculo().getPrecoKmControlado() * locacao.getKmLocacao();
-		} else {
-			valorLocacao = locacao.getVeiculo().getPrecoKmLivre() * locacao.getKmLocacao();
-		}
+		// Altera o status da locação
+		locacao.setStatus(StatusLocacaoEnum.FECHADA.getValue());
+		locacao.setDataHoraDevolucao(new Date());
 		
-		// Atribui o valor da locação ao objeto locação
-		locacao.setValor(valorLocacao);
 		
-		// Persiste a locao
-		salvar(locacao);
+		alterar(locacao);
 		
 		// Persiste o pagamento
 		PagamentoControl pagamentoControl = new PagamentoControl();
 		Pagamento pagamento = locacao.getPagamento();
 		pagamento.setIdLocacao(buscarIdLocacao(locacao));
-		pagamento.setValor(valorLocacao);
 		pagamento.setValor(locacao.getValor());
 		
 		// Atribui o id da locação realizada ao pagamento
-		pagamento.setIdLocacao(buscarIdLocacao(locacao));
+		pagamento.setIdLocacao(locacao.getId());
 		
 		// Presiste o pagamento
 		pagamentoControl.salvarPagamento(locacao.getPagamento());
@@ -59,7 +77,7 @@ public class LocacaoControl implements Serializable{
 		// Altera o status do veículo para locado
 		VeiculoControl veiculoControl = new VeiculoControl();
 		Veiculo veiculo = locacao.getVeiculo();
-		veiculo.setStatus(StatusVeiculoEnum.LOCADO.getValue());
+		veiculo.setStatus(StatusVeiculoEnum.DISPONIVEL.getValue());
 		veiculoControl.salvarOuAlterar(veiculo);
 				
 		return locacao;
@@ -68,7 +86,7 @@ public class LocacaoControl implements Serializable{
 	/**
 	 * Persiste uma locação na base de dados
 	 * @author Joaquim Neto
-	 * @param locacao Objeto Locação
+	 * @param devolucaoObjeto Locação
 	 * @return <b>true</b> Se for cadastrado com sucesso
 	 */
 	private boolean salvar(Locacao locacao) {
@@ -84,7 +102,7 @@ public class LocacaoControl implements Serializable{
 	/**
 	 * Altera uma locação já persistida na base de dados
 	 * @author Joaquim Neto
-	 * @param locacao Objeto Locação
+	 * @param devolucaoObjeto Locação
 	 * @return <b>true</b> Se for alterado com sucesso
 	 */
 	private boolean alterar(Locacao locacao) {
@@ -140,7 +158,7 @@ public class LocacaoControl implements Serializable{
 			condicao = " WHERE ativo = 1";
 			break;
 		case 2:
-			condicao = " WHERE " + "id_locacao  = " + valor + " AND ativo = 1";
+			condicao = " WHERE " + "id_devolucao = " + valor + " AND ativo = 1";
 			break;
 			
 		default:

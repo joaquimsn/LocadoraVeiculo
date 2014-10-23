@@ -19,26 +19,6 @@ public class CartaoCredito extends Pagamento {
 		setCodigoSeguranca(0);
 	}
 
-	public CartaoCredito(double valor, String cpf, String titular) {
-		super(valor, cpf, titular);
-	}
-
-	public CartaoCredito(String numeroCartao, char tipoCartao, Date validade, int codigoSeguranca) {
-		setNumeroCartao(numeroCartao);
-		setTipoCartao(tipoCartao);
-		setValidade(validade);
-		setCodigoSeguranca(codigoSeguranca);
-	}
-
-	public CartaoCredito(double valor, String cpf, String titular, String numeroCartao, char tipoCartao, Date validade,
-			int codigoSeguranca) {
-		super(valor, cpf, titular);
-		setNumeroCartao(numeroCartao);
-		setTipoCartao(tipoCartao);
-		setValidade(validade);
-		setCodigoSeguranca(codigoSeguranca);
-	}
-
 	public String getNumeroCartao() {
 		return numeroCartao;
 	}

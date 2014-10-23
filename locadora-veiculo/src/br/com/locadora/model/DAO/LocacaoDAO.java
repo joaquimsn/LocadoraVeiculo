@@ -1,16 +1,52 @@
 package br.com.locadora.model.DAO;
-import br.com.locadora.model.entity.*;
-
+import java.beans.FeatureDescriptor;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.locadora.model.connection.MysqlConnect;
+import br.com.locadora.model.entity.Agencia;
+import br.com.locadora.model.entity.Cliente;
+import br.com.locadora.model.entity.Locacao;
+import br.com.locadora.model.entity.Pagamento;
+import br.com.locadora.model.entity.Veiculo;
+import br.com.locadora.utils.SystemUtils;
 
 public class LocacaoDAO extends MysqlConnect{
+	
+	public int buscarIdLocacao(Locacao locacao) {
+		PreparedStatement sqlSt;
+		ResultSet resultSet;
+		try{
+			String sql = "SELECT id_locacao FROM locacao WHERE id_veiculo = ? AND id_funcionario = ? AND id_agencia = ?" +
+					" AND id_cliente = ? AND valor = ? AND data_hora_locacao = ?";
+			
+			sqlSt = conn.prepareStatement(sql);
+			sqlSt.setInt(1, locacao.getVeiculo().getId());
+			sqlSt.setInt(2, locacao.getIdFuncionario());
+			sqlSt.setInt(3, locacao.getIdAgencia());
+			sqlSt.setInt(4, locacao.getCliente().getId());
+			sqlSt.setDouble(5, locacao.getValor());
+			sqlSt.setDate(6, SystemUtils.dataConverter(locacao.getDataHoraLocacao()));
 
+			resultSet = sqlSt.executeQuery();
+			
+			int id = 0;
+			if (resultSet.next()){				
+				id = resultSet.getInt(1);
+			}
+			return id;
+		}catch(Exception selectError){
+			selectError.printStackTrace();
+			
+			return 0;
+		}  finally{
+			closeConnection();
+		}
+	}
+	
 	public Locacao select(int id) {
 		PreparedStatement sqlSt;
 		ResultSet resultSet;
@@ -30,28 +66,27 @@ public class LocacaoDAO extends MysqlConnect{
 				resultado.setKmLocacao(resultSet.getDouble(7));
 				resultado.setKmDevolucao(resultSet.getDouble(8));
 				resultado.setValor(resultSet.getDouble(9));
-				resultado.setTipoPagamento(resultSet.getString(10));
-				resultado.setValorAcrescimo(resultSet.getDouble(11));
-				resultado.setStatus(resultSet.getInt(12));
+				resultado.setValorAcrescimo(resultSet.getDouble(10));
+				resultado.setStatus(resultSet.getInt(11));
 				Veiculo veiculo = new Veiculo();
-				veiculo.setId(resultSet.getInt(13));
+				veiculo.setId(resultSet.getInt(12));
 				resultado.setIdVeiculo(veiculo);
 				Cliente cliente = new Cliente();
-				cliente.setId(resultSet.getInt(14));
+				cliente.setId(resultSet.getInt(13));
 				resultado.setCliente(cliente);
 				Pagamento pagamento = new Pagamento();
-				pagamento.setId(resultSet.getInt(15));
+				pagamento.setId(resultSet.getInt(14));
 				resultado.setPagamento(pagamento);
-				resultado.setIdFuncionario(resultSet.getInt(16));
+				resultado.setIdFuncionario(resultSet.getInt(15));
 				Agencia agencia = new Agencia();
-				agencia.setIdAgencia(resultSet.getInt(17));
+				agencia.setIdAgencia(resultSet.getInt(16));
 				resultado.setIdAgencia(agencia.getIdAgencia());				
 			}
 			return resultado;
 		}catch(Exception selectError){
 			selectError.printStackTrace();
 			return null;
-		}finally{
+		} finally{
 			closeConnection();
 		}
 	}
@@ -69,7 +104,6 @@ public class LocacaoDAO extends MysqlConnect{
 							"km_locacao = ?," +
 							"km_devolucao = ?," +
 							"valor = ?," +
-							"tipo_pagamento = ?," +
 							"valor_acrescimo = ?," +
 							"status = ?," +
 							"id_veiculo = ?," +
@@ -87,15 +121,14 @@ public class LocacaoDAO extends MysqlConnect{
 			sqlSt.setDouble(6, locacao.getKmLocacao());
 			sqlSt.setDouble(7, locacao.getKmDevolucao());
 			sqlSt.setDouble(8, locacao.getValor());
-			sqlSt.setString(9, locacao.getTipoPagamento());
-			sqlSt.setDouble(10, locacao.getValorAcrescimo());
-			sqlSt.setInt(11, locacao.getStatus());
-			sqlSt.setInt(12, locacao.getVeiculo().getId());
-			sqlSt.setInt(13, locacao.getCliente().getId());
-			sqlSt.setInt(14, locacao.getPagamento().getId());
-			sqlSt.setInt(15, locacao.getIdFuncionario());
-			sqlSt.setInt(16, locacao.getIdAgencia());
-			sqlSt.setInt(17, locacao.getId());
+			sqlSt.setDouble(9, locacao.getValorAcrescimo());
+			sqlSt.setInt(10, locacao.getStatus());
+			sqlSt.setInt(11, locacao.getVeiculo().getId());
+			sqlSt.setInt(12, locacao.getCliente().getId());
+			sqlSt.setInt(13, locacao.getPagamento().getId());
+			sqlSt.setInt(14, locacao.getIdFuncionario());
+			sqlSt.setInt(15, locacao.getIdAgencia());
+			sqlSt.setInt(16, locacao.getId());
 			sqlSt.executeQuery();
 			return true;
 		}catch(Exception updateError){
@@ -116,7 +149,6 @@ public class LocacaoDAO extends MysqlConnect{
 							"km_locacao," +
 							"km_devolucao," +
 							"valor," +
-							"tipo_pagamento," +
 							"valor_acrescimo," +
 							"status," +
 							"id_veiculo," +
@@ -125,7 +157,7 @@ public class LocacaoDAO extends MysqlConnect{
 							"id_funcionario," +
 							"id_agencia)" +
 						"VALUES" +
-							"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+							"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setDate(1, new  java.sql.Date(locacao.getDataHoraLocacao().getTime()));
 			sqlSt.setDate(2, new java.sql.Date(locacao.getDataHoraPrevistaDevolucao().getTime()));
@@ -134,14 +166,13 @@ public class LocacaoDAO extends MysqlConnect{
 			sqlSt.setDouble(5, locacao.getKmLocacao());
 			sqlSt.setDouble(6, locacao.getKmDevolucao());
 			sqlSt.setDouble(7, locacao.getValor());
-			sqlSt.setString(8, locacao.getTipoPagamento());
-			sqlSt.setDouble(9, locacao.getValorAcrescimo());
-			sqlSt.setInt(10, locacao.getStatus());
-			sqlSt.setInt(11, locacao.getVeiculo().getId());
-			sqlSt.setInt(12, locacao.getCliente().getId());
-			sqlSt.setInt(13, locacao.getPagamento().getId());
-			sqlSt.setInt(14, locacao.getIdFuncionario());
-			sqlSt.setInt(15, locacao.getIdAgencia());
+			sqlSt.setDouble(8, locacao.getValorAcrescimo());
+			sqlSt.setInt(9, locacao.getStatus());
+			sqlSt.setInt(10, locacao.getVeiculo().getId());
+			sqlSt.setInt(11, locacao.getCliente().getId());
+			sqlSt.setInt(12, locacao.getPagamento().getId());
+			sqlSt.setInt(13, locacao.getIdFuncionario());
+			sqlSt.setInt(14, locacao.getIdAgencia());
 			sqlSt.execute();
 			return true;
 		}catch(Exception e){

@@ -1,5 +1,7 @@
 package br.com.locadora.model.entity;
 
+import java.util.Date;
+
 import br.com.locadora.utils.annotation.Required;
 
 public class Pagamento {
@@ -10,6 +12,8 @@ public class Pagamento {
 	private String cpf;
 	@Required(label = "Titular", minimo = 4)
 	private String titular;
+	private Date dataPagamento;
+	private int idLocacao;
 
 	public Pagamento() {
 		setId(0);
@@ -78,8 +82,32 @@ public class Pagamento {
 		this.titular = titular;
 	}
 
-	public void pagar() {
+	/**
+	 * @return the dataPagamento
+	 */
+	public Date getDataPagamento() {
+		return dataPagamento;
+	}
 
+	/**
+	 * @param dataPagamento the dataPagamento to set
+	 */
+	public void setDataPagamento(Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+	/**
+	 * @return the idLocacao
+	 */
+	public int getIdLocacao() {
+		return idLocacao;
+	}
+
+	/**
+	 * @param idLocacao the idLocacao to set
+	 */
+	public void setIdLocacao(int idLocacao) {
+		this.idLocacao = idLocacao;
 	}
 
 }

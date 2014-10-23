@@ -282,6 +282,8 @@ public class ClienteGUI extends JPanel {
 			txtEstadoEmissor.setText(cliente.getEstadoEmissor());
 			txtNome.setText(cliente.getNome());
 			txtRg.setText(cliente.getRg());
+			cbxGenero.setSelectedItem(GeneroEnum.getDisplayByValue(cliente.getGenero()));
+			
 			dataNascimentoChooser.setDate(cliente.getDataNascimento());
 			dataVencimentoCnh.setDate(cliente.getValidadeCnh());
 			

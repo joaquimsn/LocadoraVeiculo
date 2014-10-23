@@ -9,11 +9,11 @@ CREATE TABLE agencia (
  cnpj VARCHAR(21) NOT NULL,
  insc_estadual VARCHAR(12) NOT NULL,
  responsavel VARCHAR(100),
- logradouro VARCHAR(50) NOT NULL,
- bairro VARCHAR(25) NOT NULL,
+ logradouro VARCHAR(200) NOT NULL,
+ bairro VARCHAR(150) NOT NULL,
  numero int(11) NOT NULL,
  cep VARCHAR(9) NOT NULL,
- cidade VARCHAR(30) NOT NULL,
+ cidade VARCHAR(100) NOT NULL,
  uf VARCHAR(2) NOT NULL,
  telefone VARCHAR(14),
  email VARCHAR(45),
@@ -34,11 +34,11 @@ CREATE TABLE cliente (
  validade_cnh DATE NOT NULL,
  estado_emissor VARCHAR(45) NOT NULL,
  genero CHAR(1),
- logradouro VARCHAR(50) NOT NULL,
- bairro VARCHAR(30),
+ logradouro VARCHAR(200) NOT NULL,
+  bairro VARCHAR(150) NOT NULL,
  numero INT(11) NOT NULL,
  cep VARCHAR(9) NOT NULL,
- cidade VARCHAR(25) NOT NULL,
+ cidade VARCHAR(100) NOT NULL,
  uf VARCHAR(2) NOT NULL,
  telefone VARCHAR(14),
  email VARCHAR(45),
@@ -59,11 +59,11 @@ CREATE TABLE funcionario (
  cpf VARCHAR(15) NOT NULL,
  rg VARCHAR(9) NOT NULL,
  genero CHAR(1) NOT NULL,
- logradouro VARCHAR(50) NOT NULL,
+ logradouro VARCHAR(200) NOT NULL,
  numero INT NOT NULL,
- bairro VARCHAR(30),
+ bairro VARCHAR(150),
  cep VARCHAR(9) NOT NULL,
- cidade VARCHAR(25) NOT NULL,
+ cidade VARCHAR(100) NOT NULL,
  uf VARCHAR(2) NOT NULL,
  telefone VARCHAR(14),
  email VARCHAR(45),
@@ -79,21 +79,11 @@ CREATE TABLE funcionario (
  FOREIGN KEY (id_agencia) REFERENCES agencia (id_agencia)
 );
 
-
-CREATE TABLE pagamento (
- id_pagamento INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
- tipo VARCHAR(50),
- nome_titular VARCHAR(100),
- cpf VARCHAR(14),
- data_pagamento DATE
-);
-
-
 CREATE TABLE veiculo (
  id_veiculo INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
- modelo VARCHAR(15),
- fabricante VARCHAR(20),
- imagem VARCHAR(60),
+ modelo VARCHAR(50),
+ fabricante VARCHAR(30),
+ imagem VARCHAR(100),
  ano INT(11),
  grupo INT(11),
  acessorio int(11),
@@ -125,7 +115,6 @@ CREATE TABLE locacao (
  km_locacao DOUBLE NOT NULL,
  km_devolucao INT(11) NOT NULL,
  valor DOUBLE NOT NULL,
- tipo_pagamento CHAR(60),
  valor_acrescimo DOUBLE,
  status INT,
  id_veiculo INT(11),
@@ -134,8 +123,19 @@ CREATE TABLE locacao (
  id_funcionario INT NOT NULL,
  id_agencia INT NOT NULL,
 
- FOREIGN KEY (id_veiculo) REFERENCES veiculo (id_veiculo),
- FOREIGN KEY (id_pagamento) REFERENCES pagamento (id_pagamento)
+ FOREIGN KEY (id_veiculo) REFERENCES veiculo (id_veiculo)
+);
+
+CREATE TABLE pagamento (
+ id_pagamento INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+ tipo VARCHAR(50),
+ nome_titular VARCHAR(100),
+ cpf VARCHAR(14),
+ data_pagamento DATE,
+ valor DOUBLE,
+ id_locacao INT NOT NULL,
+ 
+ FOREIGN KEY (id_locacao) REFERENCES locacao (id_locacao)
 );
 
 CREATE TABLE uf (

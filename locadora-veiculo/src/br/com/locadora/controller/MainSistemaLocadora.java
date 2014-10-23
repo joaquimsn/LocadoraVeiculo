@@ -1,8 +1,6 @@
 package br.com.locadora.controller;
 
 
-import java.io.File;
-
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -25,7 +23,7 @@ public class MainSistemaLocadora {
 		}
 		
 		// Garante que a lista de login foi criada e está ordernada
-//		Autenticacao.criptografar();
+		Autenticacao.criptografar();
 		Autenticacao.descriptografar();
 		Autenticacao.ordenarListaLogins();
 		

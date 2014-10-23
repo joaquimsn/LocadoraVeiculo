@@ -96,10 +96,10 @@ public class Autenticacao implements Serializable{
 		
 		try {
 			// Gera a Chave criptografica AES simetrica e o nome do arquivo onde será armazenada
-			cryptoAES.geraChave(new File(Constants.ABSOLUTEPATH + "chave"));
+			cryptoAES.geraChave(new File(Constants.ABSOLUTEPATH + "chave.jsn"));
 			
 			// Gera a cifra AES da mensagem dada, com a chave simetrica dada
-			cryptoAES.geraCifra(msgClaraArrayByte, new File(Constants.ABSOLUTEPATH + "chave"));
+			cryptoAES.geraCifra(msgClaraArrayByte, new File(Constants.ABSOLUTEPATH + "chave.jsn"));
 			
 			// Converte o texto byte[] no equivalente String
 			msgCifradaString = (new String(cryptoAES.getTextoCifrado(), "ISO-8859-1"));
@@ -134,7 +134,7 @@ public class Autenticacao implements Serializable{
 		try { 
 			
 			// Chave simetrica para descriptografar o arquivo
-			File chave = new File(Constants.ABSOLUTEPATH + "chave");
+			File chave = new File(Constants.ABSOLUTEPATH + "chave.jsn");
 			
 			// Gera a decifra AES da mensagem dada, segundo a chave simetrica gerada
 			cryptoAES.geraDecifra(msgCifradaArrayByte, chave);
