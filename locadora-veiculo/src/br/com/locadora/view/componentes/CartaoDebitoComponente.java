@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,6 +19,7 @@ import br.com.locadora.controller.PagamentoControl;
 import br.com.locadora.model.entity.CartaoDebito;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
+import br.com.locadora.view.Mask;
 
 public class CartaoDebitoComponente extends JPanel {
 	private static final long serialVersionUID = 4870107417592877514L;
@@ -31,7 +33,7 @@ public class CartaoDebitoComponente extends JPanel {
 	
 	// Inputs
 	private JTextField txtNomeTitular;
-	private JTextField txtCpfTitular;
+	private JFormattedTextField txtCpfTitular;
 	private JTextField txtTelefone;
 	private JTextField txtBanco;
 	private JButton btnFazerPagamento;
@@ -87,7 +89,7 @@ public class CartaoDebitoComponente extends JPanel {
 		lblCpf.setBounds(10, 60, 150, 20);
 		panelPagamento.add(lblCpf);
 		
-		txtCpfTitular = new JTextField(10);
+		txtCpfTitular = new JFormattedTextField(Mask.maskCpf());
 		txtCpfTitular.setBounds(165, 55, 200, 30);
 		panelPagamento.add(txtCpfTitular);
 		
