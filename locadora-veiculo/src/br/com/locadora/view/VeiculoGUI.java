@@ -76,6 +76,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 	private JButton btnEscolhaImagem;
 	
 	private String tituloPanel;
+	private int idVeiculo;
 	
 	private String[] cidades;
 
@@ -268,6 +269,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 				Veiculo veiculo = new Veiculo();
 				
 				// Preenche o objeto agência com as informações infromada pelo usuário
+				veiculo.setId(idVeiculo);
 				veiculo.setAcessorio(AcessorioVeiculoEnum.getValueByDisplay((String) cbxAcessorios.getSelectedItem()));
 				veiculo.setAno(anoFabricacao.getYear());
 				veiculo.setChassi(txtChassi.getText());
@@ -278,7 +280,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 				veiculo.setGrupo(GrupoVeiculoEnum.getValueByDisplay((String) cbxGrupo.getSelectedItem()));
 				veiculo.setImagem(txtDiretorioImagem.getText());
 				veiculo.setFabricante(txtFabricante.getText());
-				veiculo.setKmRodado(Integer.parseInt(txtKmRodado.getText()));
+				veiculo.setKmRodado(Double.parseDouble(txtKmRodado.getText()));
 				veiculo.setPrecoKmControlado(Double.parseDouble(txtTarifaKmControlado.getText()));
 				veiculo.setPrecoKmLivre(Double.parseDouble(txtTarifaKmLivre.getText()));
 				veiculo.setStatus(StatusVeiculoEnum.DISPONIVEL.getValue());	
@@ -395,6 +397,7 @@ public class VeiculoGUI extends JPanel implements Serializable, ActionListener {
 	 */
 	public void preencherCampos(Veiculo veiculo) {
 		if (!SystemUtils.isNuloOuVazio(veiculo)) {
+			idVeiculo =  veiculo.getId();
 			cbxAcessorios.setSelectedItem(AcessorioVeiculoEnum.getDisplayByValue(veiculo.getAcessorio()));
 			anoFabricacao.setYear(veiculo.getAno());
 			txtChassi.setText(veiculo.getChassi());

@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.com.locadora.model.DAO.VeiculoDAO;
 import br.com.locadora.model.entity.Veiculo;
+import br.com.locadora.model.enums.ParametroPesquisaVeiculoEnum;
 import br.com.locadora.utils.SystemUtils;
 
 public class VeiculoControl implements Serializable{
@@ -73,7 +74,7 @@ public class VeiculoControl implements Serializable{
 	public List<Veiculo> buscarTodos() {
 		// Cria uma nova conexão com o banco de dados
 		veiculoDAO = new VeiculoDAO();		
-		return veiculoDAO.pesquisarPorCondicao("");
+		return buscarPorCondicao(ParametroPesquisaVeiculoEnum.SELECIONA_TODOS.getValue(), "");
 	}
 	
 	/**
@@ -100,21 +101,22 @@ public class VeiculoControl implements Serializable{
 		veiculoDAO = new VeiculoDAO();
 		
 		String condicao = "";
+		int codigo = SystemUtils.getAgenciaSelecionado().getIdAgencia();
 		
 		switch (parametro) {
 		case 1:
-			condicao = " WHERE ativo = 1";
+			condicao = " WHERE ativo = 1 AND id_agencia = " + codigo;
 			break;
 		case 2:
-			condicao = " WHERE " + "placa  LIKE '%" + valor + "%' AND ativo = 1";
+			condicao = " WHERE " + "placa  LIKE '%" + valor + "%' AND ativo = 1 AND id_agencia = " + codigo;
 			break;
 		
 		case 3:
-			condicao = " WHERE " + "modelo  LIKE '%" + valor  + "%' AND ativo = 1";
+			condicao = " WHERE " + "modelo  LIKE '%" + valor  + "%' AND ativo = 1 AND id_agencia = " + codigo;
 			break;
 			
 		default:
-			condicao = " WHERE ativo = 1";
+			condicao = " WHERE ativo = 1 AND id_agencia = " + codigo;
 			break;
 		}	
 		
