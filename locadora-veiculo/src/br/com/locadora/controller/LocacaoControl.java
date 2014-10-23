@@ -43,15 +43,16 @@ public class LocacaoControl implements Serializable{
 		// Persiste a locao
 		salvar(locacao);
 		
-		// Persiste o pagamento
+		// Busca o id da locação
+		int indLocacao = buscarIdLocacao(locacao);
+		locacao.setId(indLocacao);
+		
+		// Atribui os valores da locação ao pagamento
 		PagamentoControl pagamentoControl = new PagamentoControl();
 		Pagamento pagamento = locacao.getPagamento();
-		pagamento.setIdLocacao(buscarIdLocacao(locacao));
+		pagamento.setIdLocacao(indLocacao);
 		pagamento.setValor(valorLocacao);
 		pagamento.setValor(locacao.getValor());
-		
-		// Atribui o id da locação realizada ao pagamento
-		pagamento.setIdLocacao(buscarIdLocacao(locacao));
 		
 		// Presiste o pagamento
 		pagamentoControl.salvarPagamento(locacao.getPagamento());

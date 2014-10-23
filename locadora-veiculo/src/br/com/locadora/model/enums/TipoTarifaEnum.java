@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum TipoTarifaEnum {
-	KM_CONTROLADO("txt_kmcontrolado", 1),
+	KM_CONTROLADO("KM controlado", 1),
 	KM_LIVRE("KM Livre", 2);
 	
 	private String display;

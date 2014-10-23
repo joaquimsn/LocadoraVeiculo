@@ -42,6 +42,9 @@ public class ClienteDAO extends MysqlConnect{
 				resultado.setTelefone(resultSet.getString(16));
 				resultado.setEmail(resultSet.getString(17));
 				resultado.setIdAgencia(resultSet.getInt(18));
+				resultado.setIdFuncionario(resultSet.getInt(19));
+				resultado.setDataCadastro(resultSet.getDate(20));
+				resultado.setAtivo(resultSet.getBoolean(21));
 			}
 			return resultado;
 		} catch(Exception selectError) {
@@ -195,6 +198,11 @@ public class ClienteDAO extends MysqlConnect{
 				cliente.setTelefone(resultSet.getString(16));
 				cliente.setEmail(resultSet.getString(17));
 				cliente.setIdAgencia(resultSet.getInt(18));
+				cliente.setIdAgencia(resultSet.getInt(18));
+				cliente.setIdFuncionario(resultSet.getInt(19));
+				cliente.setDataCadastro(resultSet.getDate(20));
+				cliente.setAtivo(resultSet.getBoolean(21));
+				
 				lista.add(cliente);
 			}
 		}

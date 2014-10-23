@@ -31,7 +31,7 @@ public class DevolucaoControl implements Serializable{
 		locacaoDAO = new LocacaoDAO();
 		Locacao locacao = locacaoDAO.select(id);
 		double valorAcrescimo = 0.0;
-		if (locacao != null){
+		if (!SystemUtils.isNuloOuVazio(locacao)){
 			if (locacao.getAgenciaDevolucao() != SystemUtils.getAgenciaSelecionado().getIdAgencia()){
 				valorAcrescimo += 30;
 			}

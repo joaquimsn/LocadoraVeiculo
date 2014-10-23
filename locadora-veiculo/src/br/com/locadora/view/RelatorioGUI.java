@@ -1,6 +1,7 @@
 package br.com.locadora.view;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -10,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import net.sf.jasperreports.view.JasperViewer;
 import br.com.locadora.utils.locale.LocaleUtils;
 
 import com.toedter.calendar.JDateChooser;
@@ -31,6 +33,7 @@ public class RelatorioGUI extends JPanel {
 	private JButton btnGerar;
 	
 	private JPanel panelResultado;
+	private  static Container container;
 	
 	public RelatorioGUI() {
 		inicializar();
@@ -75,10 +78,18 @@ public class RelatorioGUI extends JPanel {
 		btnGerar.setBounds(725, 50, 100, 30);
 		add(btnGerar);
 		
-		panelResultado = new JPanel();
+		panelResultado = new JPanel(null);
 		panelResultado.setBorder(new LineBorder(Color.GRAY, 1, true));
 		panelResultado.setBounds(20, 90, 820, 400);
 		add(panelResultado);
+		
+		JasperViewer visualizaRelatorio = new JasperViewer(null);
+		visualizaRelatorio.setVisible(false);
+		container = visualizaRelatorio.getContentPane();
+		container.setBounds(5, 5, 815, 395);
+		
+		panelResultado.add(container);
+		
 		
 		this.setBounds(15, 10, 859, 500);
 		setVisible(true);

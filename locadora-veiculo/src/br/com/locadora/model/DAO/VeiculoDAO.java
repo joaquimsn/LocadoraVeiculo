@@ -20,9 +20,10 @@ public class VeiculoDAO extends MysqlConnect{
 			sqlSt.setInt(1, id);
 			resultSet = sqlSt.executeQuery();
 			
-			Veiculo veiculo = new Veiculo();
+			Veiculo veiculo = null;
 			
 			if (resultSet.next()) {
+				veiculo = new Veiculo();
 				
 				veiculo.setId(resultSet.getInt(1));
 				veiculo.setModelo(resultSet.getString(2));
@@ -40,6 +41,10 @@ public class VeiculoDAO extends MysqlConnect{
 				veiculo.setPrecoKmControlado(resultSet.getDouble(14));
 				veiculo.setStatus(resultSet.getInt(15));
 				veiculo.setIdAgencia(resultSet.getInt(16));
+				veiculo.setIdFuncionario(resultSet.getInt(17));
+				veiculo.setDataCadastro(resultSet.getDate(18));
+				veiculo.setAtivo(resultSet.getBoolean(19));
+				
 			}
 			
 			return veiculo;
@@ -68,9 +73,8 @@ public class VeiculoDAO extends MysqlConnect{
 							" precokmlivre = ?," +
 							" precokmcontrolado = ?," +
 							" status = ?," +
-							" id_agencia = ?," +
 							" id_funcionario = ?," +
-							" data_cadastro = ?," + 
+							" data_manutencao = ?," + 
 							" ativo = ? " +
 							"WHERE " +
 								"id_veiculo = ?";
@@ -90,12 +94,12 @@ public class VeiculoDAO extends MysqlConnect{
 			sqlSt.setDouble(12, veiculo.getPrecoKmLivre());
 			sqlSt.setDouble(13, veiculo.getPrecoKmControlado());
 			sqlSt.setInt(14, veiculo.getStatus());
-			sqlSt.setInt(15, veiculo.getIdAgencia());
-			sqlSt.setInt(16, veiculo.getIdFuncionario());
-			sqlSt.setDate(17, SystemUtils.dataConverter(veiculo.getDataCadastro()));
-			sqlSt.setBoolean(18, veiculo.isAtivo());
-			sqlSt.setInt(19, veiculo.getId());
-			sqlSt.execute();
+			sqlSt.setInt(15, veiculo.getIdFuncionario());
+			sqlSt.setDate(16, SystemUtils.dataConverter(veiculo.getDataManutencao()));
+			sqlSt.setBoolean(17, veiculo.isAtivo());
+			sqlSt.setInt(18, veiculo.getId());
+			
+			sqlSt.executeUpdate();
 			
 			return true;
 		}catch(Exception e){
@@ -218,7 +222,6 @@ public class VeiculoDAO extends MysqlConnect{
 				veiculo.setIdAgencia(resultSet.getInt(16));
 				veiculo.setIdFuncionario(resultSet.getInt(17));
 				veiculo.setDataCadastro(resultSet.getDate(18));
-				veiculo.setDataManutencao(resultSet.getDate(19));
 				veiculo.setAtivo(resultSet.getBoolean(20));
 				
 				lista.add(veiculo);

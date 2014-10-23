@@ -162,9 +162,8 @@ public class FuncionarioDAO extends MysqlConnect{
 	public boolean update(Funcionario funcionario) {
 		PreparedStatement sqlSt;
 		try{
-			String sql = "UPDATE funcionario" +
-							"SET" +
-								"id_funcionario = ?," +
+			String sql = "UPDATE funcionario " +
+							"SET " +
 								"nome = ?," +
 								"data_nascimento = ?," +
 								"cpf = ?," +
@@ -175,19 +174,20 @@ public class FuncionarioDAO extends MysqlConnect{
 								"bairro = ?," +
 								"cep = ?," +
 								"cidade = ?," +
-								"uf = ?" +
+								"uf = ?, " +
 								"telefone = ?," +
 								"email = ?," +
 								"nivel = ?," +
 								"usuario = ?," +
-								"data_manutencao = ?," +
 								"funcionario_supervisor = ?," +
-								"id_agencia = ?" +
-							"WHERE" +
+								"id_agencia = ?," +
+								"data_manutencao = ?," +
+								"ativo = ? " +
+							"WHERE " +
 								"id_funcionario = ?";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setString(1, funcionario.getNome());
-			sqlSt.setDate(2, new java.sql.Date(funcionario.getDataNascimento().getTime()));
+			sqlSt.setDate(2, SystemUtils.dataConverter(funcionario.getDataNascimento()));
 			sqlSt.setString(3, funcionario.getCpf());
 			sqlSt.setString(4, funcionario.getRg());
 			sqlSt.setString(5, String.valueOf(funcionario.getGenero()));
@@ -201,10 +201,13 @@ public class FuncionarioDAO extends MysqlConnect{
 			sqlSt.setString(13, funcionario.getEmail());
 			sqlSt.setInt(14, funcionario.getNivel());
 			sqlSt.setString(15, funcionario.getUsuario());
-			sqlSt.setDate(16, new java.sql.Date(funcionario.getDataManutencao().getTime()));
-			sqlSt.setInt(17, funcionario.getFuncionarioSupervisor());
-			sqlSt.setInt(18, funcionario.getCodigoAgencia());
-			sqlSt.setInt(19, funcionario.getId());
+			sqlSt.setInt(16,  funcionario.getFuncionarioSupervisor());
+			sqlSt.setInt(17, funcionario.getCodigoAgencia());	
+			sqlSt.setDate(18, SystemUtils.dataConverter(funcionario.getDataManutencao()));
+			sqlSt.setBoolean(19, funcionario.isAtivo());
+			sqlSt.setInt(20, funcionario.getId());
+			sqlSt.execute();
+			
 			return true;
 		} catch (Exception selectError) {
 			selectError.printStackTrace();

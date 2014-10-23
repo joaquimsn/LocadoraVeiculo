@@ -344,9 +344,14 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 		if (e.getSource() == cbxTipoTarifa) {
 			if (TipoTarifaEnum.getValueByDisplay((String) cbxTipoTarifa.getSelectedItem()) == TipoTarifaEnum.KM_LIVRE.getValue()) {
 				liberaCampoKm = false;
-				txtQuantidadeKm.setEnabled(liberarCampoPreencherKM());
-				txtQuantidadeKm.repaint();
+			} else {
+				liberaCampoKm = true;
 			}
+			
+			txtQuantidadeKm.setEditable(liberarCampoPreencherKM());
+			txtQuantidadeKm.setEnabled(liberaCampoKm);
+			txtQuantidadeKm.repaint();
+			
 		}
 		
 		// Faz a locação
