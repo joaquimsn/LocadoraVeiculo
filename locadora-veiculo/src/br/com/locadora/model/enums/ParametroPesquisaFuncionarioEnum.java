@@ -3,12 +3,14 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public enum ParametroPesquisaFuncionarioEnum {
-	SELECIONA_TODOS("Buscar todos", 1),
-	CODIGO("Código", 2),
-	CPF("CPF", 3),
-	NOME("Nome", 4),
-	USUARIO("Usuário", 5);
+	SELECIONA_TODOS(LocaleUtils.getLocaleView().getString("txt_buscartodos"), 1),
+	CODIGO(LocaleUtils.getLocaleView().getString("col_codigo"), 2),
+	CPF(LocaleUtils.getLocaleView().getString("lbl_cpf"), 3),
+	NOME(LocaleUtils.getLocaleView().getString("lbl_nome"), 4),
+	USUARIO(LocaleUtils.getLocaleView().getString("lbl_usuario"), 5);
 	
 	private String display;
 	private int value;

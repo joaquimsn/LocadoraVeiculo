@@ -3,11 +3,13 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public enum StatusVeiculoEnum {
-	DISPONIVEL("Disponível", 1),
-	LOCADO("Locado", 2),
-	ATIVO("Ativo", 3),
-	INATIVO("Inativo", 4);
+	DISPONIVEL(LocaleUtils.getLocaleView().getString("txt_disponivel"), 1),
+	LOCADO(LocaleUtils.getLocaleView().getString("txt_locado"), 2),
+	ATIVO(LocaleUtils.getLocaleView().getString("txt_ativo"), 3),
+	INATIVO(LocaleUtils.getLocaleView().getString("txt_inativo"), 4);
 	
 	private String display;
 	private int value;

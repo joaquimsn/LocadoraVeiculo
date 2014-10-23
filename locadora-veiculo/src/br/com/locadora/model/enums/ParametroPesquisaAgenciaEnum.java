@@ -3,11 +3,13 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public enum ParametroPesquisaAgenciaEnum {
-	SELECIONA_TODOS("Buscar todos", 1),
-	CODIGO("Código", 2),
-	CNPJ("CNPJ", 3),
-	RAZAO_SOCAIL("Razão Social", 4);
+	SELECIONA_TODOS(LocaleUtils.getLocaleView().getString("txt_buscartodos"), 1),
+	CODIGO(LocaleUtils.getLocaleView().getString("col_codigo"), 2),
+	CNPJ(LocaleUtils.getLocaleView().getString("lbl_cnpj"), 3),
+	RAZAO_SOCAIL(LocaleUtils.getLocaleView().getString("lbl_razao_social"), 4);
 	
 	private String display;
 	private int value;

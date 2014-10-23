@@ -3,10 +3,12 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public enum GeneroEnum {
-	SELECIONE("Selecione", ' '),
-	MASCULINO("Masculino", 'm'),
-	FEMININO("Feminino", 'f');
+	SELECIONE(LocaleUtils.getLocaleView().getString("txt_selecione"), ' '),
+	MASCULINO(LocaleUtils.getLocaleView().getString("txt_masculino"), 'm'),
+	FEMININO(LocaleUtils.getLocaleView().getString("txt_feminino"), 'f');
 	
 	private String display;
 	private char value;

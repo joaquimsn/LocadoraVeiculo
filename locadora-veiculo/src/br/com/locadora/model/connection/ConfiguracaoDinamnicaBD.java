@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import br.com.locadora.model.vo.ParametrosConexao;
 import br.com.locadora.utils.Constants;
+import br.com.locadora.utils.locale.LocaleUtils;
 
 public class ConfiguracaoDinamnicaBD {
 
@@ -57,7 +58,7 @@ public class ConfiguracaoDinamnicaBD {
 			
 			property.store(outputStream, null);
 		} catch (Exception e) {
-			System.err.println("Falha ao gravar os parâmetros de conexão dobanco");
+			System.err.println(LocaleUtils.getLocaleMessages().getString("falha_gravarparametros_banco"));
 			e.printStackTrace();
 		}
 	}
