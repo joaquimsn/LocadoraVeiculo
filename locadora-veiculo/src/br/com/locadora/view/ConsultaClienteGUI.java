@@ -172,10 +172,10 @@ public class ConsultaClienteGUI extends JPanel {
 				cliente.setAtivo(false);
 				
 				if (clienteControl.salvarOuAlterar(cliente)) {
-					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("sucesso_agencia_desativada"));
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("sucesso_cliente_desativado"));
 					limparTabela();
 				} else {
-					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_agencia_desativada"));
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_cliente_desativado"));
 				}
 				
 			}

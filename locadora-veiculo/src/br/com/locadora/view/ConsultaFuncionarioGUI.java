@@ -173,10 +173,10 @@ public class ConsultaFuncionarioGUI extends JPanel {
 				funcionario.setAtivo(false);
 				
 				if (funcionarioControl.salvarOuAlterar(funcionario)) {
-					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("sucesso_agencia_desativada"));
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("sucesso_funcionario_desativado"));
 					limparTabela();
 				} else {
-					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_agencia_desativada"));
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_funcionario_desativado"));
 				}
 				
 			}

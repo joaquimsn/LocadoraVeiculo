@@ -175,10 +175,10 @@ public class ConsultaVeículoGUI extends JPanel {
 				veiculo.setAtivo(false);
 				
 				if (veiculoControl.salvarOuAlterar(veiculo)) {
-					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("sucesso_agencia_desativada"));
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("sucesso_veiculo_desativado"));
 					limparTabela();
 				} else {
-					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_agencia_desativada"));
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_veiculo_desativado"));
 				}
 				
 			}
