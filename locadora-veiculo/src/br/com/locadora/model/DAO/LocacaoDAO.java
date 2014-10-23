@@ -1,5 +1,4 @@
 package br.com.locadora.model.DAO;
-import java.beans.FeatureDescriptor;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +11,7 @@ import br.com.locadora.model.entity.Cliente;
 import br.com.locadora.model.entity.Locacao;
 import br.com.locadora.model.entity.Pagamento;
 import br.com.locadora.model.entity.Veiculo;
+import br.com.locadora.model.enums.StatusLocacaoEnum;
 import br.com.locadora.utils.SystemUtils;
 
 public class LocacaoDAO extends MysqlConnect{
@@ -51,12 +51,13 @@ public class LocacaoDAO extends MysqlConnect{
 		PreparedStatement sqlSt;
 		ResultSet resultSet;
 		try{
-			String sql = "SELECT * FROM locacao where id_locacao=?";
+			String sql = "SELECT * FROM locacao where id_locacao=? AND status = " + StatusLocacaoEnum.ABERTA.getValue();
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setInt(1, id);
 			resultSet = sqlSt.executeQuery();
-			Locacao resultado = new Locacao();
-			if (resultSet.next()){				
+			Locacao resultado = null;
+			if (resultSet.next()){	
+				resultado = new Locacao();
 				resultado.setId(resultSet.getInt(1));
 				resultado.setDataHoraLocacao(resultSet.getDate(2));
 				resultado.setDataHoraPrevistaDevolucao(resultSet.getDate(3));
@@ -94,8 +95,7 @@ public class LocacaoDAO extends MysqlConnect{
 	public boolean update(Locacao locacao) {
 		PreparedStatement sqlSt;
 		try{
-			String sql = "UPDATE locacao" +
-						"SET" +
+			String sql = "UPDATE locacao SET " +
 							"data_hora_locacao = ?," +
 							"data_hora_prevista_devolucao = ?," +
 							"data_hora_devolucao = ?," +
@@ -110,7 +110,7 @@ public class LocacaoDAO extends MysqlConnect{
 							"id_cliente = ?," +
 							"id_pagamento = ?," +
 							"id_funcionario = ?," +
-							"id_agencia = ?" +
+							"id_agencia = ? " +
 						"WHERE id_locacao = ?";
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setDate(1, new  java.sql.Date(locacao.getDataHoraLocacao().getTime()));
@@ -129,7 +129,9 @@ public class LocacaoDAO extends MysqlConnect{
 			sqlSt.setInt(14, locacao.getIdFuncionario());
 			sqlSt.setInt(15, locacao.getIdAgencia());
 			sqlSt.setInt(16, locacao.getId());
-			sqlSt.executeQuery();
+			
+			sqlSt.executeUpdate();
+			
 			return true;
 		}catch(Exception updateError){
 			updateError.printStackTrace();

@@ -146,7 +146,12 @@ public class DevolucaoGUI extends JDialog {
 				if (idLocacao.length() > 0){
 					DevolucaoControl devolucaoControl = new DevolucaoControl();
 					locacao = devolucaoControl.buscaLocacaoPorCodigo(Integer.parseInt(idLocacao));
-					preencherCampos(locacao);
+					
+					if (!SystemUtils.isNuloOuVazio(locacao)) {
+						preencherCampos(locacao);
+					} else {
+						JOptionPane.showMessageDialog(txtDetalheLocacao, "Nenhuma locação foi encontrada com o código informado");
+					}
 				}
 			}
 		});

@@ -20,9 +20,10 @@ public class VeiculoDAO extends MysqlConnect{
 			sqlSt.setInt(1, id);
 			resultSet = sqlSt.executeQuery();
 			
-			Veiculo veiculo = new Veiculo();
+			Veiculo veiculo = null;
 			
 			if (resultSet.next()) {
+				veiculo = new Veiculo();
 				
 				veiculo.setId(resultSet.getInt(1));
 				veiculo.setModelo(resultSet.getString(2));
@@ -40,6 +41,10 @@ public class VeiculoDAO extends MysqlConnect{
 				veiculo.setPrecoKmControlado(resultSet.getDouble(14));
 				veiculo.setStatus(resultSet.getInt(15));
 				veiculo.setIdAgencia(resultSet.getInt(16));
+				veiculo.setIdFuncionario(resultSet.getInt(17));
+				veiculo.setDataCadastro(resultSet.getDate(18));
+				veiculo.setAtivo(resultSet.getBoolean(19));
+				
 			}
 			
 			return veiculo;
@@ -217,7 +222,6 @@ public class VeiculoDAO extends MysqlConnect{
 				veiculo.setIdAgencia(resultSet.getInt(16));
 				veiculo.setIdFuncionario(resultSet.getInt(17));
 				veiculo.setDataCadastro(resultSet.getDate(18));
-				veiculo.setDataManutencao(resultSet.getDate(19));
 				veiculo.setAtivo(resultSet.getBoolean(20));
 				
 				lista.add(veiculo);
