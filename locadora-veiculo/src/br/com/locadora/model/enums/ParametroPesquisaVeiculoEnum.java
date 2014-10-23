@@ -3,10 +3,12 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public enum ParametroPesquisaVeiculoEnum {
-	SELECIONA_TODOS("Buscar todos", 1),
-	PLACA("Placa", 2),
-	MODELO("Modelo", 3);
+	SELECIONA_TODOS(LocaleUtils.getLocaleView().getString("txt_buscartodos"), 1),
+	PLACA(LocaleUtils.getLocaleView().getString("lbl_placa"), 2),
+	MODELO(LocaleUtils.getLocaleView().getString("lbl_modelo"), 3);
 	
 	private String display;
 	private int value;

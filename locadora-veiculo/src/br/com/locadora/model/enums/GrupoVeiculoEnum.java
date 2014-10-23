@@ -3,21 +3,26 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public enum GrupoVeiculoEnum {
 	SELECIONE("Selecione", 0),
-	A("A – Econômico", 1),
-	C("C – Econômico com Ar", 2),
-	E("F – Intermediário", 3),
-	G("G – Intermediário Wagon Especial", 4),
-	H("H – Executivo", 5),
-	I("I – Utilitário", 6),
-	K("K – Executivo Luxo", 7),
-	M("M – Intermediário Wagon", 8),
+	A("A – " + LocaleUtils.getLocaleView().getString("txt_economico"), 1),
+	C("C – " + LocaleUtils.getLocaleView().getString("txt_economico") + 
+				LocaleUtils.getLocaleView().getString("txt_comar"), 2),
+	E("F – " + LocaleUtils.getLocaleView().getString("txt_intermediario"), 3),
+	G("G – " + LocaleUtils.getLocaleView().getString("txt_intermediario")
+			 + LocaleUtils.getLocaleView().getString("txt_wagonespecial"), 4),
+	H("H – " + LocaleUtils.getLocaleView().getString("txt_executivo"), 5),
+	I("I – " + LocaleUtils.getLocaleView().getString("txt_utilitario"), 6),
+	K("K – " + LocaleUtils.getLocaleView().getString("txt_executivo")
+			 + LocaleUtils.getLocaleView().getString("txt_luxo"), 7),
+	M("M – " + LocaleUtils.getLocaleView().getString("txt_intermediario")+ " Wagon", 8),
 	N("N – Pick-up", 9),
-	P("P – 4 x 4 Especial", 10),
-	R("R – Minivan", 11),
-	U("U – Furgão", 12),
-	Y("Y – Blindado", 13);
+	P("P – " + LocaleUtils.getLocaleView().getString("txt_4x4especial"), 10),
+	R("R – " + LocaleUtils.getLocaleView().getString("txt_minivan"), 11),
+	U("U – " + LocaleUtils.getLocaleView().getString("txt_furgao"), 12),
+	Y("Y – " + LocaleUtils.getLocaleView().getString("txt_blindado"), 13);
 	
 	private String display;
 	private int value;

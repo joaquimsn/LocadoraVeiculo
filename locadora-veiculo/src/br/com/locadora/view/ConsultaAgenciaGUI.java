@@ -172,10 +172,10 @@ public class ConsultaAgenciaGUI extends JPanel {
 				agencia.setAtivo(false);
 				
 				if (agenciaControl.salvarOuAlterar(agencia)) {
-					JOptionPane.showMessageDialog(table, "Agência desativada com sucesso");
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("sucesso_agencia_desativada"));
 					limparTabela();
 				} else {
-					JOptionPane.showMessageDialog(table, "Erro ao desativar a agência");
+					JOptionPane.showMessageDialog(table, LocaleUtils.getLocaleMessages().getString("falha_agencia_desativada"));
 				}
 				
 			}

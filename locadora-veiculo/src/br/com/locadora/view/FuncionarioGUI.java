@@ -238,7 +238,8 @@ public class FuncionarioGUI extends JPanel implements Serializable {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int escolha = JOptionPane.showConfirmDialog(cbxSupervisor, "Todos os dados serão perdidos", "Atenção",JOptionPane.YES_NO_OPTION, 1);
+				int escolha = JOptionPane.showConfirmDialog(cbxSupervisor, LocaleUtils.getLocaleMessages().getString("aviso_perdadados"), 
+						LocaleUtils.getLocaleMessages().getString("aviso_atencao"), JOptionPane.YES_NO_OPTION, 1);
 				
 				if (escolha == JOptionPane.YES_OPTION) {
 					limparCampos();

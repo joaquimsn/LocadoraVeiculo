@@ -218,7 +218,8 @@ public class ClienteGUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int escolha = JOptionPane.showConfirmDialog(txtEstadoEmissor, "Todos os dados serão perdidos", "Atenção",JOptionPane.YES_NO_OPTION, 1);
+				int escolha = JOptionPane.showConfirmDialog(txtEstadoEmissor, LocaleUtils.getLocaleMessages().getString("aviso_perdadados"), 
+						LocaleUtils.getLocaleMessages().getString("aviso_atencao"),JOptionPane.YES_NO_OPTION, 1);
 				
 				if (escolha == JOptionPane.YES_OPTION) {
 					limparCampos();

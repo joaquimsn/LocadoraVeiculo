@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import br.com.locadora.utils.Constants;
 import br.com.locadora.utils.IOUtils;
+import br.com.locadora.utils.locale.LocaleUtils;
 
 
 public class Autenticacao implements Serializable{
@@ -47,8 +48,7 @@ public class Autenticacao implements Serializable{
 			if (listaLoginsOrdernada[meio].equals(login)) {
 				// Verifica se existe funcionário associado ao usuário informado na base do sistema
 				if (!adicionarFuncionarioNaSessao(usuario)) {
-					JOptionPane.showMessageDialog(null, "Não exite funcionário associado ao usuário " + usuario + 
-							" contate o suporte do sistema");
+					JOptionPane.showMessageDialog(null, LocaleUtils.getLocaleMessages().getString("falha_usuario_naovinculado"));
 					return false;
 				}
 				return true;

@@ -160,7 +160,7 @@ public class DevolucaoGUI extends JDialog {
 					devolucaoControl.fazerDevolucao(locacao);
 					limparCampos();
 				}else{
-					JOptionPane.showMessageDialog(txtDetalheLocacao, "Pesquise uma locação antes de continuar");
+					JOptionPane.showMessageDialog(txtDetalheLocacao, LocaleUtils.getLocaleMessages().getString("falha_locacao_naopesquisada"));
 				}
 			}
 		});

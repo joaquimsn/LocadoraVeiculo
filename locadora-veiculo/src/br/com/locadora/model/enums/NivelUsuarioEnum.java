@@ -3,10 +3,12 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public enum NivelUsuarioEnum {
-	SELECIONE("Selecione", 0),
-	ATENDENTE("Atendente", 1),
-	SUPERVISOR("Supervisor", 2);
+	SELECIONE(LocaleUtils.getLocaleView().getString("txt_selecione"), 0),
+	ATENDENTE(LocaleUtils.getLocaleView().getString("txt_atendente"), 1),
+	SUPERVISOR(LocaleUtils.getLocaleView().getString("txt_supervisor"), 2);
 	
 	private String display;
 	private int value;

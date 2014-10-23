@@ -3,9 +3,11 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public enum StatusLocacaoEnum {
-	ABERTA("Aberta", 1),
-	FECHADA("Concluida", 2);
+	ABERTA(LocaleUtils.getLocaleView().getString("txt_aberta"), 1),
+	FECHADA(LocaleUtils.getLocaleView().getString("txt_concluida"), 2);
 	
 	private String display;
 	private int value;

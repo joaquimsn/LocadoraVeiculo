@@ -3,12 +3,14 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public enum ParametroPesquisaClienteEnum {
-	SELECIONA_TODOS("Buscar todos", 1),
-	CODIGO("Código", 2),
-	CNH("CNH", 3),
-	NOME("Nome", 4),
-	EMAIL("E-Mail", 5);
+	SELECIONA_TODOS(LocaleUtils.getLocaleView().getString("txt_buscartodos"), 1),
+	CODIGO(LocaleUtils.getLocaleView().getString("col_codigo"), 2),
+	CNH(LocaleUtils.getLocaleView().getString("lbl_cnh"), 3),
+	NOME(LocaleUtils.getLocaleView().getString("lbl_nome"), 4),
+	EMAIL(LocaleUtils.getLocaleView().getString("lbl_email"), 5);
 	
 	private String display;
 	private int value;

@@ -3,11 +3,13 @@ package br.com.locadora.model.enums;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.locadora.utils.locale.LocaleUtils;
+
 public enum AcessorioVeiculoEnum {
-	NAO_POSSUI("Não possui", 0),
-	GPS("Navegador GPS", 1),
-	CADEIRA_BEBE("Cadeira de bebê", 2),
-	Motorista("Motorista", 3);
+	NAO_POSSUI(LocaleUtils.getLocaleView().getString("txt_naotem"), 0),
+	GPS(LocaleUtils.getLocaleView().getString("txt_gps"), 1),
+	CADEIRA_BEBE(LocaleUtils.getLocaleView().getString("txt_cadeirabebe"), 2),
+	Motorista(LocaleUtils.getLocaleView().getString("txt_motorista"), 3);
 	
 	private String display;
 	private int value;
