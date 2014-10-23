@@ -168,9 +168,9 @@ public class CartaoCreditoComponente extends JPanel {
 				pagamentoAprovado = pagamentoControl.processarPagamento(getDadoDoCartao());
 				
 				if (pagamentoAprovado) {
-					JOptionPane.showMessageDialog(dataValidadeChooser, "Pagamento efetuado com sucesso");
+					JOptionPane.showMessageDialog(dataValidadeChooser, LocaleUtils.getLocaleMessages().getString("sucesso_pagamento"));
 				} else {
-					JOptionPane.showMessageDialog(dataValidadeChooser, "Pagamento não autorizado");
+					JOptionPane.showMessageDialog(dataValidadeChooser, LocaleUtils.getLocaleMessages().getString("falha_pagamento"));
 				}
 				
 			}
