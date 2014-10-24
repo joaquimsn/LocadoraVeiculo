@@ -44,4 +44,9 @@ public class PagamentoControl {
 		PagamentoDAO pagamentoDAO = new PagamentoDAO();
 		return pagamentoDAO.buscarIdPagamento(pagamento);
 	}
+	
+	public Pagamento buscarPagamentoPorId(int idPagamento) {
+		PagamentoDAO pagamentoDAO = new PagamentoDAO();
+		return pagamentoDAO.select(idPagamento);
+	}
 }

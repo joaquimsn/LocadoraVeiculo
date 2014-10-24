@@ -21,7 +21,12 @@ public class Constants {
 	 */
 	public static final String PATH_MESSAGES_INTERNACIONALIZADA = "messages";
 	
+	/**
+	 * Obtém o diretório raiz do sistema
+	 */
 	public static final String ABSOLUTEPATH = File.listRoots()[0].getAbsolutePath() + "locadora" + File.separator;
+	
+	public static final String DIRETORIO_LAYOUT_JASPER =  File.listRoots()[0].getAbsolutePath() + "locadora";
 	
 	/**
 	 * Lista de Unidades de Federação

@@ -11,7 +11,6 @@ import br.com.locadora.model.entity.Pagamento;
 import br.com.locadora.model.entity.Veiculo;
 import br.com.locadora.model.enums.StatusLocacaoEnum;
 import br.com.locadora.model.enums.StatusVeiculoEnum;
-import br.com.locadora.model.enums.TipoTarifaEnum;
 import br.com.locadora.utils.SystemUtils;
 
 public class DevolucaoControl implements Serializable{
@@ -27,23 +26,26 @@ public class DevolucaoControl implements Serializable{
 	public Locacao buscaLocacaoPorCodigo(int id){
 		ClienteControl clienteControl = new ClienteControl();
 		VeiculoControl veiculoControl = new VeiculoControl();
-		
+		AgenciaControl agenciaControl = new AgenciaControl();
+
 		locacaoDAO = new LocacaoDAO();
 		Locacao locacao = locacaoDAO.select(id);
 		double valorAcrescimo = 0.0;
-		if (!SystemUtils.isNuloOuVazio(locacao)){
-			if (locacao.getAgenciaDevolucao() != SystemUtils.getAgenciaSelecionado().getIdAgencia()){
+		
+		if (!SystemUtils.isNuloOuVazio(locacao)) {
+			if (locacao.getAgenciaDevolucao() != SystemUtils.getAgenciaSelecionado().getIdAgencia()) {
 				valorAcrescimo += 30;
 			}
-			if (locacao.getDataHoraPrevistaDevolucao().compareTo(new Date()) > 0){
+			if (locacao.getDataHoraPrevistaDevolucao().compareTo(new Date()) <= 0) {
 				valorAcrescimo += 100;
 			}
+			
 			locacao.setValorAcrescimo(valorAcrescimo);
 			locacao.setIdVeiculo(veiculoControl.buscarPorId(locacao.getVeiculo().getId()));
 			locacao.setCliente(clienteControl.buscarPorId(locacao.getCliente().getId()));
-			
+			locacao.setObjetoAgenciaDevolucao(agenciaControl.buscarPorId(locacao.getIdAgencia()));
 		}
-		
+
 		return locacao;
 	}
 	

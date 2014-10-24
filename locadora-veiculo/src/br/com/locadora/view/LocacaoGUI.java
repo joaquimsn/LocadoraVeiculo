@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import net.sf.jasperreports.view.JasperViewer;
 import br.com.locadora.controller.AgenciaControl;
 import br.com.locadora.controller.ClienteControl;
 import br.com.locadora.controller.LocacaoControl;
@@ -362,10 +363,23 @@ public class LocacaoGUI extends JDialog implements Serializable, ActionListener{
 				return;
 			}
 			
+			if (TipoTarifaEnum.getValueByDisplay((String) cbxTipoTarifa.getSelectedItem()) == TipoTarifaEnum.KM_CONTROLADO.getValue() 
+					&& txtQuantidadeKm.getText().length() == 0) {
+				JOptionPane.showMessageDialog(cbxTipoTarifa, "Informe a quantidade de KM desejada");
+				return;
+			}
+			
 			LocacaoControl locacaoControl = new LocacaoControl();
 			locacaoAtual = locacaoControl.fazerLocacao(getDadosLocacao());
 			
-			JOptionPane.showMessageDialog(null, "Locação efetuada com sucesso \n" + "Código da locação: " + locacaoAtual.getId());
+			try {
+				JasperViewer jasperViewer = new JasperViewer(locacaoControl.gerarComprovanteLocacao(locacaoAtual));
+				jasperViewer.setVisible(true);
+				jasperViewer.setSize(500, 600);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 		}
 			

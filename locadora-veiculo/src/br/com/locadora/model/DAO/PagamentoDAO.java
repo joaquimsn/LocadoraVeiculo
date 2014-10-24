@@ -20,6 +20,7 @@ public class PagamentoDAO extends MysqlConnect{
 			sqlSt = conn.prepareStatement(sql);
 			sqlSt.setInt(1, id);
 			resultSet = sqlSt.executeQuery();
+			
 			Pagamento resultado = new Pagamento();
 			if (resultSet.next()){				
 				resultado.setId(resultSet.getInt(1));

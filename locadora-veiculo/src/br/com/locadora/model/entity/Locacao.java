@@ -19,6 +19,7 @@ public class Locacao {
 	private Cliente cliente;
 	private int idAgencia;
 	private int idFuncionario;
+	private Agencia objetoAgenciaPrevistaDevolucao;
 
 	public Locacao() {
 		setDataHoraLocacao(null);
@@ -192,4 +193,18 @@ public class Locacao {
 		this.idFuncionario = idFuncionario;
 	}
 
+	/**
+	 * @return the agenciaPrevisaDevolucao
+	 */
+	public Agencia getObjetoAgenciaDevolucao() {
+		return objetoAgenciaPrevistaDevolucao;
+	}
+
+	/**
+	 * @param agenciaPrevistaDevolucao the agenciaPrevisaDevolucao to set
+	 */
+	public void setObjetoAgenciaDevolucao(Agencia agenciaPrevistaDevolucao) {
+		objetoAgenciaPrevistaDevolucao = agenciaPrevistaDevolucao;
+	}
+	
 }

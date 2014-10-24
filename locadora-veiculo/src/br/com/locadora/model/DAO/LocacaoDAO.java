@@ -5,6 +5,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.locadora.controller.AgenciaControl;
+import br.com.locadora.controller.ClienteControl;
+import br.com.locadora.controller.PagamentoControl;
+import br.com.locadora.controller.VeiculoControl;
 import br.com.locadora.model.connection.MysqlConnect;
 import br.com.locadora.model.entity.Agencia;
 import br.com.locadora.model.entity.Cliente;
@@ -201,6 +205,11 @@ public class LocacaoDAO extends MysqlConnect{
 	 * @return Lista com as locacçãos encontradas
 	 */
 	public List<Locacao> pesquisarPorCondicao(String conditional) {
+		VeiculoControl veiculoControl = new VeiculoControl();
+		AgenciaControl agenciaControl = new AgenciaControl();
+		ClienteControl clienteControl = new ClienteControl();
+		PagamentoControl pagamentoControl = new PagamentoControl();
+		
 		List<Locacao> lista = new ArrayList<Locacao>();
 		ResultSet resultSet;
 		Locacao locacao;
@@ -214,6 +223,38 @@ public class LocacaoDAO extends MysqlConnect{
 			while(resultSet.next()){
 				locacao = new Locacao();
 				locacao.setId(resultSet.getInt(1));
+				locacao.setDataHoraLocacao(resultSet.getDate(2));
+				locacao.setDataHoraPrevistaDevolucao(resultSet.getDate(3));
+				locacao.setDataHoraDevolucao(resultSet.getDate(4));
+				
+				// Busca da agência de devolução
+				Agencia agencia = agenciaControl.buscarPorId(resultSet.getInt(5));
+				locacao.setAgenciaDevolucao(agencia.getIdAgencia());
+				locacao.setObjetoAgenciaDevolucao(agencia);
+				
+				locacao.setTipoTarifa(resultSet.getInt(6));
+				locacao.setKmLocacao(resultSet.getDouble(7));
+				locacao.setKmDevolucao(resultSet.getDouble(8));
+				locacao.setValor(resultSet.getDouble(9));
+				locacao.setValorAcrescimo(resultSet.getDouble(10));
+				locacao.setStatus(resultSet.getInt(11));
+				
+				// Busca o veículo associado a agência
+				Veiculo veiculo = veiculoControl.buscarPorId(resultSet.getInt(12));
+				locacao.setIdVeiculo(veiculo);
+				
+				// Busca o cliente associado a agência
+				Cliente cliente = clienteControl.buscarPorId(resultSet.getInt(13));
+				locacao.setCliente(cliente);
+				
+				// Busca o pagamento associado a agência
+				Pagamento pagamento = pagamentoControl.buscarPagamentoPorId(resultSet.getInt(14));
+				locacao.setPagamento(pagamento);
+				
+				locacao.setIdFuncionario(resultSet.getInt(15));
+				
+				locacao.setIdAgencia(resultSet.getInt(16));	
+				
 				lista.add(locacao);
 			}
 		}

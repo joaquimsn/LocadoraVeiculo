@@ -2,16 +2,25 @@ package br.com.locadora.view;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
+import br.com.locadora.controller.LocacaoControl;
+import br.com.locadora.controller.RelatorioControl;
+import br.com.locadora.model.enums.ParametroRelatoriosEnum;
+import br.com.locadora.model.vo.RelatorioLocacao;
+import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
 
 import com.toedter.calendar.JDateChooser;
@@ -53,7 +62,7 @@ public class RelatorioGUI extends JPanel {
 		lblTipoRelatorio.setBounds(35, 30, 175, 20);
 		add(lblTipoRelatorio);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox(ParametroRelatoriosEnum.getDisplayList().toArray(new String[0]));
 		comboBox.setBounds(30, 50, 300, 30);
 		add(comboBox);
 		
@@ -90,8 +99,48 @@ public class RelatorioGUI extends JPanel {
 		
 		panelResultado.add(container);
 		
+		btnGerar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if (dataInicialChooser.getDate() != null && dataFinalChooser.getDate() != null) {
+					LocacaoControl locacaoControl = new LocacaoControl();
+					RelatorioLocacao relatorioLocacao = new RelatorioLocacao();
+					RelatorioControl relatorioControl = new RelatorioControl();
+					
+					relatorioLocacao.setListaLocacao(locacaoControl.buscarPorPeriodo(dataInicialChooser.getDate(), dataFinalChooser.getDate(),
+						comboBox.getSelectedIndex()));
+					
+					relatorioLocacao.setFuncionario(SystemUtils.getFuncionarioLogado());
+					relatorioLocacao.setAgencia(SystemUtils.getAgenciaSelecionado());
+					
+					try {
+						trocarRelatorio(relatorioControl.gerarLocacoes(relatorioLocacao));
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block 
+						e1.printStackTrace();
+					}
+					
+				} else {
+					JOptionPane.showMessageDialog(panelResultado, "Informe o periodo");
+				}
+			}
+		});
 		
 		this.setBounds(15, 10, 859, 500);
 		setVisible(true);
+	}
+	
+	private void trocarRelatorio(JasperPrint jasPrint) {
+		JasperViewer jasperViewer = new JasperViewer(jasPrint);
+		jasperViewer.setVisible(true);
+		jasperViewer.setBounds(5, 5, 815, 395);
+		
+		container.removeAll();
+		container.add(jasperViewer.getContentPane());
+		container.repaint();
+		
+		panelResultado.repaint();
+		repaint();
 	}
 }

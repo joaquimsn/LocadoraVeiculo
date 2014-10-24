@@ -17,8 +17,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import br.com.locadora.controller.DevolucaoControl;
-import br.com.locadora.model.DAO.LocacaoDAO;
-import br.com.locadora.model.entity.CartaoDebito;
 import br.com.locadora.model.entity.Locacao;
 import br.com.locadora.utils.SystemUtils;
 import br.com.locadora.utils.locale.LocaleUtils;
@@ -189,6 +187,7 @@ public class DevolucaoGUI extends JDialog {
 		if (locacao != null){
 			info.append("Nome do cliente: ").append(locacao.getCliente().getNome());
 			info.append("\nVeículo locado: ").append(locacao.getVeiculo().getPlaca());
+			info.append("\nAgência de devolução: ").append(locacao.getObjetoAgenciaDevolucao().getRazaoSocial());
 			info.append("\nData da locação: ").append(SystemUtils.formatarDataParaTela(locacao.getDataHoraLocacao().toString()));
 			info.append("\nData prevista de devolução: ").append(SystemUtils.formatarDataParaTela(locacao.getDataHoraPrevistaDevolucao().toString()));
 			txtDetalheLocacao.setText(info.toString());
