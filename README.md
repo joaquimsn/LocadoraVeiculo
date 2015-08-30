@@ -15,3 +15,7 @@ Projeto acadêmico executado com o objetivo de aplicar os conceitos de programa�
 </ul>
 
 <b>Versão Web</b> https://github.com/joaquimsn/locadora-veiculo-web 
+
+<h3>Procedimentos necessários para rodar o projeto</h3>
+
+Obs: O login ficou meio bosta devido a restrições no escopo, exigida pelo professor
