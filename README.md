@@ -18,4 +18,4 @@ Projeto acadêmico executado com o objetivo de aplicar os conceitos de programa�
 
 <h3>Procedimentos necessários para rodar o projeto</h3>
 
-Obs: O login ficou meio bosta devido a restrições no escopo, exigida pelo professor
+Obs: O login ficou meio bosta devido a restrições no escopo exigida pelo professor
