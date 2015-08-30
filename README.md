@@ -13,3 +13,5 @@ Projeto acadêmico executado com o objetivo de aplicar os conceitos de programa�
 	<li>Java SE</li>
 	<li>Mysql</li>
 </ul>
+
+<b>Versão Web</b> https://github.com/joaquimsn/locadora-veiculo-web 
